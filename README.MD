@@ -12,7 +12,7 @@ This repository contains the source files for [Percona MongoLink documentation](
 
 ## Contributing
 
-We welcome all contributors. For how to contribute to documentation, read the [Contributing guide](https://github.com/percona/pbm-docs/blob/master/CONTRIBUTING.md).
+We welcome all contributors. For how to contribute to documentation, read the [Contributing guide](CONTRIBUTING.md).
  
 ## Licensing
 
