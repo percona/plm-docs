@@ -1,0 +1,19 @@
+
+Markdown
+mkdocs
+mkdocs-versioning
+mkdocs-macros-plugin
+mkdocs-exclude
+markdown-include
+mkdocs-material
+mkdocs-with-pdf
+mkdocs-git-revision-date-plugin
+mkdocs-git-revision-date-localized-plugin
+mkdocs-bootstrap-tables-plugin
+mkdocs-section-index
+mkdocs-htmlproofer-plugin
+mkdocs-meta-descriptions-plugin
+mkdocs-glightbox
+mike
+mkdocs-open-in-new-tab
+Pillow > 10.1.0

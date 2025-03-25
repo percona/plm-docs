@@ -1,0 +1,8 @@
+# PBM Variables set for HTML output
+# See also mkdocs.yml plugins.with-pdf.cover_subtitle and output_path
+
+year: '2025'
+
+pml:
+  full_name: 'Percona MongoLink'
+  short: 'PML'

@@ -1,0 +1,15 @@
+# Ignore
+*~
+*.pyc
+build
+source/ext/__pycache__
+
+# Local Netlify folder
+.netlify
+site
+
+styles/
+
+# Allow
+
+!styles/config/vocabularies/Percona/**
