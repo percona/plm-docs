@@ -1,1 +1,1 @@
-{{pml.full_name}} ({{pml.short}}) is a tool for replicating data from a source MongoDB cluster to a target MongoDB cluster. It supports cloning data, replicating changes, and managing collections and indexes.
+Percona MongoLink (PML) is a tool for replicating data from a source MongoDB cluster to a target MongoDB cluster. It supports cloning data, replicating changes, and managing collections and indexes.

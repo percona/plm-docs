@@ -90,8 +90,6 @@ markdown_extensions:
   pymdownx.inlinehilite: {}
   pymdownx.snippets:  
     base_path: ["snippets"]
-#    auto_append:
-#      - services-banner.md
   pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
@@ -139,20 +137,22 @@ plugins:
       javascript_dir: js
       canonical_version: null
 
-#extra:
-#  homepage:
-#    https://docs.percona.com
+
+not_in_nav: |
+  - 404.md
 
 nav:
   - Home: index.md
   - get-help.md
   - Get started:
-      - installation.md 
-      - 1. Install:
-         - system-requirements.md
-         - Build from source: install/source.md
-      - 2. Set up and configure: 
-        - install/usage.md       
+      - System requirements: system-requirements.md
+      - 1. Build from source: install/source.md
+      - 2. Use PML: install/usage.md 
+      - 3. Test PML: install/testing.md     
+  - install/parameters.md
+  - How to:
+    - Use PML API: install/api.md
+    - install/logging.md
   - Release notes:
       - release-notes.md
   - Reference:
