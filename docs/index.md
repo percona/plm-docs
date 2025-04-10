@@ -7,3 +7,36 @@
 
 --8<-- "pml-description.md"
 
+[How {{pml.full_name}} works](intro.md){.md-button}
+
+## Features
+
+* **Data clone**: Instant transfer existing data from a source MongoDB to a target MongoDB deployment.
+* **Real-Time Replication**: Tail the oplog to keep your target cluster up to date.
+* **Namespace Filtering**: Specify which databases and collections to include or exclude.
+* **Automatic Index Management**: Ensure necessary indexes are created on the target.
+* **HTTP API**: Start, finalize, pause, resume, and check replication status via REST endpoints.
+
+## Why you need PML
+
+Benefit from {{pml.full_name}} in the following use cases:
+
+* **Disaster Recovery**:
+
+    {{pml.short}} enables you to maintain a secondary cluster as a backup. In case of a failure in the primary cluster, the secondary cluster can take over, ensuring minimal downtime.
+    
+* **Data Migration**:
+
+    {{pml.short}} simplifies the process of migrating data between clusters, whether you're upgrading to a new MongoDB version, moving to a different vendor, or transitioning from cloud to on-premises.
+
+* **Global Data Distribution**
+
+    Synchronize data across geographically distributed clusters to improve data access speed and reduce latency for users in different regions.
+
+* **Testing and Development**:
+
+    Keep a test or development cluster in sync with the production cluster to ensure accurate testing and debugging without affecting live data.
+
+* **Hybrid Cloud Deployments**
+
+    Synchronize data between on-premises clusters and cloud clusters, enabling hybrid cloud strategies.

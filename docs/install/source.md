@@ -39,7 +39,7 @@ Here's how to build {{pml.full_name}}:
     go install .
     ```
 
-    > This will install `percona-mongolink` into your `GOBIN` directory. If `GOBIN` is included in your `PATH`, you can run MongoLink by typing `percona-mongolink` in your terminal.
+    > This installs `percona-mongolink` into your `GOBIN` directory. Add `GOBIN` to your `PATH` and you can run {{pml.full_name}} by typing `percona-mongolink` in your terminal.
 
 3. Run the server:
 
@@ -55,7 +55,7 @@ Here's how to build {{pml.full_name}}:
     bin/percona-mongolink --source $SOURCE_URI --target $TARGET_URI
     ```
 
-    > Connections to the source and target must have `readPreference=primary` and `writeConcern=majority` explicitly or unset.
+    > Connections to the source and target must have `readPreference=primary` and `writeConcern=majority` either set explicitly or unset.
 
 ## Next steps
 

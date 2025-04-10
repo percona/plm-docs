@@ -144,6 +144,8 @@ not_in_nav: |
 nav:
   - Home: index.md
   - get-help.md
+  - intro.md
+  - compare.md
   - Get started:
       - System requirements: system-requirements.md
       - 1. Build from source: install/source.md

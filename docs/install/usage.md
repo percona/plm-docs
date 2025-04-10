@@ -1,84 +1,88 @@
 # How to use {{pml.full_name}}?
 
-## Starting the Replication
+You can  {{pml.full_name}} either via the command-line interface or via the HTTP REST API. Read more about [PML API](api.md).
 
-To start the replication process, you can either use the command-line interface or send a POST request to the `/start` endpoint with the desired options:
+## Start the Replication
 
-### Using Command-Line Interface
+=== "Command line"
 
-```sh
-bin/percona-mongolink start
-```
+    ```sh
+    bin/percona-mongolink start
+    ```
 
-### Using HTTP API
+=== "HTTP API"
+    
+    Send a POST request to the `/start` endpoint with the desired options:
 
-```sh
-curl -X POST http://localhost:2242/start -d '{
-    "includeNamespaces": ["db1.collection1", "db2.collection2"],
-    "excludeNamespaces": ["db3.collection3"]
-}'
-```
+    ```sh
+    curl -X POST http://localhost:2242/start -d '{
+        "includeNamespaces": ["db1.collection1", "db2.collection2"],
+        "excludeNamespaces": ["db3.collection3"]
+    }'
+    ```
 
-## Finalizing the Replication
+## Finalize the replication
 
-To finalize the replication process, you can either use the command-line interface or send a POST request to the `/finalize` endpoint:
+=== "Command line"
 
-### Using Command-Line Interface
+    ```sh
+    bin/percona-mongolink finalize
+    ```
 
-```sh
-bin/percona-mongolink finalize
-```
+=== "HTTP API"
+    
+    Send a POST request to the `/finalize` endpoint:
 
-### Using HTTP API
+    ```sh
+    curl -X POST http://localhost:2242/finalize
+    ```
 
-```sh
-curl -X POST http://localhost:2242/finalize
-```
+## Pause the replication
 
-## Pausing the Replication
+=== "Command line"
 
-To pause the replication process, you can either use the command-line interface or send a POST request to the `/pause` endpoint:
+    ```sh
+    bin/percona-mongolink pause
+    ```
 
-### Using Command-Line Interface
+=== "HTTP API"
 
-```sh
-bin/percona-mongolink pause
-```
+    Send a POST request to the `/pause` endpoint:
 
-### Using HTTP API
+    ```sh
+    curl -X POST http://localhost:2242/pause
+    ```
 
-```sh
-curl -X POST http://localhost:2242/pause
-```
+## Resume the replication
 
-## Resuming the Replication
+=== "Command line"
 
-To resume the replication process, you can either use the command-line interface or send a POST request to the `/resume` endpoint:
+    ```sh
+    bin/percona-mongolink resume
+    ```
 
-### Using Command-Line Interface
+=== "HTTP API"
 
-```sh
-bin/percona-mongolink resume
-```
+    Send a POST request to the `/resume` endpoint:
 
-### Using HTTP API
+    ```sh
+    curl -X POST http://localhost:2242/resume
+    ```
 
-```sh
-curl -X POST http://localhost:2242/resume
-```
+## Check the replication status
 
-## Checking the Status
+Check the current status of the replication process.
 
-To check the current status of the replication process, you can either use the command-line interface or send a GET request to the `/status` endpoint:
+=== "Command line"
 
-### Using Command-Line Interface
+    ```sh
+    bin/percona-mongolink status
+    ```
 
-```sh
-bin/percona-mongolink status
-```
+=== "HTTP API"
 
-### Using HTTP API
+    Send a GET request to the `/status` endpoint:
 
-```sh
-curl http://localhost:2242/status
-```
+    ```sh
+    curl http://localhost:2242/status
+    ```
