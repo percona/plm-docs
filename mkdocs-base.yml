@@ -152,9 +152,10 @@ nav:
       - 2. Use PML: install/usage.md 
       - 3. Test PML: install/testing.md     
   - install/parameters.md
+  - limitations.md
   - How to:
-    - Use PML API: install/api.md
-    - install/logging.md
+    - Use PML API: api.md
+    - logging.md
   - Release notes:
       - release-notes.md
   - Reference:
