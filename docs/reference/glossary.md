@@ -24,6 +24,12 @@ A collection is the way data is organized in MongoDB. It is analogous to a table
 
 In the context of backup and restore, consistency means that the data restored will be consistent in a given point in time. Partial or incomplete writes to disk of atomic operations (for example, to table and index data structures separately) won't be served to the client after the restore. The same applies to multi-document transactions that started but didn't complete by the time the backup was finished.
 
+## Container
+
+A container in Microsoft Azure Blob storage organizes a set of [blobs](#blob), similar to a directory in a file system. It can include an unlimited number of blobs.
+
+A container name must be a valid DNS name, as it forms part of the unique URI (Uniform resource identifier) used to address the container or its blobs. 
+
 ## Durability
    
 Once a transaction is committed, it will remain so.

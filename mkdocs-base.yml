@@ -44,6 +44,24 @@ theme:
         icon: material/brightness-4
         name: Color theme set to Dark Mode. Click to change
 
+# Theme features
+
+  features:
+    - search.highlight
+    - search.share
+    - search.suggest
+    - navigation.top
+    - navigation.tracking 
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.indexes
+    - content.tooltips
+    - content.tabs.link
+    - content.action.edit
+    - content.action.view
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow      
 
 extra_css:
   - https://unicons.iconscout.com/release/v3.0.3/css/line.css
@@ -102,7 +120,6 @@ plugins:
   section-index: {}
   search: 
     separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
-  open-in-new-tab: {}
   git-revision-date-localized: 
     enable_creation_date: true
     enabled: !ENV [ENABLED_GIT_REVISION_DATE, True]
@@ -144,14 +161,16 @@ not_in_nav: |
 nav:
   - Home: index.md
   - get-help.md
-  - intro.md
-  - compare.md
+  - About Percona MongoLink: 
+     - How PML works: intro.md
+     - compare.md
   - Get started:
       - System requirements: system-requirements.md
       - 1. Build from source: install/source.md
       - 2. Use PML: install/usage.md 
       - 3. Test PML: install/testing.md     
   - install/parameters.md
+  - pml-commands.md
   - limitations.md
   - How to:
     - Use PML API: api.md

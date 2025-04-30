@@ -1,6 +1,6 @@
 # How to use {{pml.full_name}}?
 
-You can  {{pml.full_name}} either via the command-line interface or via the HTTP REST API. Read more about [PML API](api.md).
+You can  {{pml.full_name}} either via the command-line interface or via the HTTP REST API. Read more about [PML API](../api.md).
 
 ## Start the Replication
 

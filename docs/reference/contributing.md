@@ -63,4 +63,4 @@ If you'd like to submit a code patch, follow the [Contributing guide in {{pml.sh
 
 ### Edit documentation locally
 
-If you wish to have full control over the documentation process, follow the [Contributing to documentation guide](../../CONTRIBUTING.md).
+If you wish to have full control over the documentation process, follow the [Contributing to documentation guide](https://github.com/Percona-Lab/pml-docs/blob/main/CONTRIBUTING.md).
