@@ -9,28 +9,6 @@ theme:
   name: material
   custom_dir: _resource/overrides
 
-# Theme features
-
-  features:
-    - search.highlight
-    - search.share
-    - search.suggest
-    - navigation.top
-    - navigation.tracking 
-    - navigation.instant
-    - navigation.instant.progress
-    - navigation.indexes
-#    - navigation.tabs
-#    - navigation.tabs.sticky
-    - content.tooltips
-    - content.tabs.link
-    - content.action.edit
-    - content.action.view
-    - content.code.copy
-    - content.code.annotate
-    - toc.follow      
-
-
   
 #Google Analytics configuration 
 extra: 

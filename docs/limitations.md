@@ -8,26 +8,38 @@ This page lists known limitations for using Percona MongoLink
 
 ## Versions and topology
 
-* Sharded clusters support
-* EOLed MongoDB version
-* **Percona MongoLink** supports only Replica Set to Replica Set clusters synchronization
-* You can synchronize Percona Server for MongoDB or MongoDB Community/Enterprise Advanced/Atlas within the compatible versions - 6.0 to 6.0, 7.0 to 7.0, 8.0 to 8.0
-* Minimal supported MongoDB version is 6.0.17, 7.0.13, 8.0.0
-* You can connect two Percona Server for MongoDB clusters, connect Percona Server for MongoDB (source) and Mongo Community/Enterprise Advanced cluster (target), connect Percona Server for MongoDB (source) and Atlas cluster (target)
+* Sharded clusters are not supported
+* MongoDB versions that reached End-of-Life are not supported
+* Percona MongoLink supports only Replica Set to Replica Set synchronization. The source and target replica sets can have different number of nodes
+* You can synchronize Percona Server for MongoDB or MongoDB Community/Enterprise Advanced/Atlas within the same major versions - 6.0 to 6.0, 7.0 to 7.0, 8.0 to 8.0
+* Minimal supported MongoDB versions are: 6.0.17, 7.0.13, 8.0.0
+* You can connect the following MongoDB deployments:
+
+   | Source | Target |
+   | --- | --- |
+   | Percona Server for MongoDB | Percona Server for MongoDB |
+   | Percona Server for MongoDB | MongoDB Community |
+   | Percona Server for MongoDB | MongoDB Enterprise Advanced |
+   | Percona Server for MongoDB | MongoDB Atlas |
+
+* Connections to hidden/delayed nodes are not supported because the [`applyOps`](https://www.mongodb.com/docs/upcoming/reference/command/applyOps/#mongodb-dbcommand-dbcmd.applyOps) command is not available on such nodes.
+
 
 ## Data types
 
 * Queryable encryption is not supported
-* User and roles are not synchronized
+* Users and roles are not synchronized
 * Timeseries collections are not supported
-* InMemory Storage Engine is not supported
-* Persistent Query Settings (for MongoDB 8)
+* [Percona Memory Engine](https://docs.percona.com/percona-server-for-mongodb/8.0/inmemory.html) is not supported
+* Persistent Query Settings (added in MongoDB 8) are not supported 
 
 ## Other
 
-* Multiple source or multiple target clusters
-* Resumable initial synchronization
-* Non-empty cluster support
+The following functionalities are not supported:
+
+* Multiple source or multiple target clusters 
+* Resumable initial synchronization 
+* Synchronization with a non-empty target cluster
 * Database upgrade during the sync, even in the paused state.
 * Reverse synchronization
 * LDAP authentication
