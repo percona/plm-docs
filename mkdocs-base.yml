@@ -167,8 +167,9 @@ nav:
   - Get started:
       - System requirements: system-requirements.md
       - 1. Build from source: install/source.md
-      - 2. Use PML: install/usage.md 
-      - 3. Test PML: install/testing.md     
+      - 2. Configure authentication: install/setup.md
+      - 3. Use PML: install/usage.md 
+      - 4. Test PML: install/testing.md     
   - install/parameters.md
   - pml-commands.md
   - limitations.md

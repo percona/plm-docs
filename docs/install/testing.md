@@ -1,4 +1,4 @@
-# How to test {{pml.full_name}}?
+# Test {{pml.full_name}}
 
 ## Prerequisites
 

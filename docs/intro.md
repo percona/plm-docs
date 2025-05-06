@@ -23,7 +23,9 @@ A solution is to use Percona MongoLink. MongoDB Atlas is your source. A new, emp
 
 Create users for PML in both MongoDB deployments and connect PML to them using these user credentials. Now you are ready to start the migration.
 
-To start the migration, call the start command. PML starts copying the data from the source to the target. After the initial data sync, it monitors changes in the source and replicates them to the target at runtime. You don't have to stop your source deployment, it operates as usual, accepting client requests. PML uses [change streams :octicons-link-external-16:](https://www.mongodb.com/docs/manual/changeStreams/) to track the changes to your data and replicate them to the target.
+To start the migration, call the start command. PML starts copying the data from the source to the target. First it does the initial sync by cloning the data and then applying all the changes that happened since the clone start. 
+
+After the initial data sync, PML monitors changes in the source and replicates them to the target at runtime. You don't have to stop your source deployment, it operates as usual, accepting client requests. PML uses [change streams :octicons-link-external-16:](https://www.mongodb.com/docs/manual/changeStreams/) to track the changes to your data and replicate them to the target.
 
 You can pause the replication and resume it later. When paused, PML saves the timestamp when it stops the replication. After you resume PML, it copies the changes from the saved timestamp and continues real-time replication.
 

@@ -16,6 +16,10 @@ A blob stands for Binary Large Object, which includes objects such as images and
 
 A bucket is a container on the s3 remote storage that stores backups.
 
+## Clone
+
+A clone is the process of creating an exact copy of a database during initial sync. This process involves copying all databases and collections, including indexes, to ensure the target has an identical copy of the data from source. 
+
 ## Collection
      
 A collection is the way data is organized in MongoDB. It is analogous to a table in relational databases.
@@ -34,6 +38,10 @@ A container name must be a valid DNS name, as it forms part of the unique URI (U
    
 Once a transaction is committed, it will remain so.
 
+## Initial sync
+
+Initial sync is the process of copying all data from a source to a target system. In MongoDB, this occurs when a new node joins a replica set, where it copies all databases, collections, and indexes from an existing member. In the context of Percona MongoLink (PML), initial sync is the first phase of data migration where all existing data is copied from the source cluster to the target cluster. Then PML applies the changes that occurred to data since the initial sync start.
+
 ## Isolation
 
 The Isolation requirement means that no transaction can interfere with another.
@@ -45,6 +53,18 @@ Percona Server for MongoDB is a drop-in replacement for MongoDB Community Editio
 ## Replica set
    
 A replica set is a group of `mongod` nodes that host the same data set.
+
+## Replication
+
+Replication is the process of synchronizing data across multiple database instances and database deployments to ensure availability, redundancy, and consistency. It allows changes in one database (or cluster) to be reflected in another.
+
+## Source
+
+A source deployment is where the data is copied during an initial sync and then replicated to a target.
+
+## Target 
+
+A target deployment is where the data is replicated to.
 
 ## Technical preview feature
 
