@@ -6,67 +6,51 @@ You can  {{pml.full_name}} either via the command-line interface or via the HTTP
 
 === "Command line"
 
-    ```sh
-    bin/percona-mongolink start
+    ```{.bash data-prompt="$"}
+    $ bin/percona-mongolink start
     ```
 
 === "HTTP API"
     
     Send a POST request to the `/start` endpoint with the desired options:
 
-    ```sh
-    curl -X POST http://localhost:2242/start -d '{
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/start -d '{
         "includeNamespaces": ["db1.collection1", "db2.collection2"],
         "excludeNamespaces": ["db3.collection3"]
     }'
-    ```
-
-## Finalize the replication
-
-=== "Command line"
-
-    ```sh
-    bin/percona-mongolink finalize
-    ```
-
-=== "HTTP API"
-    
-    Send a POST request to the `/finalize` endpoint:
-
-    ```sh
-    curl -X POST http://localhost:2242/finalize
     ```
 
 ## Pause the replication
 
 === "Command line"
 
-    ```sh
-    bin/percona-mongolink pause
+    ```{.bash data-prompt="$"}
+    $ bin/percona-mongolink pause
     ```
 
 === "HTTP API"
 
     Send a POST request to the `/pause` endpoint:
 
-    ```sh
-    curl -X POST http://localhost:2242/pause
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/pause
     ```
 
 ## Resume the replication
 
 === "Command line"
 
-    ```sh
-    bin/percona-mongolink resume
+    ```{.bash data-prompt="$"}
+    $ bin/percona-mongolink resume
     ```
 
 === "HTTP API"
 
     Send a POST request to the `/resume` endpoint:
 
-    ```sh
-    curl -X POST http://localhost:2242/resume
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/resume
     ```
 
 ## Check the replication status
@@ -75,14 +59,30 @@ Check the current status of the replication process.
 
 === "Command line"
 
-    ```sh
-    bin/percona-mongolink status
+    ```{.bash data-prompt="$"}
+    $ bin/percona-mongolink status
     ```
 
 === "HTTP API"
 
     Send a GET request to the `/status` endpoint:
 
-    ```sh
-    curl http://localhost:2242/status
+    ```{.bash data-prompt="$"}
+    $ curl http://localhost:2242/status
+    ```
+
+## Finalize the replication
+
+=== "Command line"
+
+    ```{.bash data-prompt="$"}
+    $ bin/percona-mongolink finalize
+    ```
+
+=== "HTTP API"
+    
+    Send a POST request to the `/finalize` endpoint:
+
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/finalize
     ```

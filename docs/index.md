@@ -12,9 +12,9 @@
 ## Features
 
 * **Data clone**: Transfer existing data from a source MongoDB to a target MongoDB deployment.
-* **Real-Time Replication**: {{pml.full_name}} uses MongoDB [change streams :octicons-external-link-16:](https://mongodb.com/docs/manual/changeStreams/) to track changes in your source cluster and replicate them to target in real time.
-* **Namespace Filtering**: Specify which databases and collections to include or exclude.
-* **Automatic Index Management**: Ensure necessary indexes are created on the target.
+* **Real-Time replication**: {{pml.full_name}} uses MongoDB [change streams :octicons-external-link-16:](https://mongodb.com/docs/manual/changeStreams/) to track changes in your source cluster and replicate them to target in real time.
+* **Namespace filtering**: Specify which databases and collections to include or exclude.
+* **Automatic index management**: Ensure necessary indexes are created on the target.
 * **API**: Start, finalize, pause, resume, and check replication status via HTTP endpoints.
 
 ## Why you need PML
