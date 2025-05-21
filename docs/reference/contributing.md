@@ -4,14 +4,13 @@ We're glad that you would like to become a Percona community member and particip
 
 There are many ways how you can contribute:
 
-* Submit bug reports or feature requests.
-* Submit a code patch.
-* Contribute to documentation.
+* [Submit bug reports or feature requests](#submit-bug-reports-or-feature-requests)
+* [Submit a code patch](#submit-a-code-patch)
+* [Contribute to documentation](#contribute-to-documentation)
 
 # Submit bug reports or feature requests
 
-If you find a bug in {{pml.full_name}}, you can submit a report to the [JIRA issue tracker](https://jira.percona.com/projects/PML)
-for {{pml.full_name}}.
+If you find a bug in {{pml.full_name}}, you can submit a report to the [JIRA issue tracker](https://jira.percona.com/projects/PML) for {{pml.full_name}}.
 
 Start by searching the open tickets for a similar report. If you find that
 someone else has already reported your problem, then you can upvote that report

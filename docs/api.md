@@ -4,7 +4,7 @@
 
 Starts the replication process.
 
-### Request Body
+### Request 
 
 - `includeNamespaces` (optional): List of namespaces to include in the replication.
 - `excludeNamespaces` (optional): List of namespaces to exclude from the replication.
@@ -12,10 +12,10 @@ Starts the replication process.
 Example:
 
 ```json
-{
+curl -X POST http://localhost:2242/start -d '{
     "includeNamespaces": ["dbName.*", "anotherDB.collName1", "anotherDB.collName2"],
     "excludeNamespaces": ["dbName.collName"]
-}
+}'
 ```
 
 ### Response
@@ -33,6 +33,14 @@ Example:
 
 Finalizes the replication process.
 
+### Request 
+
+Example:
+
+```json
+curl -X POST http://localhost:2242/finalize
+```
+
 ### Response
 
 - `ok`: Boolean indicating if the operation was successful.
@@ -44,9 +52,17 @@ Example:
 { "ok": true }
 ```
 
-### POST /pause
+## POST /pause
 
 Pauses the replication process.
+
+### Request 
+
+Example:
+
+```json
+curl -X POST http://localhost:2242/pause
+```
 
 ### Response
 
@@ -63,6 +79,14 @@ Example:
 
 Resumes the replication process.
 
+### Request
+
+Example:
+
+```json
+curl -X POST http://localhost:2242/resume
+```
+
 ### Response
 
 - `ok`: Boolean indicating if the operation was successful.
@@ -78,20 +102,25 @@ Example:
 
 The /status endpoint provides the current state of the MongoLink replication process, including its progress, lag, and event processing details.
 
+### Request
+
+Example:
+
+```json
+curl -X GET http://localhost:2242/status
+```
+
 ### Response
 
 - `ok`: indicates if the operation was successful.
 - `state`: the current state of the replication.
 - `info`: provides additional information about the current state.
 - `error` (optional): the error message if the operation failed.
-
 - `lagTime`: the current lag time in logical seconds between source and target clusters.
 - `eventsProcessed`: the number of events processed.
 - `lastReplicatedOpTime`: the last replicated operation time.
-
 - `initialSync.completed`: indicates if the initial sync is completed.
 - `initialSync.lagTime`: the lag time in logical seconds until the initial sync completed.
-
 - `initialSync.cloneCompleted`: indicates if the cloning process is completed.
 - `initialSync.estimatedCloneSize`: the estimated total size of the clone.
 - `initialSync.clonedSize`: the size of the data that has been cloned.

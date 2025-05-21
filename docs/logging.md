@@ -1,4 +1,4 @@
-# How to Log JSON Fields?
+# How to log JSON fields?
 
 When using the `--log-json` option, the logs will be output in JSON format with the following fields:
 

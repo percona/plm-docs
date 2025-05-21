@@ -1,72 +1,86 @@
 # Use {{pml.full_name}}
 
-You can  {{pml.full_name}} either via the command-line interface or via the HTTP REST API. Read more about [PML API](../api.md).
+{{pml.full_name}} doesn't automatically start data replication after the startup. It has the `idle` status indicating that it is ready to accept requests.
 
-## Start the Replication
+You can interact with {{pml.full_name}} using the command-line interface or via the HTTP API. Read more about [PML API](../api.md).
+
+## Start the replication
+
+Start the replication process between source and target clusters. PML starts copying the data from the source to the target. First it does the initial sync by cloning the data and then applying all the changes that happened since the clone start. 
+
+Then it uses the [change streams :octicons-link-external-16:](https://www.mongodb.com/docs/manual/changeStreams/) to track the changes to your data on the source and replicate them to the target.
 
 === "Command line"
 
-    ```sh
-    bin/percona-mongolink start
+    ```{.bash data-prompt="$"}
+    $ percona-mongolink start
     ```
+
+    ??? example "Expected output"
+
+        ```{.json .no-copy}
+        {
+          "ok": true
+        }
+        ```
 
 === "HTTP API"
     
-    Send a POST request to the `/start` endpoint with the desired options:
+    Send a POST request to the `/start` endpoint:
 
-    ```sh
-    curl -X POST http://localhost:2242/start -d '{
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/start 
+    ```
+
+## Start the filtered sync
+
+You can replicate the whole dataset or specific namespaces - databases and collections. You can specify what namespaces to include and/or exclude from the replication. Currently you can start the filtered sync only via the API. The ability to start it via the CLI will be added in future releases.
+
+=== "HTTP API"
+    
+    Send a POST request to the `/start` endpoint:
+
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/start -d '{
         "includeNamespaces": ["db1.collection1", "db2.collection2"],
         "excludeNamespaces": ["db3.collection3"]
     }'
     ```
 
-## Finalize the replication
-
-=== "Command line"
-
-    ```sh
-    bin/percona-mongolink finalize
-    ```
-
-=== "HTTP API"
-    
-    Send a POST request to the `/finalize` endpoint:
-
-    ```sh
-    curl -X POST http://localhost:2242/finalize
-    ```
-
 ## Pause the replication
 
+You can pause the replication at any moment. PML stops the replication, saves the timestamp and enters the `paused` state. PML uses the saved timestamp after you [resume the replication](#resume-the-replication).
+
 === "Command line"
 
-    ```sh
-    bin/percona-mongolink pause
+    ```{.bash data-prompt="$"}
+    $ percona-mongolink pause
     ```
 
 === "HTTP API"
 
     Send a POST request to the `/pause` endpoint:
 
-    ```sh
-    curl -X POST http://localhost:2242/pause
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/pause
     ```
 
 ## Resume the replication
 
+Resume the replication. PML changes the state to `running` and copies the changes that occurred to the data from the timestamp it saved when you paused the replication. Then it continues monitoring the data changes and replicating them real-time. 
+
 === "Command line"
 
-    ```sh
-    bin/percona-mongolink resume
+    ```{.bash data-prompt="$"}
+    $ percona-mongolink resume
     ```
 
 === "HTTP API"
 
     Send a POST request to the `/resume` endpoint:
 
-    ```sh
-    curl -X POST http://localhost:2242/resume
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/resume
     ```
 
 ## Check the replication status
@@ -75,14 +89,32 @@ Check the current status of the replication process.
 
 === "Command line"
 
-    ```sh
-    bin/percona-mongolink status
+    ```{.bash data-prompt="$"}
+    $ percona-mongolink status
     ```
 
 === "HTTP API"
 
     Send a GET request to the `/status` endpoint:
 
-    ```sh
-    curl http://localhost:2242/status
+    ```{.bash data-prompt="$"}
+    $ curl http://localhost:2242/status
+    ```
+
+# Finalize the replication
+
+When you no longer need / want to replicate data, finalize the replication. PML stops replication, creates the required indexes on the target, and stops. This is a one-time operation. You cannot restart the replicaton after you finalized it. If you run the `start` command, PML will start the replication anew, with the initial sync. 
+
+=== "Command line"
+
+    ```{.bash data-prompt="$"}
+    $ percona-mongolink finalize
+    ```
+
+=== "HTTP API"
+    
+    Send a POST request to the `/finalize` endpoint:
+
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/finalize
     ```
