@@ -1,13 +1,31 @@
-# How to use {{pml.full_name}} HTTP API?
+# {{pml.full_name}} HTTP API documentation
 
-## POST /start
+## Quick start guide
+
+To get started with {{pml.full_name}} API:
+
+1. Ensure the service is running on `http://localhost:2242`
+2. Use the `/start` endpoint to begin replication
+3. Monitor progress using the `/status` endpoint
+4. Use `/pause` and `/resume` to control the replication process
+5. Call `/finalize` when replication is complete
+
+## Authentication
+
+Currently, the API does not require authentication. However, it's recommended to run the service behind a reverse proxy with proper authentication in production environments.
+
+## API endpoints
+
+### POST /start
 
 Starts the replication process.
 
-### Request 
+#### Request 
 
-- `includeNamespaces` (optional): List of namespaces to include in the replication.
-- `excludeNamespaces` (optional): List of namespaces to exclude from the replication.
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `includeNamespaces` | string[] | No | List of namespaces to include in replication (e.g., ["db.*", "db.collection"]) |
+| `excludeNamespaces` | string[] | No | List of namespaces to exclude from replication |
 
 Example:
 
@@ -18,7 +36,7 @@ curl -X POST http://localhost:2242/start -d '{
 }'
 ```
 
-### Response
+#### Response
 
 - `ok`: Boolean indicating if the operation was successful.
 - `error` (optional): Error message if the operation failed.
@@ -29,11 +47,11 @@ Example:
 { "ok": true }
 ```
 
-## POST /finalize
+### POST /finalize
 
 Finalizes the replication process.
 
-### Request 
+#### Request 
 
 Example:
 
@@ -41,7 +59,7 @@ Example:
 curl -X POST http://localhost:2242/finalize
 ```
 
-### Response
+#### Response
 
 - `ok`: Boolean indicating if the operation was successful.
 - `error` (optional): Error message if the operation failed.
@@ -52,11 +70,11 @@ Example:
 { "ok": true }
 ```
 
-## POST /pause
+### POST /pause
 
 Pauses the replication process.
 
-### Request 
+#### Request 
 
 Example:
 
@@ -64,7 +82,7 @@ Example:
 curl -X POST http://localhost:2242/pause
 ```
 
-### Response
+#### Response
 
 - `ok`: Boolean indicating if the operation was successful.
 - `error` (optional): Error message if the operation failed.
@@ -75,11 +93,11 @@ Example:
 { "ok": true }
 ```
 
-## POST /resume
+### POST /resume
 
 Resumes the replication process.
 
-### Request
+#### Request
 
 Example:
 
@@ -87,7 +105,7 @@ Example:
 curl -X POST http://localhost:2242/resume
 ```
 
-### Response
+#### Response
 
 - `ok`: Boolean indicating if the operation was successful.
 - `error` (optional): Error message if the operation failed.
@@ -98,11 +116,11 @@ Example:
 { "ok": true }
 ```
 
-## GET /status
+### GET /status
 
 The /status endpoint provides the current state of the MongoLink replication process, including its progress, lag, and event processing details.
 
-### Request
+#### Request
 
 Example:
 
@@ -110,20 +128,25 @@ Example:
 curl -X GET http://localhost:2242/status
 ```
 
-### Response
+#### Response
 
-- `ok`: indicates if the operation was successful.
-- `state`: the current state of the replication.
-- `info`: provides additional information about the current state.
-- `error` (optional): the error message if the operation failed.
-- `lagTime`: the current lag time in logical seconds between source and target clusters.
-- `eventsProcessed`: the number of events processed.
-- `lastReplicatedOpTime`: the last replicated operation time.
-- `initialSync.completed`: indicates if the initial sync is completed.
-- `initialSync.lagTime`: the lag time in logical seconds until the initial sync completed.
-- `initialSync.cloneCompleted`: indicates if the cloning process is completed.
-- `initialSync.estimatedCloneSize`: the estimated total size of the clone.
-- `initialSync.clonedSize`: the size of the data that has been cloned.
+The following are response fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `ok` | boolean | Operation success status |
+| `state` | string | Current replication state |
+| `info` | string | Additional information about the current state|
+| `error`| string | (optional): The error message if the operation failed.
+| `lagTime` | number | Current lag time in logical seconds between source and target clusters. |
+| `eventsProcessed` | number | Total events processed |
+| `lastReplicatedOpTime` | string | The last replicated operation time.|
+| `initialSync.completed` | boolean | Initial sync completion status |
+| `initialSync.lagTime` | number | The lag time in logical seconds until the initial sync completed|
+| `initialSync.cloneCompleted` | boolean | Clone process completion status |
+| `initialSync.estimatedCloneSize` | number | Estimated total size to clone (bytes) |
+| `initialSync.clonedSize` | number | Current cloned size (bytes) |
+
 
 Example:
 
@@ -147,3 +170,22 @@ Example:
     }
 }
 ```
+
+## Error handling
+
+The API uses standard HTTP status codes and returns error messages in the following format:
+
+```json
+{
+    "ok": false,
+    "error": "Detailed error message"
+}
+```
+
+Common error scenarios:
+
+- 400 Bad Request: Invalid request parameters
+- 404 Not Found: Endpoint not found
+- 500 Internal Server Error: Server-side issues
+
+
