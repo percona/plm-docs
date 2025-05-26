@@ -4,6 +4,10 @@
 
 You can interact with {{pml.full_name}} using the command-line interface or via the HTTP API. Read more about [PML API](../api.md).
 
+## Before you start
+
+Your target MongoDB cluster may be empty or contain data. PML replicates data from the source to the target but doesn’t manage the target’s data. If the target already has the same data as the source, PML overwrites it. However, if the target contains different data, PML doesn't delete it during replication. This leads to inconsistencies between the source and target. To ensure consistency, manually delete any existing data from the target before starting replication.
+
 ## Start the replication
 
 Start the replication process between source and target clusters. PML starts copying the data from the source to the target. First it does the initial sync by cloning the data and then applying all the changes that happened since the clone start. 

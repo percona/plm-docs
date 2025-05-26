@@ -16,9 +16,17 @@ A blob stands for Binary Large Object, which includes objects such as images and
 
 A bucket is a container on the s3 remote storage that stores backups.
 
-## Clone
+## Change replication 
 
-A clone is the process of creating an exact copy of a database during initial sync. This process involves copying all databases and collections, including indexes, to ensure the target has an identical copy of the data from source. 
+An ongoing process of replicating modifications to collections, views, indexes, and documents after initial copying.
+
+## Clone changes catchup
+
+The process of applying changes that occurred during the cloning period to ensure consistency between source and target.
+
+## Cluster replication 
+
+The process of copying user data, collections, views, and indexes from a primary (source) cluster to a secondary (target) cluster. Initiated by POST /start command, it transitions PML status to running, and completes when the PML status becomes finalized.
 
 ## Collection
      
@@ -34,9 +42,17 @@ A container in Microsoft Azure Blob storage organizes a set of [blobs](#blob), s
 
 A container name must be a valid DNS name, as it forms part of the unique URI (Uniform resource identifier) used to address the container or its blobs. 
 
+## Data clone
+
+A base operation of copying collections, views, selected indexes, and documents. Produces inconsistent data without accompanying change replication.
+
 ## Durability
    
 Once a transaction is committed, it will remain so.
+
+## Finalization 
+
+A critical process that converts temporary changes into their original form from the source cluster, ensuring complete consistency.
 
 ## Initial sync
 
@@ -57,6 +73,14 @@ A replica set is a group of `mongod` nodes that host the same data set.
 ## Replication
 
 Replication is the process of synchronizing data across multiple database instances and database deployments to ensure availability, redundancy, and consistency. It allows changes in one database (or cluster) to be reflected in another.
+
+## Replication status 
+
+Indicators like idle, running, paused, failed, finalizing, and finalized that reflect the current state of replication.
+
+## Replication lag 
+
+Logical time difference between when a change occurs on the source cluster and when it's applied to the target cluster.
 
 ## Source
 

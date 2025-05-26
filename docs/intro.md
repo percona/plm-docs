@@ -19,7 +19,7 @@ Now, let's use the data migration from MongoDB Atlas to Percona Server for Mongo
 
 You run a MongoDB Atlas 8.0.8 deployed as a replica set. You need to migrate to Percona Server for MongoDB 8.0.8-3, also a replica set. You have a strict requirement to migrate with zero downtime; therefore, using PBM logical backups is a no-go. 
 
-A solution is to use Percona MongoLink. MongoDB Atlas is your source. A new, empty Percona Server for MongoDB  replica set is your target. Data migration is a resource-intensive task. Therefore, we recommend installing PML closest to the target to reduce the network lag as much as possible. 
+A solution is to use Percona MongoLink. MongoDB Atlas is your source. An empty Percona Server for MongoDB replica set is your target. Data migration is a resource-intensive task. Therefore, we recommend installing PML closest to the target to reduce the network lag as much as possible. 
 
 Create users for PML in both MongoDB deployments. Start and connect PML to your source and target using these user credentials. Now you are ready to start the migration.
 

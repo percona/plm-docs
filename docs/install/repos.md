@@ -18,7 +18,7 @@ To install the software from Percona repositories means to subscribe to them. Pe
 
 Check the [system requirements](../system-requirements.md) and [known limitations](../limitations.md).
 
-Data migration is a resource-intensive task. Therefore, we recommend installing PML closest to the target to reduce the network lag as much as possible.s
+Data migration is a resource-intensive task. Therefore, we recommend installing PML on the instance closest to the target to reduce the network lag as much as possible.s
 
 ## Procedure
 

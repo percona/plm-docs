@@ -1,6 +1,6 @@
-# {{pml.full_name}} parameters
+# Percona MongoLink startup configuration
 
-When starting the Percona MongoLink, you can use the following options:
+When [starting the `pml` process](start-pml.md), you can use the following options:
 
 - `--port`: The port on which the server will listen (default: 2242)
 - `--source`: The MongoDB connection string for the source cluster

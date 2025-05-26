@@ -164,13 +164,16 @@ nav:
         - Build from source: install/source.md
       - 2. Configure authentication: install/authentication.md
       - 3. Start PML: install/start-pml.md
-      - 4. Use PML: install/usage.md   
-  - install/parameters.md
-  - pml-commands.md
-  - PML API: api.md
-  - limitations.md
-  - logging.md
-  - troubleshooting.md
+      - install/parameters.md
+  - Use PML: 
+    - Use PML:install/usage.md   
+    - pml-commands.md
+    - api.md
+  - Troubleshooting and debugging:
+    - Known limitations: limitations.md
+    - troubleshooting.md
+    - logging.md
+  - pmm-setup.md
   - Release notes:
       - release-notes.md
   - Reference:
