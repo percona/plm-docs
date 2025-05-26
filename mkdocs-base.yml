@@ -155,6 +155,7 @@ nav:
   - About Percona MongoLink: 
      - How PML works: intro.md
      - compare.md
+     - deployment.md
   - Get started:
       - Quickstart: installation.md
       - System requirements: system-requirements.md
@@ -166,10 +167,10 @@ nav:
       - 4. Use PML: install/usage.md   
   - install/parameters.md
   - pml-commands.md
+  - PML API: api.md
   - limitations.md
-  - How to:
-    - Use PML API: api.md
-    - logging.md
+  - logging.md
+  - troubleshooting.md
   - Release notes:
       - release-notes.md
   - Reference:
