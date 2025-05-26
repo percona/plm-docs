@@ -17,11 +17,11 @@ To build {{pml.full_name}} from source, you need the following:
 Here's how to build {{pml.full_name}}:
 {.power-number}
 
-1. Clone the repository and change directory to `percona-mongolink`:
+1. Clone the repository and change directory to `pml`:
 
     ```{.bash data-prompt="$"}
-    $ git clone https://github.com/percona-lab/percona-mongolink.git
-    $ cd percona-mongolink
+    $ git clone https://github.com/percona-lab/pml.git
+    $ cd pml
     ```
 
 2. Build the project using the Makefile:
@@ -36,9 +36,9 @@ Here's how to build {{pml.full_name}}:
     $ go install .
     ```
 
-    This installs `percona-mongolink` into your `GOBIN` directory. 
+    This installs `pml` into your `GOBIN` directory. 
 
-3. Add `GOBIN` to your `PATH`. This makes `percona-mongolink` a global command in your terminal.
+3. Add `GOBIN` to your `PATH`. This makes `pml` a global command in your terminal.
 
 ## Next steps
 

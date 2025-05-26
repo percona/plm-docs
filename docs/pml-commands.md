@@ -22,7 +22,7 @@ These options are available for all commands:
 Display the current version of Percona MongoLink.
 
 ```{.bash data-prompt="$"$}
-$ percona-mongolink version
+$ pml version
 ```
 
 ### status
@@ -30,7 +30,7 @@ $ percona-mongolink version
 Get the status of the replication process.
 
 ```{.bash data-prompt="$"$}
-$ percona-mongolink status
+$ pml status
 ```
 
 ### start
@@ -38,7 +38,7 @@ $ percona-mongolink status
 Start cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ percona-mongolink start
+$ pml start
 ```
 
 
@@ -47,7 +47,7 @@ $ percona-mongolink start
 Finalize cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ percona-mongolink finalize
+$ pml finalize
 ```
 
 ### pause
@@ -55,7 +55,7 @@ $ percona-mongolink finalize
 Pause cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ percona-mongolink pause
+$ pml pause
 ```
 
 ### resume
@@ -63,6 +63,6 @@ $ percona-mongolink pause
 Resume cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ percona-mongolink resume
+$ pml resume
 ```
 

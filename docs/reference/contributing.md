@@ -41,7 +41,7 @@ the problem.
 
 ## Submit a code patch
 
-If you'd like to submit a code patch, follow the [Contributing guide in {{pml.short}} code repository](https://github.com/percona-lab/percona-mongolink/blob/main/README.md#contributing). 
+If you'd like to submit a code patch, follow the [Contributing guide in {{pml.short}} code repository](https://github.com/percona/pecrona-mongolink/blob/main/README.md#contributing). 
 
 ## Contribute to documentation
 

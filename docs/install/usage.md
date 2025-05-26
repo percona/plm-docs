@@ -13,7 +13,7 @@ Then it uses the [change streams :octicons-link-external-16:](https://www.mongod
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ percona-mongolink start
+    $ pml start
     ```
 
     ??? example "Expected output"
@@ -54,7 +54,7 @@ You can pause the replication at any moment. PML stops the replication, saves th
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ percona-mongolink pause
+    $ pml pause
     ```
 
 === "HTTP API"
@@ -72,7 +72,7 @@ Resume the replication. PML changes the state to `running` and copies the change
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ percona-mongolink resume
+    $ pml resume
     ```
 
 === "HTTP API"
@@ -90,7 +90,7 @@ Check the current status of the replication process.
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ percona-mongolink status
+    $ pml status
     ```
 
 === "HTTP API"
@@ -108,7 +108,7 @@ When you no longer need / want to replicate data, finalize the replication. PML 
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ percona-mongolink finalize
+    $ pml finalize
     ```
 
 === "HTTP API"

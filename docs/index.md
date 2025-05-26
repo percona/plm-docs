@@ -7,6 +7,7 @@
 
 --8<-- "pml-description.md"
 
+[Get started](installation.md){.md-button}
 [How {{pml.full_name}} works](intro.md){.md-button}
 
 ## Features

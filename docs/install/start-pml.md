@@ -4,26 +4,26 @@ Start {{pml.full_name}}.
 
 === ":material-console: Using `systemd`"
 
-    We recommend to use the packaged service scripts to run `percona-mongolink`.
+    We recommend to use the packaged service scripts to run `pml`.
     
     ```{.bash data-prompt="$"}
-    $ sudo systemctl start percona-mongolink
+    $ sudo systemctl start pml
     ```
 
     Check the status with this command:
 
     ```{.bash data-prompt="$"}
-    $ sudo systemctl status percona-mongolink
+    $ sudo systemctl status pml
     ```
 
 === ":fontawesome-solid-user-gear: Manually"
 
-    You can start `percona-mongolink` manually. This option is the way you start {{pml.full_name}} if you installed it [from source code](source.md) 
+    You can start PML manually. This option is the way you start {{pml.full_name}} if you installed it [from source code](source.md) 
 
     Run Percona MongoLink with the following command **if you haven't defined MongoDB connection string URI before**:
 
     ```{.bash data-prompt="$"}
-    percona-mongolink --source <source-mongodb-uri>--target <target-mongodb-uri>
+    pml --source <source-mongodb-uri>--target <target-mongodb-uri>
     ```
 
     Alternatively, you can use environment variables:
@@ -31,7 +31,7 @@ Start {{pml.full_name}}.
     ```{.bash data-prompt="$"}
     $ export SOURCE_URI=<source-mongodb-uri>
     $ export TARGET_URI=<target-mongodb-uri>
-    $ percona-mongolink 
+    $ pml 
     ```
 
 ## How to see {{pml.full_name}} logs
@@ -41,7 +41,7 @@ systemd’s default redirection to `systemd-journald`. You can view it with this
 command:
 
 ```{.bash data-prompt="$"}
-$ sudo journalctl -u percona-mongolink.service
+$ sudo journalctl -u pml.service
 ```
 
 See `man journalctl` for useful options such as `--lines`, `--follow`, etc.

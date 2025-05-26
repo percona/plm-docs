@@ -12,7 +12,7 @@ When starting the Percona MongoLink, you can use the following options:
 Example:
 
 ```{.bash data-prompt="$"}
-$ percona-mongolink \
+$ pml \
     --source <source-mongodb-uri> \
     --target <target-mongodb-uri> \
     --port 2242 \

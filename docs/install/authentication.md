@@ -42,8 +42,8 @@ To connect PML to source and target MongoDB clusters, specify the MongoDB Connec
 
 When you [install PML from repositories](repos.md), the environment file is created for you. You can find it at the following path:
 
-* for Debian and Ubuntu: `/etc/default/percona-mongolink`
-* for RHEL and derivatives: `/etc/sysconfig/percona-mongolink`
+* for Debian and Ubuntu: `/etc/default/pml`
+* for RHEL and derivatives: `/etc/sysconfig/pml`
 
 ### Example environment file 
 
