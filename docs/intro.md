@@ -33,14 +33,14 @@ You can track the migration status in logs and using the `status` command. When 
 
 Afterwards, you will only need to switch your clients to connect to Percona Server for MongoDB.
 
-## Filtered sync
+## Filtered replication
 
-You can sync the whole dataset or only specific subset of data. This is called a filtered sync. You can use it for various use cases. For example, to spin up a new development environment with a specific subset of data instead of the whole dataset. Or to optimize cloud storage costs for hybrid environments where your target MongoDB deployment runs in the cloud.
+You can replicate the whole dataset or only specific subset of data. This is called a filtered replication. You can use it for various use cases. For example, to spin up a new development environment with a specific subset of data instead of the whole dataset. Or to optimize cloud storage costs for hybrid environments where your target MongoDB deployment runs in the cloud.
 
-You specify what namespaces - databases and collections - to include and/or exclude from the sync. Note that a filtered sync is currently available via the API.
+Specify what namespaces - databases and collections - to include and/or exclude from the replication when you start it. Note that a filtered replication is currently available via the API.
 
 ## Next steps
 
-Ready to try it out? 
+Ready to try out PML? 
 
 [Quickstart](installation.md){.md-button}

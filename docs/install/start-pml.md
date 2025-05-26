@@ -23,7 +23,7 @@ Start {{pml.full_name}}.
     Run Percona MongoLink with the following command **if you haven't defined MongoDB connection string URI before**:
 
     ```{.bash data-prompt="$"}
-    pml --source <source-mongodb-uri>--target <target-mongodb-uri>
+    nohup pml --source <source-mongodb-uri> --target <target-mongodb-uri> --no-color > percona-mongolink.log 2>&1 &
     ```
 
     Alternatively, you can use environment variables:
@@ -31,7 +31,8 @@ Start {{pml.full_name}}.
     ```{.bash data-prompt="$"}
     $ export SOURCE_URI=<source-mongodb-uri>
     $ export TARGET_URI=<target-mongodb-uri>
-    $ pml 
+    $ nohup pml --no-color > percona-mongolink.log 2>&1 &
+ 
     ```
 
 ## How to see {{pml.full_name}} logs

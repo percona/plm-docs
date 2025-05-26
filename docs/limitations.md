@@ -22,7 +22,7 @@ This page lists known limitations for using Percona MongoLink
    | Percona Server for MongoDB | MongoDB Enterprise Advanced |
    | Percona Server for MongoDB | MongoDB Atlas |
 
-* Connections to hidden/delayed nodes are not supported because the [`applyOps`](https://www.mongodb.com/docs/upcoming/reference/command/applyOps/#mongodb-dbcommand-dbcmd.applyOps) command is not available on such nodes.
+* PML connects only to the primary node in the replica set. You cannot force connection to secondary members using the [directConnect]() option. This option is ignored.
 
 
 ## Data types
@@ -38,8 +38,8 @@ This page lists known limitations for using Percona MongoLink
 The following functionalities are not supported:
 
 * Multiple source or multiple target clusters 
-* Resumable initial synchronization 
+* You cannot resume initial synchronization if an issue occurred. You must start it from scratch.
 * Synchronization with a non-empty target cluster
 * Database upgrade during the sync, even in the paused state.
 * Reverse synchronization
-* LDAP authentication
+* External authentication via Kerberos, AWS and LDAP

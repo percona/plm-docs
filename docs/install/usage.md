@@ -32,9 +32,9 @@ Then it uses the [change streams :octicons-link-external-16:](https://www.mongod
     $ curl -X POST http://localhost:2242/start 
     ```
 
-## Start the filtered sync
+## Start the filtered replication
 
-You can replicate the whole dataset or specific namespaces - databases and collections. You can specify what namespaces to include and/or exclude from the replication. Currently you can start the filtered sync only via the API. The ability to start it via the CLI will be added in future releases.
+You can replicate the whole dataset or specific namespaces - databases and collections. You can specify what namespaces to include and/or exclude from the replication. Currently you can start the filtered replication only via the API. The ability to start it via the CLI will be added in future releases.
 
 === "HTTP API"
     
@@ -82,6 +82,25 @@ Resume the replication. PML changes the state to `running` and copies the change
     ```{.bash data-prompt="$"}
     $ curl -X POST http://localhost:2242/resume
     ```
+
+The replication may fail for some reason, like lost connectivity or the like. In this case you can resume replication by adding the `--from-failure` flag to the `resume` command:
+
+=== "Command line"
+
+    ```{.bash data-prompt="$"}
+    $ pml resume
+    ```
+
+=== "HTTP API"
+
+    Send a POST request to the `/resume` endpoint:
+
+    ```{.bash data-prompt="$"}
+    $ curl -X POST http://localhost:2242/resume -d '{
+        "fromFailure": true
+    }'
+    ```
+
 
 ## Check the replication status
 
