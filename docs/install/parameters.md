@@ -29,6 +29,6 @@ Alternatively, you can define the following environment variables:
 | `PML_SOURCE_URI` | MongoDB connection string for the source cluster | - |
 | `PML_TARGET_URI` | MongoDB connection string for the target cluster | - |
 | `PML_PORT` | Server port number | `2242` |
-| `PML_CLONE_NUM_PARALLEL_COLLECTIONS` | Number of collections cloned in parallel | `0` |
-| `PML_CLONE_NUM_READ_WORKERS` | Number of read workers for cloning | `0` |
-| `PML_CLONE_NUM_INSERT_WORKERS` | Number of insert workers for cloning | `0` |
+| `PML_CLONE_NUM_PARALLEL_COLLECTIONS` | Number of collections cloned in parallel | `2` |
+| `PML_CLONE_NUM_READ_WORKERS` | Number of read workers for cloning | `NumCPU / 4` |
+| `PML_CLONE_NUM_INSERT_WORKERS` | Number of insert workers for cloning | `NumCPU * 4` |
