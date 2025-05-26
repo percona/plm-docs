@@ -48,8 +48,8 @@ When you [install PML from repositories](repos.md), the environment file is crea
 ### Example environment file 
 
 ```{.text .no-copy}
-PML_SOURCE_URI=""mongodb://source:mys3cretpAssword@mysource1:27017,mysource2:27017,mysource3:27017/admin?readPreference=primary"
-PML_TARGET_URI=""mongodb://target:tops3cr3t@mytarget1:27017,mytarget2:27017,mytarget3:27017/admin?readPreference=primary"
+PML_SOURCE_URI="mongodb://source:mys3cretpAssword@mysource1:27017,mysource2:27017,mysource3:27017/"
+PML_TARGET_URI="mongodb://target:tops3cr3t@mytarget1:27017,mytarget2:27017,mytarget3:27017/"
 ```
 
 ### Passwords with special characters
