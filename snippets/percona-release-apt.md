@@ -1,6 +1,6 @@
 1. Install the `curl` download utility if it's not installed already:
 
-    ```{.bash data-prompt="$"}
+    ```{.bash .data-prompt="$"}
     $ sudo apt update
     $ sudo apt install curl 
     ```

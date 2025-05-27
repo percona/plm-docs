@@ -166,7 +166,7 @@ nav:
       - 3. Start PML: install/start-pml.md
       - install/parameters.md
   - Use PML: 
-    - Use PML:install/usage.md   
+    - Usage: install/usage.md   
     - pml-commands.md
     - api.md
   - Troubleshooting and debugging:
@@ -177,9 +177,10 @@ nav:
   - Release notes:
       - release-notes.md
   - Reference:
-      - "About Percona MongoLink documentation": about-docs.md 
-      - reference/glossary.md 
+      - Glossary: reference/glossary.md 
       - reference/contributing.md
+      - About documentation": about-docs.md 
+  - Legal:
       - Copyright and licensing: copyright.md
       - Trademark policy: trademark-policy.md 
 
