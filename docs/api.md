@@ -105,6 +105,14 @@ Example:
 curl -X POST http://localhost:2242/resume
 ```
 
+Resume from failure:
+
+```json
+curl -X POST http://localhost:2242/resume -d '{
+  "fromFailure": true
+}'
+```
+
 #### Response
 
 - `ok`: Boolean indicating if the operation was successful.

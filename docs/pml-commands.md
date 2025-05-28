@@ -43,13 +43,11 @@ $ pml start
 
 ### reset
 
-Resets the `pml` state and deletes the metadata collections from target deployment. To use this command you must first stop the `pml` service. Then, you must restart `pml` and start the data replication from scratch. Read more about the flow in [Troubleshooting guide](troubleshooting.md) 
+Resets the `pml` state and deletes the metadata collections from target deployment. After the command execution, you must restart the `pml` service and start the data replication from scratch. Read more about the flow in [Troubleshooting guide](troubleshooting.md) 
 
 ```{.bash data-prompt="$"$}
 pml reset --target
 ```
-
-
 
 ### finalize
 

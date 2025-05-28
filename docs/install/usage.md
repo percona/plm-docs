@@ -92,7 +92,7 @@ The replication may fail for some reason, like lost connectivity or the like. In
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ pml resume
+    $ pml resume --from-failure
     ```
 
 === "HTTP API"

@@ -20,7 +20,7 @@ Here's how to build {{pml.full_name}}:
 1. Clone the repository and change directory to `pml`:
 
     ```{.bash data-prompt="$"}
-    $ git clone https://github.com/percona-lab/pml.git
+    git clone https://github.com/percona/percona-mongolink.git
     $ cd pml
     ```
 

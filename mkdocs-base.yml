@@ -167,8 +167,8 @@ nav:
       - install/parameters.md
   - Use PML: 
     - Usage: install/usage.md   
-    - pml-commands.md
-    - api.md
+    - PML commands: pml-commands.md
+    - PML HTTP API: api.md
   - Troubleshooting and debugging:
     - Known limitations: limitations.md
     - troubleshooting.md
