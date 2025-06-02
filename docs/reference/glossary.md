@@ -16,9 +16,9 @@ A blob stands for Binary Large Object, which includes objects such as images and
 
 A bucket is a container on the s3 remote storage that stores backups.
 
-## Clone
+## Cloning
 
-A clone is the process of creating an exact copy of a database during initial sync. This process involves copying all databases and collections, including indexes, to ensure the target has an identical copy of the data from source. 
+Cloning is the process of creating an exact copy of a database during initial sync. This process involves copying all databases and collections, including indexes, to ensure the target has an identical copy of the data from source. 
 
 ## Collection
      

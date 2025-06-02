@@ -22,7 +22,6 @@ This page lists known limitations for using Percona MongoLink
    | Percona Server for MongoDB | MongoDB Enterprise Advanced |
    | Percona Server for MongoDB | MongoDB Atlas |
 
-* Connections to hidden/delayed nodes are not supported because the [`applyOps`](https://www.mongodb.com/docs/upcoming/reference/command/applyOps/#mongodb-dbcommand-dbcmd.applyOps) command is not available on such nodes.
 
 
 ## Data types

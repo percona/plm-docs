@@ -1,4 +1,4 @@
-# {{pml.full_name}} Parameters
+# {{pml.full_name}} parameters
 
 When starting the MongoLink server, you can use the following options:
 
