@@ -34,6 +34,7 @@ Then it uses the [change streams :octicons-link-external-16:](https://www.mongod
 
     ```{.bash data-prompt="$"}
     $ curl -X POST http://localhost:2242/start 
+
     ```
 
 ## Start the filtered replication

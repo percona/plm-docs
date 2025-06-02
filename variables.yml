@@ -4,6 +4,9 @@
 year: '2025'
 release: '0.5.0'
 
+date:
+   v0_5_0: '2025-06-04'
+
 pml:
   full_name: 'Percona MongoLink'
   short: 'PML'

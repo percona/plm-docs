@@ -13,6 +13,7 @@ This page lists known limitations for using Percona MongoLink
 * PML connects only to the primary node in the replica set. You cannot force connection to secondary members using the [directConnection :octicons-link-external-16:](https://www.mongodb.com/docs/manual/reference/connection-string/#connection-string-formats) option. This option is ignored.
 
 
+
 ## Data types
 
 * Queryable encryption is not supported
