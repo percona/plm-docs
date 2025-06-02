@@ -8,6 +8,6 @@
    | Source | Target |
    | --- | --- |
    | Percona Server for MongoDB | Percona Server for MongoDB |
-   | Percona Server for MongoDB | MongoDB Community |
-   | Percona Server for MongoDB | MongoDB Enterprise Advanced |
-   | Percona Server for MongoDB | MongoDB Atlas |
+   | MongoDB Community | Percona Server for MongoDB |
+   | MongoDB Enterprise Advanced | Percona Server for MongoDB |
+   | MongoDB Atlas | Percona Server for MongoDB |
