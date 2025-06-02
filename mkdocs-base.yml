@@ -138,16 +138,7 @@ plugins:
 # exclude: # Don't process these files
 #      glob:
 #         - file.md
-  with-pdf: # https://github.com/orzih/mkdocs-with-pdf
-          output_path: '_pdf/PerconaMongoLink.pdf'
-          cover_title: 'Percona MongoLink Documentation'
-          cover_subtitle: 1.0 (May 1, 2025)
-          author: 'Percona Technical Documentation Team'
-          cover_logo: docs/_images/Percona_Logo_Color.png
-          debug_html: false
-#          two_columns_level: 3
-          custom_template_path: _resource/templates
-          enabled_if_env: ENABLE_PDF_EXPORT
+
   mike:
       version_selector: true
       css_dir: css
@@ -164,25 +155,33 @@ nav:
   - About Percona MongoLink: 
      - How PML works: intro.md
      - compare.md
+     - deployment.md
   - Get started:
+      - Quickstart: installation.md
       - System requirements: system-requirements.md
-      - 1. Build from source: install/source.md
-      - 2. Configure authentication: install/setup.md
-      - 3. Use PML: install/usage.md 
-      - 4. Test PML: install/testing.md     
-  - install/parameters.md
-  - pml-commands.md
-  - limitations.md
-  - How to:
-    - Use PML API: api.md
+      - 1. Install:
+        - From repositories: install/repos.md
+        - Build from source: install/source.md
+      - 2. Configure authentication: install/authentication.md
+      - 3. Start PML: install/start-pml.md
+      - install/parameters.md
+  - Use PML: 
+    - Usage: install/usage.md   
+    - PML commands: pml-commands.md
+    - PML HTTP API: api.md
+  - Troubleshooting and debugging:
+    - Known limitations: limitations.md
+    - troubleshooting.md
     - logging.md
+  - pmm-setup.md
   - Release notes:
       - release-notes.md
       - 0.5.0: release-notes/0.5.0.md
   - Reference:
-      - "About Percona MongoLink documentation": about-docs.md 
-      - reference/glossary.md 
+      - Glossary: reference/glossary.md 
       - reference/contributing.md
+      - About documentation": about-docs.md 
+  - Legal:
       - Copyright and licensing: copyright.md
       - Trademark policy: trademark-policy.md 
 
