@@ -8,13 +8,15 @@ This guide helps you recover {{pml.full_name}} after an unexpected interruption,
 
 ### Symptoms
 
-After subsequently starting the service, you may see messages such as:
+After subsequently starting the service, you may see such messages:
 
-```{.text .n-copy}
-2025-06-02 21:25:38.927 INF Found Recovery Data. Recovering... s=recovery
-Error: new server: recover MongoLink: recover: cannot resume: replication is not started or not resuming from failure
-2025-06-02 21:25:38.929 FTL error="new server: recover MongoLink: recover: cannot resume: replication is not started or not resuming from failure"
-```
+??? example "Sample error messages"
+
+    ```{.text .no-copy}
+    2025-06-02 21:25:38.927 INF Found Recovery Data. Recovering... s=recovery
+    Error: new server: recover MongoLink: recover: cannot resume: replication is not started or not resuming from failure
+    2025-06-02 21:25:38.929 FTL error="new server: recover MongoLink: recover: cannot resume: replication is not started or not resuming from failure"
+    ```
 
 ### Recovery steps 
 

@@ -23,22 +23,22 @@ The destination cluster must have enough space to store both the full dataset an
 
 During the initial data clone, PML clones data and then applies oplog entries on top. You track the sync progress and fine-tune PML. Here's how:
 
-1. Extend the oplog window if the lag approaches its limit  
+### Extend the oplog window if the lag approaches its limit  
 
-   - Evaluate the oplog size required for initial data clone with the following command: 
+1. Evaluate the oplog size required for initial data clone with the following command: 
       
-      ```{.json data-prompt=">"}
-      > db.getReplicationInfo().timeDiff
-      ```
+    ```{.json data-prompt=">"}
+    > db.getReplicationInfo().timeDiff
+    ```
 
-      The value you get is the minimum oplog window, in seconds.
+    The value you get is the minimum oplog window, in seconds.
 
-   - Compare this value to the current sync lag using the `pml status` command and the `lagTime` field.  If the `lagTime` approaches the oplog window, extend the window using the `replSetResizeOplog` with a higher `minRetentionHours` value.
+2. Compare this value to the current sync lag using the `pml status` command and the `lagTime` field.  If the `lagTime` approaches the oplog window, extend the window using the `replSetResizeOplog` with a higher `minRetentionHours` value.
 
-2. Improve the sync performance to reduce lag  
+### Improve the sync performance to reduce lag  
 
-    If the oplog is large enough but the lag is still high, optimize performance by:
+If the oplog is large enough but the lag is still high, optimize performance by:
 
-    - Running PML closer to the destination to reduce network latency
-    - Increasing CPU and memory on PML host
-    - Using faster hardware on the destination to improve write performance
+- Running PML closer to the destination to reduce network latency
+- Increasing CPU and memory on PML host
+- Using faster hardware on the destination to improve write performance
