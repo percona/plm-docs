@@ -172,6 +172,7 @@ nav:
   - Troubleshooting and debugging:
     - Known limitations: limitations.md
     - troubleshooting.md
+    - oplog-sizing.md
     - logging.md
   - pmm-setup.md
   - FAQ: faq.md
