@@ -1,6 +1,6 @@
 # MkDocs configuration for builds with material theme
 
-site_name: Percona MongoLink
+site_name: Percona Link for MongoDB
 site_description: documentation
 site_author: Percona LLC
 copyright: >
@@ -152,7 +152,7 @@ not_in_nav: |
 nav:
   - Home: index.md
   - get-help.md
-  - About Percona MongoLink: 
+  - About Percona Link for MongoDB: 
      - How PML works: intro.md
      - compare.md
      - deployment.md

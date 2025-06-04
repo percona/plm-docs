@@ -1,4 +1,4 @@
-# Percona MongoLink startup configuration
+# Percona Link for MongoDB startup configuration
 
 When [starting the `pml` process](start-pml.md), you can use the following options:
 

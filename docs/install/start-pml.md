@@ -1,4 +1,4 @@
-# Start Percona MongoLink
+# Start Percona Link for MongoDB
 
 Start {{pml.full_name}}.
 
@@ -20,7 +20,7 @@ Start {{pml.full_name}}.
 
     You can start PML manually. This option is the way you start {{pml.full_name}} if you installed it [from source code](source.md) 
 
-    Run Percona MongoLink with the following command **if you haven't defined MongoDB connection string URI before**:
+    Run Percona Link for MongoDB with the following command **if you haven't defined MongoDB connection string URI before**:
 
     ```{.bash data-prompt="$"}
     $ nohup pml --source <source-mongodb-uri> --target <target-mongodb-uri> --no-color > percona-mongolink.log 2>&1 &
@@ -34,7 +34,7 @@ Start {{pml.full_name}}.
     $ nohup pml --no-color > percona-mongolink.log 2>&1 &
     ```
 
-See [Percona MongoLink startup configuration](parameters.md) for all available options.
+See [Percona Link for MongoDB startup configuration](parameters.md) for all available options.
 
 
 ## How to see {{pml.full_name}} logs

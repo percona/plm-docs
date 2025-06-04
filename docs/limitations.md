@@ -4,7 +4,7 @@ author: Radoslaw Szulgo
 ---
 # Known issues and limitations
 
-This page lists known limitations for using Percona MongoLink
+This page lists known limitations for using Percona Link for MongoDB
 
 ## Versions and topology
 

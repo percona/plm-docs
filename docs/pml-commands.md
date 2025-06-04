@@ -2,13 +2,13 @@
 
 ## Overview
 
-Percona MongoLink is a replication tool for MongoDB clusters. It provides commands to manage and monitor the replication process between source and target MongoDB clusters.
+Percona Link for MongoDB is a replication tool for MongoDB clusters. It provides commands to manage and monitor the replication process between source and target MongoDB clusters.
 
 ## Commands
 
 ### version
 
-Display the current version of Percona MongoLink.
+Display the current version of Percona Link for MongoDB.
 
 ```{.bash data-prompt="$"$}
 $ pml version

@@ -1,10 +1,10 @@
 # Contributing guide
 
-Welcome to Percona MongoLink documentation!
+Welcome to Percona Link for MongoDB documentation!
 
 We're glad that you would like to become a Percona community member and participate in keeping open source open.  
 
-Percona MongoLink is a tool for replicating data from a source MongoDB cluster to a target MongoDB cluster. It supports cloning data, replicating changes, and managing collections and indexes.
+Percona Link for MongoDB is a tool for replicating data from a source MongoDB cluster to a target MongoDB cluster. It supports cloning data, replicating changes, and managing collections and indexes.
 
 This repository contains the source file for PML documentation and this document explains how you can contribute to it. 
 

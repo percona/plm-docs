@@ -54,7 +54,7 @@ PML_TARGET_URI="mongodb://target:tops3cr3t@mytarget1:27017,mytarget2:27017,mytar
 
 ### Passwords with special characters
 
-If the password includes special characters like `#`, `@`, `/` and so on, you must convert these characters using the [percent-encoding mechanism](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1) when passing them to Percona MongoLink. For example, the password `secret#pwd` should be passed as `secret%23pwd`.
+If the password includes special characters like `#`, `@`, `/` and so on, you must convert these characters using the [percent-encoding mechanism](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1) when passing them to Percona Link for MongoDB. For example, the password `secret#pwd` should be passed as `secret%23pwd`.
 
 ### MongoDB connection string options
 

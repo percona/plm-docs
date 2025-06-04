@@ -56,7 +56,7 @@ A critical process that converts temporary changes into their original form from
 
 ## Initial sync
 
-Initial sync is the process of copying all data from a source to a target system. In MongoDB, this occurs when a new node joins a replica set, where it copies all databases, collections, and indexes from an existing member. In the context of Percona MongoLink (PML), initial sync is the first phase of data migration where all existing data is copied from the source cluster to the target cluster. Then PML applies the changes that occurred to data since the initial sync start.
+Initial sync is the process of copying all data from a source to a target system. In MongoDB, this occurs when a new node joins a replica set, where it copies all databases, collections, and indexes from an existing member. In the context of Percona Link for MongoDB (PML), initial sync is the first phase of data migration where all existing data is copied from the source cluster to the target cluster. Then PML applies the changes that occurred to data since the initial sync start.
 
 ## Isolation
 

@@ -1,6 +1,6 @@
-# Oplog sizing for Percona MongoLink
+# Oplog sizing for Percona Link for MongoDB
 
-Percona MongoLink synchronizes data between MongoDB replica sets using change streams. For the sync to complete successfully, the required operations must remain in the source's oplog until they are applied. If operations expire from the oplog before being processed, the sync will fail.
+Percona Link for MongoDB synchronizes data between MongoDB replica sets using change streams. For the sync to complete successfully, the required operations must remain in the source's oplog until they are applied. If operations expire from the oplog before being processed, the sync will fail.
 
 ## Source cluster oplog requirements
 
