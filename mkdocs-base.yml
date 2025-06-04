@@ -153,7 +153,7 @@ nav:
   - Home: index.md
   - get-help.md
   - About Percona Link for MongoDB: 
-     - How PML works: intro.md
+     - How PLM works: intro.md
      - compare.md
      - deployment.md
   - Get started:
@@ -163,12 +163,12 @@ nav:
         - From repositories: install/repos.md
         - Build from source: install/source.md
       - 2. Configure authentication: install/authentication.md
-      - 3. Start PML: install/start-pml.md
+      - 3. Start PLM: install/start-plm.md
       - install/parameters.md
-  - Use PML: 
+  - Use PLM: 
     - Usage: install/usage.md   
-    - PML commands: pml-commands.md
-    - PML HTTP API: api.md
+    - PLM commands: plm-commands.md
+    - PLM HTTP API: api.md
   - Troubleshooting and debugging:
     - Known limitations: limitations.md
     - troubleshooting.md

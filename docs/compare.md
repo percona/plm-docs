@@ -12,4 +12,4 @@ Percona Software for MongoDB offers a variety of tools for different purposes. B
 | [File-copy-based initial sync in Percona Server for MongoDB Pro](https://docs.percona.com/percona-server-for-mongodb/8.0/psmdb-pro.html)| Replica set data synchronization | - Scaling Percona Server for MongoDB deployments<br>- Make a faster initial sync for new replica set members |
 -->
 
-[Supported MongoDB deployments for PML :material-arrow-right:](deployment.md){.md-button}
+[Supported MongoDB deployments for PLM :material-arrow-right:](deployment.md){.md-button}

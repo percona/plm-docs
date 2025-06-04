@@ -1,23 +1,23 @@
-# Use {{pml.full_name}}
+# Use {{PLM.full_name}}
 
-{{pml.full_name}} doesn't automatically start data replication after the startup. It has the `idle` status indicating that it is ready to accept requests.
+{{PLM.full_name}} doesn't automatically start data replication after the startup. It has the `idle` status indicating that it is ready to accept requests.
 
-You can interact with {{pml.full_name}} using the command-line interface or via the HTTP API. Read more about [PML API](../api.md).
+You can interact with {{PLM.full_name}} using the command-line interface or via the HTTP API. Read more about [PLM API](../api.md).
 
 ## Before you start
 
-Your target MongoDB cluster may be empty or contain data. PML replicates data from the source to the target but doesn’t manage the target’s data. If the target already has the same data as the source, PML overwrites it. However, if the target contains different data, PML doesn't delete it during replication. This leads to inconsistencies between the source and target. To ensure consistency, manually delete any existing data from the target before starting replication.
+Your target MongoDB cluster may be empty or contain data. PLM replicates data from the source to the target but doesn’t manage the target’s data. If the target already has the same data as the source, PLM overwrites it. However, if the target contains different data, PLM doesn't delete it during replication. This leads to inconsistencies between the source and target. To ensure consistency, manually delete any existing data from the target before starting replication.
 
 ## Start the replication
 
-Start the replication process between source and target clusters. PML starts copying the data from the source to the target. First it does the initial sync by cloning the data and then applying all the changes that happened since the clone start. 
+Start the replication process between source and target clusters. PLM starts copying the data from the source to the target. First it does the initial sync by cloning the data and then applying all the changes that happened since the clone start. 
 
 Then it uses the [change streams :octicons-link-external-16:](https://www.mongodb.com/docs/manual/changeStreams/) to track the changes to your data on the source and replicate them to the target.
 
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ pml start
+    $ PLM start
     ```
 
     ??? example "Expected output"
@@ -54,12 +54,12 @@ You can replicate the whole dataset or specific namespaces - databases and colle
 
 ## Pause the replication
 
-You can pause the replication at any moment. PML stops the replication, saves the timestamp and enters the `paused` state. PML uses the saved timestamp after you [resume the replication](#resume-the-replication).
+You can pause the replication at any moment. PLM stops the replication, saves the timestamp and enters the `paused` state. PLM uses the saved timestamp after you [resume the replication](#resume-the-replication).
 
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ pml pause
+    $ PLM pause
     ```
 
 === "HTTP API"
@@ -72,12 +72,12 @@ You can pause the replication at any moment. PML stops the replication, saves th
 
 ## Resume the replication
 
-Resume the replication. PML changes the state to `running` and copies the changes that occurred to the data from the timestamp it saved when you paused the replication. Then it continues monitoring the data changes and replicating them real-time. 
+Resume the replication. PLM changes the state to `running` and copies the changes that occurred to the data from the timestamp it saved when you paused the replication. Then it continues monitoring the data changes and replicating them real-time. 
 
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ pml resume
+    $ PLM resume
     ```
 
 === "HTTP API"
@@ -93,7 +93,7 @@ The replication may fail for some reason, like lost connectivity or the like. In
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ pml resume --from-failure
+    $ PLM resume --from-failure
     ```
 
 === "HTTP API"
@@ -114,7 +114,7 @@ Check the current status of the replication process.
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ pml status
+    $ PLM status
     ```
 
 === "HTTP API"
@@ -127,12 +127,12 @@ Check the current status of the replication process.
 
 # Finalize the replication
 
-When you no longer need / want to replicate data, finalize the replication. PML stops replication, creates the required indexes on the target, and stops. This is a one-time operation. You cannot restart the replicaton after you finalized it. If you run the `start` command, PML will start the replication anew, with the initial sync. 
+When you no longer need / want to replicate data, finalize the replication. PLM stops replication, creates the required indexes on the target, and stops. This is a one-time operation. You cannot restart the replicaton after you finalized it. If you run the `start` command, PLM will start the replication anew, with the initial sync. 
 
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ pml finalize
+    $ PLM finalize
     ```
 
 === "HTTP API"

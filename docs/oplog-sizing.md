@@ -4,7 +4,7 @@ Percona Link for MongoDB synchronizes data between MongoDB replica sets using ch
 
 ## Source cluster oplog requirements
 
-After the initial data copy, PML applies ongoing changes using the oplog from the source cluster. If the oplog window is too short, PML may fall behind and lose access to required changes. To avoid this, increase the oplog retention window using the `replSetResizeOplog` command.
+After the initial data copy, PLM applies ongoing changes using the oplog from the source cluster. If the oplog window is too short, PLM may fall behind and lose access to required changes. To avoid this, increase the oplog retention window using the `replSetResizeOplog` command.
 
 This is especially important when:
 
@@ -21,7 +21,7 @@ The destination cluster must have enough space to store both the full dataset an
 
 ## Track the data sync progress
 
-During the initial data clone, PML clones data and then applies oplog entries on top. You track the sync progress and fine-tune PML. Here's how:
+During the initial data clone, PLM clones data and then applies oplog entries on top. You track the sync progress and fine-tune PLM. Here's how:
 
 ### Extend the oplog window if the lag approaches its limit  
 
@@ -33,12 +33,12 @@ During the initial data clone, PML clones data and then applies oplog entries on
 
     The value you get is the minimum oplog window, in seconds.
 
-2. Compare this value to the current sync lag using the `pml status` command and the `lagTime` field.  If the `lagTime` approaches the oplog window, extend the window using the `replSetResizeOplog` with a higher `minRetentionHours` value.
+2. Compare this value to the current sync lag using the `PLM status` command and the `lagTime` field.  If the `lagTime` approaches the oplog window, extend the window using the `replSetResizeOplog` with a higher `minRetentionHours` value.
 
 ### Improve the sync performance to reduce lag  
 
 If the oplog is large enough but the lag is still high, optimize performance by:
 
-- Running PML closer to the destination to reduce network latency
-- Increasing CPU and memory on PML host
+- Running PLM closer to the destination to reduce network latency
+- Increasing CPU and memory on PLM host
 - Using faster hardware on the destination to improve write performance

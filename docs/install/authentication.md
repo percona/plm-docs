@@ -1,6 +1,6 @@
 # Configure authentication in MongoDB
 
-{{pml.full_name}} uses the authentication and authorization subsystem of MongoDB. This means that to authenticate {{pml.full_name}}, you need to:
+{{PLM.full_name}} uses the authentication and authorization subsystem of MongoDB. This means that to authenticate {{PLM.full_name}}, you need to:
 
 * [Create users in source and target cluster](#create-users)
 * [Set a valid MongoDB connection string URI for source and target cluster](#set-mongodb-connection-string-uri)
@@ -32,24 +32,24 @@ You need to create users in both source and target clusters. You will use these 
 
 ## Set MongoDB connection string URI
 
-{{pml.full_name}} authenticates in source and target clusters using the MongoDB Connection string URI. It has the following format:
+{{PLM.full_name}} authenticates in source and target clusters using the MongoDB Connection string URI. It has the following format:
 
 ```
 mongodb://user:pwd@host1:port1,host2:port2,host3:port3/[authdb]?[options]
 ```
 
-To connect PML to source and target MongoDB clusters, specify the MongoDB Connection string URI for the `PML_SOURCE_URI` and `PML_TARGET_URI` environment variables in its environment file. 
+To connect PLM to source and target MongoDB clusters, specify the MongoDB Connection string URI for the `PLM_SOURCE_URI` and `PLM_TARGET_URI` environment variables in its environment file. 
 
-When you [install PML from repositories](repos.md), the environment file is created for you. You can find it at the following path:
+When you [install PLM from repositories](repos.md), the environment file is created for you. You can find it at the following path:
 
-* for Debian and Ubuntu: `/etc/default/pml`
-* for RHEL and derivatives: `/etc/sysconfig/pml`
+* for Debian and Ubuntu: `/etc/default/PLM`
+* for RHEL and derivatives: `/etc/sysconfig/PLM`
 
 ### Example environment file 
 
 ```{.text .no-copy}
-PML_SOURCE_URI="mongodb://source:mys3cretpAssword@mysource1:27017,mysource2:27017,mysource3:27017/"
-PML_TARGET_URI="mongodb://target:tops3cr3t@mytarget1:27017,mytarget2:27017,mytarget3:27017/"
+PLM_SOURCE_URI="mongodb://source:mys3cretpAssword@mysource1:27017,mysource2:27017,mysource3:27017/"
+PLM_TARGET_URI="mongodb://target:tops3cr3t@mytarget1:27017,mytarget2:27017,mytarget3:27017/"
 ```
 
 ### Passwords with special characters
@@ -60,7 +60,7 @@ If the password includes special characters like `#`, `@`, `/` and so on, you mu
 
 You can pass additional connection options to the MongoDB connection string. The string of options begins with the question mark (`?`).
 
-{{pml.full_name}} accepts the following authentication and TLS-related options:
+{{PLM.full_name}} accepts the following authentication and TLS-related options:
 
 | Option | Description |
 |--------|-------------|
@@ -81,4 +81,4 @@ You can pass additional connection options to the MongoDB connection string. The
 
 ## Next steps 
 
-[Start PML :material-arrow-right: ](start-pml.md){.md-button}
+[Start PLM :material-arrow-right: ](start-PLM.md){.md-button}

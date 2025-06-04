@@ -1,8 +1,8 @@
-# {{pml.full_name}} HTTP API documentation
+# {{plm.full_name}} HTTP API documentation
 
 ## Quick start guide
 
-To get started with {{pml.full_name}} API:
+To get started with {{plm.full_name}} API:
 
 1. Ensure the service is running on `http://localhost:2242`
 2. Use the `/start` endpoint to begin replication

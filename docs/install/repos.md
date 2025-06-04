@@ -1,10 +1,10 @@
-# Install {{pml.full_name}} from Percona repositories
+# Install {{PLM.full_name}} from Percona repositories
 
-To install the software from Percona repositories means to subscribe to them. Percona provides the [`percona-release` :octicons-link-external-16:](https://www.percona.com/doc/percona-repo-config/index.html) repository management tool. It automatically enables the required repository so that you can install and update both {{pml.full_name}} packages and required dependencies smoothly.
+To install the software from Percona repositories means to subscribe to them. Percona provides the [`percona-release` :octicons-link-external-16:](https://www.percona.com/doc/percona-repo-config/index.html) repository management tool. It automatically enables the required repository so that you can install and update both {{PLM.full_name}} packages and required dependencies smoothly.
 
 ## Supported operating systems
 
-{{pml.full_name}} is available on the following operating systems:
+{{PLM.full_name}} is available on the following operating systems:
 
 * Debian 11
 * Debian 12
@@ -18,7 +18,7 @@ To install the software from Percona repositories means to subscribe to them. Pe
 
 Check the [system requirements](../system-requirements.md) and [known limitations](../limitations.md).
 
-Data migration is a resource-intensive task. Therefore, we recommend installing PML on the instance closest to the target to reduce the network lag as much as possible.s
+Data migration is a resource-intensive task. Therefore, we recommend installing PLM on the instance closest to the target to reduce the network lag as much as possible.s
 
 ## Procedure
 
@@ -33,7 +33,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
     2. Enable the repository    
 
         ```{.bash data-prompt="$"}
-        $ sudo percona-release enable pml release
+        $ sudo percona-release enable PLM release
         ```
 
     3. Install the package:
@@ -51,7 +51,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
     2. Enable the repository    
 
         ```{.bash data-prompt="$"}
-        $ sudo percona-release enable pml release
+        $ sudo percona-release enable PLM release
         ```  
 
     3. Install the package:
@@ -69,7 +69,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
     2. Enable the repository    
 
         ```{.bash data-prompt="$"}
-        $ sudo percona-release enable pml release
+        $ sudo percona-release enable PLM release
         ```  
 
     3. Install the package:
@@ -78,7 +78,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
         $ sudo yum install percona-mongolink
         ``` 
     
-Congratulations! You have successfully installed {{pml.full_name}}. Now you must connect it to source and target MongoDB deployments.
+Congratulations! You have successfully installed {{PLM.full_name}}. Now you must connect it to source and target MongoDB deployments.
 
 ## Next steps
 

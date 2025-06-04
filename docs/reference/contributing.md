@@ -10,7 +10,7 @@ There are many ways how you can contribute:
 
 # Submit bug reports or feature requests
 
-If you find a bug in {{pml.full_name}}, you can submit a report to the [JIRA issue tracker](https://jira.percona.com/projects/PML) for {{pml.full_name}}.
+If you find a bug in {{PLM.full_name}}, you can submit a report to the [JIRA issue tracker](https://jira.percona.com/projects/PLM) for {{PLM.full_name}}.
 
 Start by searching the open tickets for a similar report. If you find that
 someone else has already reported your problem, then you can upvote that report
@@ -19,7 +19,7 @@ to increase its visibility.
 If there is no existing report, submit a report following these steps:
 
 
-1. Sign in to [JIRA issue tracker](https://jira.percona.com/projects/PML). You will need to create an account if you do not have one.
+1. Sign in to [JIRA issue tracker](https://jira.percona.com/projects/PLM). You will need to create an account if you do not have one.
 
 2. In the *Summary*, *Description*, *Steps To Reproduce*, *Affects Version* fields
 describe the problem you have detected. 
@@ -41,7 +41,7 @@ the problem.
 
 ## Submit a code patch
 
-If you'd like to submit a code patch, follow the [Contributing guide in {{pml.short}} code repository](https://github.com/percona/pecrona-mongolink/blob/main/README.md#contributing). 
+If you'd like to submit a code patch, follow the [Contributing guide in {{PLM.short}} code repository](https://github.com/percona/pecrona-mongolink/blob/main/README.md#contributing). 
 
 ## Contribute to documentation
 
@@ -62,4 +62,4 @@ If you'd like to submit a code patch, follow the [Contributing guide in {{pml.sh
 
 ### Edit documentation locally
 
-If you wish to have full control over the documentation process, follow the [Contributing to documentation guide](https://github.com/Percona-Lab/pml-docs/blob/main/CONTRIBUTING.md).
+If you wish to have full control over the documentation process, follow the [Contributing to documentation guide](https://github.com/Percona-Lab/PLM-docs/blob/main/CONTRIBUTING.md).
