@@ -23,7 +23,7 @@ Start {{PLM.full_name}}.
     Run Percona Link for MongoDB with the following command **if you haven't defined MongoDB connection string URI before**:
 
     ```{.bash data-prompt="$"}
-    $ nohup PLM --source <source-mongodb-uri> --target <target-mongodb-uri> --no-color > percona-mongolink.log 2>&1 &
+    $ nohup PLM --source <source-mongodb-uri> --target <target-mongodb-uri> --no-color > percona-link-mongodb.log 2>&1 &
     ```
 
     Alternatively, you can use environment variables:
@@ -31,7 +31,7 @@ Start {{PLM.full_name}}.
     ```{.bash data-prompt="$"}
     $ export SOURCE_URI=<source-mongodb-uri>
     $ export TARGET_URI=<target-mongodb-uri>
-    $ nohup PLM --no-color > percona-mongolink.log 2>&1 &
+    $ nohup PLM --no-color > percona-link-mongodb.log 2>&1 &
     ```
 
 See [Percona Link for MongoDB startup configuration](parameters.md) for all available options.

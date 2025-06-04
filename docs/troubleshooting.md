@@ -14,8 +14,8 @@ After subsequently starting the service, you may see such messages:
 
     ```{.text .no-copy}
     2025-06-02 21:25:38.927 INF Found Recovery Data. Recovering... s=recovery
-    Error: new server: recover MongoLink: recover: cannot resume: replication is not started or not resuming from failure
-    2025-06-02 21:25:38.929 FTL error="new server: recover MongoLink: recover: cannot resume: replication is not started or not resuming from failure"
+    Error: new server: recover Percona Link for MongoDB: recover: cannot resume: replication is not started or not resuming from failure
+    2025-06-02 21:25:38.929 FTL error="new server: recover Percona Link for MongoDB: recover: cannot resume: replication is not started or not resuming from failure"
     ```
 
 ### Recovery steps 
@@ -64,7 +64,7 @@ If PLM exits abnormally or is stopped unexpectedly, restart the `PLM` service. T
 ??? example "Example logs"
 
     ```{.text .no-copy}
-    2025-06-02 21:32:04.592 INF Starting Cluster Replication s=mongolink
+    2025-06-02 21:32:04.592 INF Starting Cluster Replication s=plm
     2025-06-02 21:32:04.592 DBG Change Replication is resuming s=repl
     2025-06-02 21:32:04.592 INF Change Replication resumed op_ts=[1748887947,1] s=repl
     2025-06-02 21:32:04.594 DBG Checkpoint saved s=checkpointing
