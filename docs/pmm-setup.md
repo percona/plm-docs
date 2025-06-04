@@ -43,7 +43,7 @@ PMM Server and PMM Client are installed separately.
 To enable metrics collection, add PLM as an external service to PMM server, Run the following command:
 
 ```{.bash data-prompt="$"}
-$ pmm-admin add external --service-name=PLM_test --listen-port=2242 --metrics-path=metrics --scheme=http
+$ pmm-admin add external --service-name=plm_test --listen-port=2242 --metrics-path=metrics --scheme=http
 ```
 
 ??? example "Expected output"
@@ -51,7 +51,7 @@ $ pmm-admin add external --service-name=PLM_test --listen-port=2242 --metrics-pa
     ```{.text .no-copy}
     External Service added.
     Service ID  : 0b3460d9-4173-4ff8-adcd-105883a4ef56
-    Service name: PLM_test
+    Service name: plm_test
     Group       : external
     ```
 

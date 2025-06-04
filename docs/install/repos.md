@@ -1,6 +1,6 @@
 # Install {{plm.full_name}} from Percona repositories
 
-To install the software from Percona repositories means to subscribe to them. Percona provides the [`percona-release` :octicons-link-external-16:](https://www.percona.com/doc/percona-repo-config/index.html) repository management tool. It automatically enables the required repository so that you can install and update both {{PLM.full_name}} packages and required dependencies smoothly.
+To install the software from Percona repositories means to subscribe to them. Percona provides the [`percona-release` :octicons-link-external-16:](https://www.percona.com/doc/percona-repo-config/index.html) repository management tool. It automatically enables the required repository so that you can install and update both {{plm.full_name}} packages and required dependencies smoothly.
 
 ## Supported operating systems
 
@@ -33,7 +33,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
     2. Enable the repository    
 
         ```{.bash data-prompt="$"}
-        $ sudo percona-release enable PLM release
+        $ sudo percona-release enable plm release
         ```
 
     3. Install the package:
@@ -51,7 +51,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
     2. Enable the repository    
 
         ```{.bash data-prompt="$"}
-        $ sudo percona-release enable PLM release
+        $ sudo percona-release enable plm release
         ```  
 
     3. Install the package:
