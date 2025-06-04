@@ -50,7 +50,7 @@ $ sudo journalctl -u pml.service
 See `man journalctl` for useful options such as `--lines`, `--follow`, etc.
 
 
-If you started `pbm-agent` manually, see the file you redirected `stdout` and `stderr` to.
+If you started `pml` manually, see the file you redirected `stdout` and `stderr` to.
 
 
 ## Next steps

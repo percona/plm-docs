@@ -4,17 +4,6 @@
 
 Percona MongoLink is a replication tool for MongoDB clusters. It provides commands to manage and monitor the replication process between source and target MongoDB clusters.
 
-## Global options
-
-These options are available for all commands:
-
-| Option | Description | Default | Environment Variable |
-|--------|-------------|---------|----------------------|
-| `--log-level` | Set the logging level | `info` | - |
-| `--log-json` | Output logs in JSON format | `false` | - |
-| `--no-color` | Disable colored log output | `false` | - |
-| `--port` | Server port number | `2242` | `PML_PORT` |
-
 ## Commands
 
 ### version
@@ -46,7 +35,7 @@ $ pml start
 Resets the `pml` state and deletes the metadata collections from target deployment. After the command execution, you must restart the `pml` service and start the data replication from scratch. Read more about the flow in [Troubleshooting guide](troubleshooting.md) 
 
 ```{.bash data-prompt="$"$}
-pml reset --target
+$ pml reset --target
 ```
 
 ### finalize
@@ -73,3 +62,8 @@ Resume cluster replication.
 $ pml resume
 ```
 
+Available flags:
+
+| Name | Description|
+| -----| -----------|
+| `--from-failure` | Resume replication from the last failure point |
