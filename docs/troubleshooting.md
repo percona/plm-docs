@@ -4,7 +4,7 @@ This guide helps you recover {{pml.full_name}} after an unexpected interruption,
 
 ## Recover {{pml.full_name}} during initial data clone
 
-{{pml.full_name}} can interrupt because of various reasons. For example, it is restarted, abnormally exits or loses connection to the source or destination cluster for an extended time. 
+{{pml.full_name}} can interrupt because of various reasons. For example, it is restarted, abnormally exits or loses connection to the source or destination cluster for an extended time. In any of these cases you must restart the initial data clone.
 
 ### Symptoms
 
