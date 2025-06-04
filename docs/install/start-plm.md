@@ -1,29 +1,29 @@
 # Start Percona Link for MongoDB
 
-Start {{PLM.full_name}}.
+Start {{plm.full_name}}.
 
 === ":material-console: Using `systemd`"
 
-    We recommend to use the packaged service scripts to run `PLM`.
+    We recommend to use the packaged service scripts to run `plm`.
     
     ```{.bash data-prompt="$"}
-    $ sudo systemctl start PLM
+    $ sudo systemctl start plm
     ```
 
     Check the status with this command:
 
     ```{.bash data-prompt="$"}
-    $ sudo systemctl status PLM
+    $ sudo systemctl status plm
     ```
 
 === ":fontawesome-solid-user-gear: Manually"
 
-    You can start PLM manually. This option is the way you start {{PLM.full_name}} if you installed it [from source code](source.md) 
+    You can start PLM manually. This option is the way you start {{plm.full_name}} if you installed it [from source code](source.md) 
 
     Run Percona Link for MongoDB with the following command **if you haven't defined MongoDB connection string URI before**:
 
     ```{.bash data-prompt="$"}
-    $ nohup PLM --source <source-mongodb-uri> --target <target-mongodb-uri> --no-color > percona-link-mongodb.log 2>&1 &
+    $ nohup plm --source <source-mongodb-uri> --target <target-mongodb-uri> --no-color > percona-link-mongodb.log 2>&1 &
     ```
 
     Alternatively, you can use environment variables:
@@ -31,30 +31,30 @@ Start {{PLM.full_name}}.
     ```{.bash data-prompt="$"}
     $ export SOURCE_URI=<source-mongodb-uri>
     $ export TARGET_URI=<target-mongodb-uri>
-    $ nohup PLM --no-color > percona-link-mongodb.log 2>&1 &
+    $ nohup plm --no-color > percona-link-mongodb.log 2>&1 &
     ```
 
 See [Percona Link for MongoDB startup configuration](parameters.md) for all available options.
 
 
-## How to see {{PLM.full_name}} logs
+## How to see {{plm.full_name}} logs
 
 With the packaged `systemd` service, the log output to `stdout` is captured by
 systemd’s default redirection to `systemd-journald`. You can view it with this
 command:
 
 ```{.bash data-prompt="$"}
-$ sudo journalctl -u PLM.service
+$ sudo journalctl -u plm.service
 ```
 
 See `man journalctl` for useful options such as `--lines`, `--follow`, etc.
 
 
-If you started `PLM` manually, see the file you redirected `stdout` and `stderr` to.
+If you started `plm` manually, see the file you redirected `stdout` and `stderr` to.
 
 
 ## Next steps
 
 Congratulations! you have successfully installed and connected PLM to your source and target MongoDB. Now you have it up and running and you are ready to use it.
 
-[Use {{PLM.full_name}} :material-arrow-right:](usage.md){.md-button}
+[Use {{plm.full_name}} :material-arrow-right:](usage.md){.md-button}

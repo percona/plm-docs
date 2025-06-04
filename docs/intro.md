@@ -1,8 +1,8 @@
-# How {{PLM.full_name}} works
+# How {{plm.full_name}} works
 
-{{PLM.full_name}} is a binary process that replicates data between MongoDB deployments in real time until you manually finalize it. You can also make a one-time data migration from the source to the target with zero downtime. 
+{{plm.full_name}} is a binary process that replicates data between MongoDB deployments in real time until you manually finalize it. You can also make a one-time data migration from the source to the target with zero downtime. 
 
-You operate with {{PLM.full_name}} using the [set of commands](PLM-commands.md) or [API calls](api.md). Depending on the request it receives, {{PLM.full_name}} has several states as shown in the following diagram:
+You operate with {{plm.full_name}} using the [set of commands](plm-commands.md) or [API calls](api.md). Depending on the request it receives, {{plm.full_name}} has several states as shown in the following diagram:
 
 ![PLM states](_images/state-transition-flow.jpg)
 

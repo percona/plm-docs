@@ -1,6 +1,6 @@
 # Percona Link for MongoDB startup configuration
 
-When [starting the `PLM` process](start-PLM.md), you can use the following options:
+When [starting the `plm` process](start-plm.md), you can use the following options:
 
 - `--port`: The port on which the server will listen (default: 2242)
 - `--source`: The MongoDB connection string for the source cluster
@@ -12,7 +12,7 @@ When [starting the `PLM` process](start-PLM.md), you can use the following optio
 Example:
 
 ```{.bash data-prompt="$"}
-$ PLM \
+$ plm \
     --source <source-mongodb-uri> \
     --target <target-mongodb-uri> \
     --port 2242 \

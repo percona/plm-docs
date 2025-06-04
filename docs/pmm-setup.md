@@ -1,12 +1,12 @@
 # Set up observability with Percona Monitoring and Management
 
-{{PLM.full_name}} exports Prometheus metrics enabling you to monitor the replication performance including the number of processed events, data transfer sizes, document counts, and batch processing times. These metrics are available at the `/metrics` endpoint. 
+{{plm.full_name}} exports Prometheus metrics enabling you to monitor the replication performance including the number of processed events, data transfer sizes, document counts, and batch processing times. These metrics are available at the `/metrics` endpoint. 
 
 [Available metrics](#available-metrics){.md-button}
 
 You can use any monitoring tool of your choice to collect and analyze these metrics. We recommend and provide instructions for setting up observability with [Percona Monitoring and Management (PMM)](https://docs.percona.com/percona-monitoring-and-management/3/index.html).
 
-{{PLM.full_name}} is natively integrated with PMM for automated monitoring of replication performance with data visualization on dashboards. This comprehensive monitoring helps you optimize replication performance and quickly identify any potential issues during the replication process.
+{{plm.full_name}} is natively integrated with PMM for automated monitoring of replication performance with data visualization on dashboards. This comprehensive monitoring helps you optimize replication performance and quickly identify any potential issues during the replication process.
 
 PMM is the server-client solution. The PMM Client collects the metrics and sends them to the PMM Server. PMM Server displays these metrics on dashboards in a user-friendly way.
 
@@ -19,7 +19,7 @@ PMM Server and PMM Client are installed separately.
 
 ## Install PMM Client
 
-1. You must install PMM Client on the same instance where {{PLM.full_name}} is running. Refer to the [installation instructions :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-client/index.html) suitable for your deployment
+1. You must install PMM Client on the same instance where {{plm.full_name}} is running. Refer to the [installation instructions :octicons-link-external-16:](https://docs.percona.com/percona-monitoring-and-management/3/install-pmm/install-pmm-client/index.html) suitable for your deployment
 2. Register the client node in PMM Server. Replace the `admin:admin` with your PMM Server credentials and the `X.X.X.X` with the PMM Server IP address in the following command:
    
     ```{.bash data-prompt="$"}
@@ -590,7 +590,7 @@ To view PLM metrics, configure a dashboard in PMM Server. Here's how:
                       "options": {
                         "mode": "exclude",
                         "names": [
-                          "PLM"
+                          "plm"
                         ],
                         "prefix": "All except:",
                         "readOnly": true
@@ -636,7 +636,7 @@ To view PLM metrics, configure a dashboard in PMM Server. Here's how:
                   },
                   "editorMode": "code",
                   "exemplar": false,
-                  "expr": "rate(round(go_goroutines{node_name=\"PLM\"}[1m]))",
+                  "expr": "rate(round(go_goroutines{node_name=\"plm\"}[1m]))",
                   "instant": false,
                   "legendFormat": "{{node_name}}",
                   "range": true,
@@ -712,7 +712,7 @@ To view PLM metrics, configure a dashboard in PMM Server. Here's how:
                       "options": {
                         "mode": "exclude",
                         "names": [
-                          "PLM"
+                          "plm"
                         ],
                         "prefix": "All except:",
                         "readOnly": true
@@ -758,7 +758,7 @@ To view PLM metrics, configure a dashboard in PMM Server. Here's how:
                   },
                   "editorMode": "code",
                   "exemplar": false,
-                  "expr": "rate(round(go_threads{node_name=\"PLM\"}[1m]))",
+                  "expr": "rate(round(go_threads{node_name=\"plm\"}[1m]))",
                   "instant": false,
                   "legendFormat": "{{node_name}}",
                   "range": true,
@@ -835,7 +835,7 @@ To view PLM metrics, configure a dashboard in PMM Server. Here's how:
                       "options": {
                         "mode": "exclude",
                         "names": [
-                          "PLM"
+                          "plm"
                         ],
                         "prefix": "All except:",
                         "readOnly": true
@@ -881,7 +881,7 @@ To view PLM metrics, configure a dashboard in PMM Server. Here's how:
                   },
                   "editorMode": "code",
                   "exemplar": false,
-                  "expr": "go_memstats_alloc_bytes{node_name=\"PLM\"} / 1024 / 1024",
+                  "expr": "go_memstats_alloc_bytes{node_name=\"plm\"} / 1024 / 1024",
                   "instant": false,
                   "legendFormat": "{{node_name}}",
                   "range": true,

@@ -1,6 +1,6 @@
 # FAQ
 
-## What are the typical use cases for {{PLM.full_name}}?
+## What are the typical use cases for {{plm.full_name}}?
 
 {{plm.full_name}} is a data migration tool that you can use for various use cases. Among them are:
 

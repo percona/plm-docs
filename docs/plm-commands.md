@@ -1,4 +1,4 @@
-# {{PLM.full_name}} commands
+# {{plm.full_name}} commands
 
 ## Overview
 
@@ -11,7 +11,7 @@ Percona Link for MongoDB is a replication tool for MongoDB clusters. It provides
 Display the current version of Percona Link for MongoDB.
 
 ```{.bash data-prompt="$"$}
-$ PLM version
+$ plm version
 ```
 
 ### status
@@ -19,7 +19,7 @@ $ PLM version
 Get the status of the replication process.
 
 ```{.bash data-prompt="$"$}
-$ PLM status
+$ plm status
 ```
 
 ### start
@@ -27,7 +27,7 @@ $ PLM status
 Start cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ PLM start
+$ plm start
 ```
 
 ### reset
@@ -35,7 +35,7 @@ $ PLM start
 Resets the `PLM` state and deletes the metadata collections from target deployment. After the command execution, you must restart the `PLM` service and start the data replication from scratch. Read more about the flow in [Troubleshooting guide](troubleshooting.md) 
 
 ```{.bash data-prompt="$"$}
-$ PLM reset --target
+$ plm reset --target
 ```
 
 ### finalize
@@ -43,7 +43,7 @@ $ PLM reset --target
 Finalize cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ PLM finalize
+$ plm finalize
 ```
 
 ### pause
@@ -51,7 +51,7 @@ $ PLM finalize
 Pause cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ PLM pause
+$ plm pause
 ```
 
 ### resume
@@ -59,7 +59,7 @@ $ PLM pause
 Resume cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ PLM resume
+$ plm resume
 ```
 
 Available flags:

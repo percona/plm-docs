@@ -1,6 +1,6 @@
 # Configure authentication in MongoDB
 
-{{PLM.full_name}} uses the authentication and authorization subsystem of MongoDB. This means that to authenticate {{PLM.full_name}}, you need to:
+{{plm.full_name}} uses the authentication and authorization subsystem of MongoDB. This means that to authenticate {{plm.full_name}}, you need to:
 
 * [Create users in source and target cluster](#create-users)
 * [Set a valid MongoDB connection string URI for source and target cluster](#set-mongodb-connection-string-uri)
@@ -32,7 +32,7 @@ You need to create users in both source and target clusters. You will use these 
 
 ## Set MongoDB connection string URI
 
-{{PLM.full_name}} authenticates in source and target clusters using the MongoDB Connection string URI. It has the following format:
+{{plm.full_name}} authenticates in source and target clusters using the MongoDB Connection string URI. It has the following format:
 
 ```
 mongodb://user:pwd@host1:port1,host2:port2,host3:port3/[authdb]?[options]
@@ -42,8 +42,8 @@ To connect PLM to source and target MongoDB clusters, specify the MongoDB Connec
 
 When you [install PLM from repositories](repos.md), the environment file is created for you. You can find it at the following path:
 
-* for Debian and Ubuntu: `/etc/default/PLM`
-* for RHEL and derivatives: `/etc/sysconfig/PLM`
+* for Debian and Ubuntu: `/etc/default/plm`
+* for RHEL and derivatives: `/etc/sysconfig/plm`
 
 ### Example environment file 
 
@@ -60,7 +60,7 @@ If the password includes special characters like `#`, `@`, `/` and so on, you mu
 
 You can pass additional connection options to the MongoDB connection string. The string of options begins with the question mark (`?`).
 
-{{PLM.full_name}} accepts the following authentication and TLS-related options:
+{{plm.full_name}} accepts the following authentication and TLS-related options:
 
 | Option | Description |
 |--------|-------------|
@@ -81,4 +81,4 @@ You can pass additional connection options to the MongoDB connection string. The
 
 ## Next steps 
 
-[Start PLM :material-arrow-right: ](start-PLM.md){.md-button}
+[Start PLM :material-arrow-right: ](start-plm.md){.md-button}

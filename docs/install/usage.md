@@ -1,8 +1,8 @@
-# Use {{PLM.full_name}}
+# Use {{plm.full_name}}
 
-{{PLM.full_name}} doesn't automatically start data replication after the startup. It has the `idle` status indicating that it is ready to accept requests.
+{{plm.full_name}} doesn't automatically start data replication after the startup. It has the `idle` status indicating that it is ready to accept requests.
 
-You can interact with {{PLM.full_name}} using the command-line interface or via the HTTP API. Read more about [PLM API](../api.md).
+You can interact with {{plm.full_name}} using the command-line interface or via the HTTP API. Read more about [PLM API](../api.md).
 
 ## Before you start
 
@@ -17,7 +17,7 @@ Then it uses the [change streams :octicons-link-external-16:](https://www.mongod
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ PLM start
+    $ plm start
     ```
 
     ??? example "Expected output"
@@ -59,7 +59,7 @@ You can pause the replication at any moment. PLM stops the replication, saves th
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ PLM pause
+    $ plm pause
     ```
 
 === "HTTP API"
@@ -77,7 +77,7 @@ Resume the replication. PLM changes the state to `running` and copies the change
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ PLM resume
+    $ plm resume
     ```
 
 === "HTTP API"
@@ -93,7 +93,7 @@ The replication may fail for some reason, like lost connectivity or the like. In
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ PLM resume --from-failure
+    $ plm resume --from-failure
     ```
 
 === "HTTP API"
@@ -114,7 +114,7 @@ Check the current status of the replication process.
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ PLM status
+    $ plm status
     ```
 
 === "HTTP API"
@@ -132,7 +132,7 @@ When you no longer need / want to replicate data, finalize the replication. PLM 
 === "Command line"
 
     ```{.bash data-prompt="$"}
-    $ PLM finalize
+    $ plm finalize
     ```
 
 === "HTTP API"

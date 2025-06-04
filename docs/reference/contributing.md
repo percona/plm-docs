@@ -10,7 +10,7 @@ There are many ways how you can contribute:
 
 # Submit bug reports or feature requests
 
-If you find a bug in {{PLM.full_name}}, you can submit a report to the [JIRA issue tracker](https://jira.percona.com/projects/PLM) for {{PLM.full_name}}.
+If you find a bug in {{plm.full_name}}, you can submit a report to the [JIRA issue tracker](https://jira.percona.com/projects/PLM) for {{plm.full_name}}.
 
 Start by searching the open tickets for a similar report. If you find that
 someone else has already reported your problem, then you can upvote that report
@@ -41,7 +41,7 @@ the problem.
 
 ## Submit a code patch
 
-If you'd like to submit a code patch, follow the [Contributing guide in {{PLM.short}} code repository](https://github.com/percona/percona-link-mongodb/blob/main/README.md#contributing). 
+If you'd like to submit a code patch, follow the [Contributing guide in {{plm.short}} code repository](https://github.com/percona/percona-link-mongodb/blob/main/README.md#contributing). 
 
 ## Contribute to documentation
 
@@ -62,4 +62,4 @@ If you'd like to submit a code patch, follow the [Contributing guide in {{PLM.sh
 
 ### Edit documentation locally
 
-If you wish to have full control over the documentation process, follow the [Contributing to documentation guide](https://github.com/Percona-Lab/PLM-docs/blob/main/CONTRIBUTING.md).
+If you wish to have full control over the documentation process, follow the [Contributing to documentation guide](https://github.com/Percona-Lab/plm-docs/blob/main/CONTRIBUTING.md).
