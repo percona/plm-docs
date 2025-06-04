@@ -39,7 +39,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
     3. Install the package:
 
         ```{.bash data-prompt="$"}
-        $ sudo apt install percona-mongolink
+        $ sudo apt install percona-link-mongodb
         ```
 
 === ":material-redhat: On RHEL and derivatives" 
@@ -57,7 +57,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
     3. Install the package:
 
         ```{.bash data-prompt="$"}
-        $ sudo yum install percona-mongolink
+        $ sudo yum install percona-link-mongodb
         ``` 
 
 === ":simple-amazon: On Amazon Linux 2023" 
@@ -75,7 +75,7 @@ Data migration is a resource-intensive task. Therefore, we recommend installing 
     3. Install the package:
 
         ```{.bash data-prompt="$"}
-        $ sudo yum install percona-mongolink
+        $ sudo yum install percona-link-mongodb
         ``` 
     
 Congratulations! You have successfully installed {{PLM.full_name}}. Now you must connect it to source and target MongoDB deployments.

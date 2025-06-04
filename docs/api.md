@@ -126,7 +126,7 @@ Example:
 
 ### GET /status
 
-The /status endpoint provides the current state of the MongoLink replication process, including its progress, lag, and event processing details.
+The /status endpoint provides the current state of the Percona Link for MongoDB replication process, including its progress, lag, and event processing details.
 
 #### Request
 

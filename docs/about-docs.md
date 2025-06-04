@@ -10,7 +10,7 @@ To track feature changes, an additional version indication is added where a feat
 
 ## Report an issue or request a change
 
-To report an issue with the documentation, leave your feedback using the widget at the bottom of the page or open a ticket in [{{plm.full_name}} Jira project :octicons-link-external-16:](https://perconadev.atlassian.net/jira/software/c/projects/PML/issues).
+To report an issue with the documentation, leave your feedback using the widget at the bottom of the page or open a ticket in [{{plm.full_name}} Jira project :octicons-link-external-16:](https://perconadev.atlassian.net/jira/software/c/projects/PLM/issues).
 
 ## How to contribute
 

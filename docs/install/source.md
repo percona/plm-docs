@@ -20,7 +20,7 @@ Here's how to build {{PLM.full_name}}:
 1. Clone the repository and change directory to `PLM`:
 
     ```{.bash data-prompt="$"}
-    git clone https://github.com/percona/percona-mongolink.git
+    git clone https://github.com/percona/percona-link-mongodb.git
     $ cd PLM
     ```
 
@@ -30,7 +30,7 @@ Here's how to build {{PLM.full_name}}:
     $ make build
     ```
 
-    Alternatively, you can install MongoLink from the cloned repo using `go install`:
+    Alternatively, you can install {{PLM.short}} from the cloned repo using `go install`:
 
     ```{.bash data-prompt="$"}
     $ go install .

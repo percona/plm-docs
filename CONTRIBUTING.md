@@ -8,7 +8,7 @@ Percona Link for MongoDB is a tool for replicating data from a source MongoDB cl
 
 This repository contains the source file for PLM documentation and this document explains how you can contribute to it. 
 
-If you'd like to submit a PLM code patch, follow the [Contributing section in PLM's code repository](https://github.com/percona/percona-mongolink/blob/main/README.md#contributing). 
+If you'd like to submit a PLM code patch, follow the [Contributing section in PLM's code repository](https://github.com/percona/percona-link-mongodb/blob/main/README.md#contributing). 
 
 ## Contributing to documentation
 
