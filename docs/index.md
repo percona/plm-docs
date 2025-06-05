@@ -7,8 +7,8 @@
 
 --8<-- "plm-description.md"
 
-[Get started](installation.md){.md-button}
-[How {{plm.full_name}} works](intro.md){.md-button}
+[Get started :material-arrow-right:](installation.md){.md-button}
+[How {{plm.full_name}} works :material-arrow-right:](intro.md){.md-button}
 
 ## Features
 
