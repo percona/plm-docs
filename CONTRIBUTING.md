@@ -1,14 +1,14 @@
 # Contributing guide
 
-Welcome to Percona MongoLink documentation!
+Welcome to Percona Link for MongoDB documentation!
 
 We're glad that you would like to become a Percona community member and participate in keeping open source open.  
 
-Percona MongoLink is a tool for replicating data from a source MongoDB cluster to a target MongoDB cluster. It supports cloning data, replicating changes, and managing collections and indexes.
+Percona Link for MongoDB is a tool for replicating data from a source MongoDB cluster to a target MongoDB cluster. It supports cloning data, replicating changes, and managing collections and indexes.
 
-This repository contains the source file for PML documentation and this document explains how you can contribute to it. 
+This repository contains the source file for PLM documentation and this document explains how you can contribute to it. 
 
-If you'd like to submit a PML code patch, follow the [Contributing section in PML's code repository](https://github.com/percona/percona-mongolink/blob/main/README.md#contributing). 
+If you'd like to submit a PLM code patch, follow the [Contributing section in PLM's code repository](https://github.com/percona/percona-link-mongodb/blob/main/README.md#contributing). 
 
 ## Contributing to documentation
 
@@ -44,13 +44,13 @@ The steps are the following:
 2. Clone the repository on your machine:
 
 ```sh
-git clone git@github.com:<your_name>/pml-docs.git
+git clone git@github.com:<your_name>/plm-docs.git
 ```
 
 3. Change the directory to ``pbm-docs`` and add the remote upstream repository:
 
 ```sh
-git remote add upstream git@github.com:percona-lab/pml-docs.git
+git remote add upstream git@github.com:percona-lab/plm-docs.git
 ```
 
 4. Pull the latest changes from upstream

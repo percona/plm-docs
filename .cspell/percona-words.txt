@@ -2,7 +2,7 @@ Percona
 PMM
 PBM
 PSMDB
-PML
+PLM
 MongoDB
 mongos
 mongosh

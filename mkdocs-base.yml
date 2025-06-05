@@ -1,13 +1,13 @@
 # MkDocs configuration for builds with material theme
 
-site_name: Percona MongoLink
+site_name: Percona Link for MongoDB
 site_description: documentation
 site_author: Percona LLC
 copyright: >
   <a href="https://www.percona.com/about">Percona LLC</a> and/or its affiliates © 2024 
   — <a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')">Cookie Preferences</a>
-repo_name: percona-lab/pml-docs
-repo_url: https://github.com/percona-lab/pml-docs
+repo_name: percona-lab/plm-docs
+repo_url: https://github.com/percona-lab/plm-docs
 edit_uri: edit/main/docs/
 
 use_directory_urls: false
@@ -152,8 +152,8 @@ not_in_nav: |
 nav:
   - Home: index.md
   - get-help.md
-  - About Percona MongoLink: 
-     - How PML works: intro.md
+  - About Percona Link for MongoDB: 
+     - How PLM works: intro.md
      - compare.md
      - deployment.md
   - Get started:
@@ -163,12 +163,12 @@ nav:
         - From repositories: install/repos.md
         - Build from source: install/source.md
       - 2. Configure authentication: install/authentication.md
-      - 3. Start PML: install/start-pml.md
+      - 3. Start PLM: install/start-plm.md
       - install/parameters.md
-  - Use PML: 
+  - Use PLM: 
     - Usage: install/usage.md   
-    - PML commands: pml-commands.md
-    - PML HTTP API: api.md
+    - PLM commands: plm-commands.md
+    - PLM HTTP API: api.md
   - Troubleshooting and debugging:
     - Known limitations: limitations.md
     - troubleshooting.md

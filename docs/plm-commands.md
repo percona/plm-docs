@@ -1,17 +1,17 @@
-# {{pml.full_name}} commands
+# {{plm.full_name}} commands
 
 ## Overview
 
-Percona MongoLink is a replication tool for MongoDB clusters. It provides commands to manage and monitor the replication process between source and target MongoDB clusters.
+Percona Link for MongoDB is a replication tool for MongoDB clusters. It provides commands to manage and monitor the replication process between source and target MongoDB clusters.
 
 ## Commands
 
 ### version
 
-Display the current version of Percona MongoLink.
+Display the current version of Percona Link for MongoDB.
 
 ```{.bash data-prompt="$"$}
-$ pml version
+$ plm version
 ```
 
 ### status
@@ -19,7 +19,7 @@ $ pml version
 Get the status of the replication process.
 
 ```{.bash data-prompt="$"$}
-$ pml status
+$ plm status
 ```
 
 ### start
@@ -27,15 +27,15 @@ $ pml status
 Start cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ pml start
+$ plm start
 ```
 
 ### reset
 
-Resets the `pml` state and deletes the metadata collections from target deployment. After the command execution, you must restart the `pml` service and start the data replication from scratch. Read more about the flow in [Troubleshooting guide](troubleshooting.md) 
+Resets the `PLM` state and deletes the metadata collections from target deployment. After the command execution, you must restart the `PLM` service and start the data replication from scratch. Read more about the flow in [Troubleshooting guide](troubleshooting.md) 
 
 ```{.bash data-prompt="$"$}
-$ pml reset --target
+$ plm reset --target
 ```
 
 ### finalize
@@ -43,7 +43,7 @@ $ pml reset --target
 Finalize cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ pml finalize
+$ plm finalize
 ```
 
 ### pause
@@ -51,7 +51,7 @@ $ pml finalize
 Pause cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ pml pause
+$ plm pause
 ```
 
 ### resume
@@ -59,7 +59,7 @@ $ pml pause
 Resume cluster replication.
 
 ```{.bash data-prompt="$"$}
-$ pml resume
+$ plm resume
 ```
 
 Available flags:
