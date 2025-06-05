@@ -180,7 +180,7 @@ To view PML metrics, configure a dashboard in PMM Server. Here's how:
                   },
                   "disableTextWrap": false,
                   "editorMode": "code",
-                  "expr": "rate(percona_mongolink_events_processed_total[1m])",
+                  "expr": "rate(percona_link_mongodb_events_processed_total[1m])",
                   "fullMetaSearch": false,
                   "includeNullMetadata": true,
                   "instant": false,
@@ -279,7 +279,7 @@ To view PML metrics, configure a dashboard in PMM Server. Here's how:
                     "uid": "PA58DA793C7250F1B"
                   },
                   "editorMode": "code",
-                  "expr": "percona_mongolink_lag_time_seconds",
+                  "expr": "percona_link_mongodb_lag_time_seconds",
                   "instant": false,
                   "legendFormat": "Lag Time",
                   "range": true,
@@ -389,7 +389,7 @@ To view PML metrics, configure a dashboard in PMM Server. Here's how:
                   },
                   "disableTextWrap": false,
                   "editorMode": "code",
-                  "expr": "percona_mongolink_copied_total_size_bytes_total / 1024 / 1024",
+                  "expr": "percona_link_mongodb_copied_total_size_bytes_total / 1024 / 1024",
                   "fullMetaSearch": false,
                   "includeNullMetadata": true,
                   "instant": false,
@@ -404,7 +404,7 @@ To view PML metrics, configure a dashboard in PMM Server. Here's how:
                     "uid": "PA58DA793C7250F1B"
                   },
                   "editorMode": "code",
-                  "expr": "percona_mongolink_estimated_total_size_bytes  / 1024 / 1024",
+                  "expr": "percona_link_mongodb_estimated_total_size_bytes  / 1024 / 1024",
                   "hide": false,
                   "instant": false,
                   "legendFormat": "Estimated Total Size",
@@ -501,7 +501,7 @@ To view PML metrics, configure a dashboard in PMM Server. Here's how:
                     "uid": "PA58DA793C7250F1B"
                   },
                   "editorMode": "code",
-                  "expr": "percona_mongolink_initial_sync_lag_time_seconds",
+                  "expr": "percona_link_mongodb_initial_sync_lag_time_seconds",
                   "instant": false,
                   "legendFormat": "Lag time",
                   "range": true,
@@ -904,7 +904,7 @@ To view PML metrics, configure a dashboard in PMM Server. Here's how:
           },
           "timepicker": {},
           "timezone": "browser",
-          "title": "Percona-MongoLink",
+          "title": "Percona Link for MongoDB",
           "uid": "aegcuit193shse",
           "version": 8,
           "weekStart": ""
@@ -915,17 +915,17 @@ To view PML metrics, configure a dashboard in PMM Server. Here's how:
 
 ## Available metrics
 
-You can collect and view the following PML metrics at the `/metrics` endpoint:
+You can collect and view the following PLM metrics at the `/metrics` endpoint:
 
 | Metric name | Description |
 |-------------|-------------|
-| `percona_mongolink_events_processed_total` | Total number of events processed |
-| `percona_mongolink_copy_read_size_bytes_total` | Total size of the read data in bytes |
-| `percona_mongolink_copy_insert_size_bytes_total` | Total size of the inserted data in bytes |
-| `percona_mongolink_lag_time_seconds` | Lag time in logical seconds between source and target clusters |
-| `percona_mongolink_initial_sync_lag_time_seconds` | Lag time during the initial sync in seconds |
-| `percona_mongolink_estimated_total_size_bytes` | Estimated total size of the data to be replicated in bytes |
-| `percona_mongolink_copy_read_document_total` | Total count of the read documents |
-| `percona_mongolink_copy_insert_document_total` | Total count of the inserted documents |
-| `percona_mongolink_copy_read_batch_duration_seconds` | Read batch duration time in seconds |
-| `percona_mongolink_copy_insert_batch_duration_seconds` | Insert batch duration time in seconds |
+| `percona_link_mongodb_events_processed_total` | Total number of events processed |
+| `percona_link_mongodb_copy_read_size_bytes_total` | Total size of the read data in bytes |
+| `percona_link_mongodb_copy_insert_size_bytes_total` | Total size of the inserted data in bytes |
+| `percona_link_mongodb_lag_time_seconds` | Lag time in logical seconds between source and target clusters |
+| `percona_link_mongodb_initial_sync_lag_time_seconds` | Lag time during the initial sync in seconds |
+| `percona_link_mongodb_estimated_total_size_bytes` | Estimated total size of the data to be replicated in bytes |
+| `percona_link_mongodb_copy_read_document_total` | Total count of the read documents |
+| `percona_link_mongodb_copy_insert_document_total` | Total count of the inserted documents |
+| `percona_link_mongodb_copy_read_batch_duration_seconds` | Read batch duration time in seconds |
+| `percona_link_mongodb_copy_insert_batch_duration_seconds` | Insert batch duration time in seconds |
