@@ -4,7 +4,9 @@ Welcome to Percona Link for MongoDB documentation!
 
 ## Overview
 
-Percona Link for MongoDB is a tool for replicating data from a source MongoDB cluster to a target MongoDB cluster. It supports cloning data, replicating changes, and managing collections and indexes.
+Percona Link for MongoDB is a tool for replicating data from a source MongoDB cluster to a target MongoDB cluster. It supports cloning data, replicating changes, and managing collections and indexes. 
+
+Percona Link for MongoDB requires replica set deployments of Percona Server for MongoDB and MongoDB. You must [convert your standalone instance](https://www.mongodb.com/docs/manual/tutorial/convert-standalone-to-replica-set/#std-label-server-replica-set-deploy-convert) to a single-node replica set to use Percona Link for MongoDB.  
 
 Percona Link for MongoDB code is [here](https://github.com/percona/percona-link-mongodb).
 
