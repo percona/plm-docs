@@ -18,7 +18,6 @@ This page lists known limitations for using Percona Link for MongoDB
 * Users and roles are not synchronized
 * Timeseries collections are not supported
 * `system.*` collections are not replicated
-* Collections with unique and non-unique indexes defined on the same field(s) are not replicated
 * [Clustered collections :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/clustered-collections/) with indexes that have the `expireAfterSeconds` field defined are not supported because the change stream does not provide a Time-to-Live (TTL) value for the index
 * Capped collections created or converted as the result of `cloneCollectionAsCapped` and `convertToCapped` commands are not supported. These operations don't change the event and are not captured by the change streams.
 * [Percona Memory Engine :octicons-link-external-16:](https://docs.percona.com/percona-server-for-mongodb/8.0/inmemory.html) is not supported

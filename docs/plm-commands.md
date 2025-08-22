@@ -24,11 +24,30 @@ $ plm status
 
 ### start
 
-Start cluster replication.
+Starts cluster replication.
 
 ```{.bash data-prompt="$"$}
 $ plm start
 ```
+
+To start a filtered replication, pass the namespaces (databases and collections) that you want to include/exclude from replication. 
+
+```{.bash data-prompt="$"}
+$ plm start \
+--include-namespaces="db1.collection1,db2.collection2" \
+--exclude-namespaces="db3.collection3"
+```
+
+To include or exclude a specific database and all collections it includes, pass it in the format `mydb.*`.
+
+Available flags:
+
+
+| Name | Description|
+| -----| -----------|
+| `--include-namespaces` | Replicate only the specified namespaces. Multiple namespaces are supported as a comma separated list. The number of namespaces to specify is unlimited|
+| `--exclude-namespaces` | Replicate everything except the specified namespaces. Multiple namespaces are supported as a comma separated list. The number of namespaces to specify is unlimited|
+
 
 ### reset
 
