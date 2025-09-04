@@ -39,7 +39,25 @@ Then it uses the [change streams :octicons-link-external-16:](https://www.mongod
 
 ## Start the filtered replication
 
-You can replicate the whole dataset or specific namespaces - databases and collections. You can specify what namespaces to include and/or exclude from the replication. Currently you can start the filtered replication only via the API. The ability to start it via the CLI will be added in future releases.
+You can replicate the whole dataset or specific namespaces - databases and collections. You can specify what namespaces to include and/or exclude from the replication. 
+
+To include or exclude a specific database and all collections it includes, pass it in the format `mydb.*`.
+
+=== "Command line"
+
+    ```{.bash data-prompt="$"}
+    $ plm start \ 
+    --include-namespaces="db1.collection1,db2.collection2" \
+    --exclude-namespaces="db3.collection3"
+    ```
+
+    ??? example "Expected output"
+
+        ```{.json .no-copy}
+        {
+          "ok": true
+        }
+        ```
 
 === "HTTP API"
     

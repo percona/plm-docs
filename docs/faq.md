@@ -34,7 +34,7 @@ Yes. {{plm.full_name}} provides Prometheus metrics exposed at the `/metrics` end
 
 ## Can I filter which databases or collections to sync?
 
-Yes. {{plm.full_name}} allows you to include/exclude filters for specific databases or collections. This option is currently available via HTTP API. The command-line support will be added in future releases.
+Yes. {{plm.full_name}} allows you to include/exclude filters for specific databases or collections. You can do it both via the API and using the CLI. To learn more, see [PLM usage](install/usage.md#start-the-filtered-replication).
 
 ## How does {{plm.full_name}} handle failures?
 

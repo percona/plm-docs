@@ -50,7 +50,7 @@ git clone git@github.com:<your_name>/plm-docs.git
 3. Change the directory to ``pbm-docs`` and add the remote upstream repository:
 
 ```sh
-git remote add upstream git@github.com:percona-lab/plm-docs.git
+git remote add upstream git@github.com:percona/plm-docs.git
 ```
 
 4. Pull the latest changes from upstream
