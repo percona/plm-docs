@@ -76,7 +76,7 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
         For how include and exclude filters interact, see [Start the filtered replication](install/usage.md#start-the-filtered-replication). For the full flag list, see [PCSM commands](pcsm-commands.md). You can also drive every step through the [PCSM HTTP API](api.md).
 
-    5. Check each instance and wait for the clone and replication stages to complete:
+    5. Check each instance and wait for the clone to complete and replication lag to reach an acceptable value:
 
         ```bash
                 pcsm status
