@@ -12,9 +12,9 @@ For details about using a replica set as the target, see [Replicate from a shard
 
 ## Overview
 
-The workflow for sharded clusters is similar to replica sets. See [How {{pcsm.full_name}} works](intro.md#replication-workflows) for the complete workflow overview. The key difference is that {{pcsm.short}} connects to `mongos` instances on both the source and target clusters instead of replica set members.
+The workflow for sharded clusters is similar to replica sets. See [How {{pcsm.full_name}} works](intro.md#replication-workflows) for the complete workflow overview. The key difference is the target topology: when the target is a sharded cluster, {{pcsm.short}} connects through `mongos` on both the source and target. When the target is a replica set, it connects through the source `mongos` and then the target replica set members instead of a target `mongos`.
 
-Since {{pcsm.short}} connects through `mongos`, the cluster topology doesn't matter. This means the source and target clusters can have different numbers of shards.
+In both cases, the source must be a sharded MongoDB deployment. The source and target can have different numbers of shards, and a replica set target does not require a target `mongos` instance.
 
 Also, {{pcsm.short}} replicates data and not metadata. This means chunk distribution as well as the primary shard name for a collection may differ on source and target clusters.
 
@@ -27,13 +27,13 @@ Also, {{pcsm.short}} replicates data and not metadata. This means chunk distribu
 
 ## Connection string format
 
-When connecting to sharded clusters, use the standard MongoDB connection string format but specify `mongos` hostname and port instead of replica set members:
+When connecting to a sharded source or a sharded target, use the standard MongoDB connection string format but specify the `mongos` hostname and port instead of replica set members:
 
 ```{.text .no-copy}
 mongodb://user:pwd@mongos-host:port/[authdb]?[options]
 ```
 
-Since {{pcsm.short}} connects through `mongos`, you don't need to specify individual shard members or config servers in the connection string. The `mongos` router handles routing to the appropriate shards.
+When the target is a replica set, specify the target replica set members in the target connection string instead of a `mongos` URI. {{pcsm.short}} does not require a target `mongos` instance in that topology.
 
 For detailed information about authentication and connection string configuration, see [Configure authentication in MongoDB](install/authentication.md).
 
