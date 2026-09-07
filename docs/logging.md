@@ -49,7 +49,7 @@ PCSM can output logs in two formats: human-readable text (default) and structure
 
 !!! admonition "Version added: 0.10.0"
 
-PCSM writes log timestamps in [RFC 3339 :octicons-link-external-16:](https://www.rfc-editor.org/rfc/rfc3339){:target="_blank"} format and always in UTC, regardless of the host's local timezone:
+PCSM writes every log timestamp in [RFC 3339 :octicons-link-external-16:](https://www.rfc-editor.org/rfc/rfc3339){:target="_blank"} format and always in UTC, also known as Zulu time. This applies to both text and JSON output.
 
 ```{.text .no-copy}
 2026-06-02T10:43:46.854Z INF POST /start s=http
@@ -68,7 +68,7 @@ By default, logs are printed to the console in a color-coded, human-readable for
 
     ```text
     2026-06-02T10:43:46.854Z INF s=http Starting HTTP server at http://localhost:2242
-    2026-06-02T10:43:46.854Z DBG s=repl:watch op=insert ns=test.coll1 op_ts=1729953005,1
+2026-06-02T10:43:46.955Z DBG s=repl:watch op=insert ns=test.coll1 op_ts=1780397026,1
     ```
 
 You can disable the colorization with the `--log-no-color` flag. This is useful when redirecting log output to a file.
@@ -96,7 +96,8 @@ For automated processing and integration with log aggregation tools (like the EL
 ??? example "Sample output"
 
     ```json
-    {"level":"info","s":"http","time":"2026-06-02T10:43:46.854Z","message":"Starting HTTP server at http://localhost:2242"}         {"level":"debug","s":"repl:watch","op":"insert","ns":"test.coll1","op_ts":[1729953005,1],"time":"2026-06-02T10:43:46.854Z"}
+    {"level":"info","s":"http","time":"2026-06-02T10:43:46.854Z","message":"Starting HTTP server at http://localhost:2242"}
+    {"level":"debug","s":"repl:watch","op":"insert","ns":"test.coll1","op_ts":[1780397026,1],"time":"2026-06-02T10:43:46.955Z"}
     ```
 
 ### JSON field reference
