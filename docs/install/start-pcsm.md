@@ -87,13 +87,13 @@ Changing the bind host doesn't affect the CLI. Subcommands such as `pcsm status`
 From inside the container, confirm the server answers on the pod IP rather than only on loopback. For an IPv4 pod:
 
 ```{.bash data-prompt="$"}
-$ curl -s "http://$(hostname -i | awk '{for (i=1;i<=NF;i++) if ($i !~ /:/) {print $i; exit}}'):2242/status"
+$ curl -sS "http://$(hostname -i | awk '{for (i=1;i<=NF;i++) if ($i !~ /:/) {print $i; exit}}'):2242/status"
 ```
 
 For an IPv6 pod, enclose the address in brackets:
 
 ```{.bash data-prompt="$"}
-$ curl -g -s "http://[$(hostname -i | awk '{for (i=1;i<=NF;i++) if ($i ~ /:/) {print $i; exit}}')]:2242/status"
+$ curl -g -sS "http://[$(hostname -i | awk '{for (i=1;i<=NF;i++) if ($i ~ /:/) {print $i; exit}}')]:2242/status"
 ```
 
 A response means the bind address took effect. Connection refused means the server is still on loopback, so check that the environment variable or option reached the process.
