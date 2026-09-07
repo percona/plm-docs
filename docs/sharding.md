@@ -20,7 +20,8 @@ Also, {{pcsm.short}} replicates data and not metadata. This means chunk distribu
 
 ## Prerequisites
 
-* {{pcsm.full_name}} version 0.7.0 or later
+* If the target is a sharded MongoDB deployment, {{pcsm.full_name}} version 0.7.0 or later.
+* If the target is a replica set, {{pcsm.full_name}} version 0.10.0 or later.
 * The source must be a sharded MongoDB deployment.
 * The target can be either a sharded MongoDB deployment or a replica set.
 * Both clusters must be running the same MongoDB version. Check [Version requirements](deployment.md#version-requirements) for more information about supported versions.
