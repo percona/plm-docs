@@ -45,42 +45,30 @@ pcsm --source <source-uri> --target <target-uri> --log-level=debug
 
 PCSM can output logs in two formats: human-readable text (default) and structured JSON.
 
-PCSM writes timestamps in **UTC** using **RFC 3339** format with millisecond precision:
+#### Timestamp format
 
-```sh
-YYYY-MM-DDTHH:MM:SS.mmmZ
+!!! admonition "Version added: 0.10.0"
+
+PCSM writes log timestamps in [RFC 3339 :octicons-link-external-16:](https://www.rfc-editor.org/rfc/rfc3339){:target="_blank"} format and always in UTC, regardless of the host's local timezone:
+
+```{.text .no-copy}
+2026-06-02T10:43:46.854Z INF POST /start s=http
 ```
 
-The **T** separates the date and time, and the **Z** suffix indicates UTC, also known as Zulu time.
+The format is `YYYY-MM-DDTHH:MM:SS.mmmZ`. The `T` separates the date from the time, and the trailing `Z` marks the timestamp as UTC, also known as Zulu time.
 
 Using UTC provides a consistent timestamp regardless of the host's local timezone. This makes it easier to correlate PCSM logs with MongoDB logs, FTDC diagnostics, application logs, and monitoring systems without converting between local timezones.
 
+
 #### Text format (default)
 
-By default, logs are printed to the console in a color-coded, human-readable format. The timestamp uses **RFC 3339 format** with an explicit timezone offset. This makes timestamps unambiguous and allows PCSM logs to be correlated with MongoDB logs, application logs, monitoring tools, and other systems running in different timezones.
-
-The timestamp format is:
-
-```text
-YYYY-MM-DDTHH:MM:SS.mmm±HH:MM
-```
-
-For example:
-
-```sh
-2026-06-02T12:43:46.854+02:00 INF POST /start s=http
-```
-The `T` separates the date and time, and the `±HH:MM` suffix specifies the local timezone offset from UTC. For example, `+02:00` indicates that the local time is two hours ahead of UTC.
-
-This format provides an unambiguous representation of the log event time and aligns with the timestamp format used by MongoDB and the **RFC 3339** standard.
-
-
+By default, logs are printed to the console in a color-coded, human-readable format. This is ideal for interactive use and manual inspection.
 
 ??? example "Sample output"
 
     ```text
-    2026-06-02T12:43:46.854+02:00 INF s=http Starting HTTP server at http://localhost:2242
-    2026-06-02T12:43:50.123+02:00 DBG s=repl:watch op=insert ns=test.coll1 op_ts=1729953005,1
+    2024-10-26T14:30:01.000Z INF s=http Starting HTTP server at http://localhost:2242
+    2024-10-26T14:30:05.123Z DBG s=repl:watch op=insert ns=test.coll1 op_ts=1729953005,1
     ```
 
 You can disable the colorization with the `--log-no-color` flag. This is useful when redirecting log output to a file.
@@ -108,8 +96,7 @@ For automated processing and integration with log aggregation tools (like the EL
 ??? example "Sample output"
 
     ```json
-    {"level":"info","s":"http","time":"2024-10-01 14:30:01.000","message":"Starting HTTP server at http://localhost:2242"}
-    {"level":"debug","s":"repl:watch","op":"insert","ns":"test.coll1","op_ts":[1729953005,1],"time":"2024-10-26 14:30:05.123"}
+    {"level":"info","s":"http","time":"2024-10-26T14:30:01.000Z","message":"Starting HTTP server at http://localhost:2242"}         {"level":"debug","s":"repl:watch","op":"insert","ns":"test.coll1","op_ts":[1729953005,1],"time":"2024-10-26T14:30:05.123Z"}
     ```
 
 ### JSON field reference
@@ -122,7 +109,7 @@ When `--log-json` is enabled, the following fields may appear in the log entries
 | `s`	           | string	 | The scope or component where the log originated (e.g., http, clone, repl). |
 | `ns`	         | string	 | The MongoDB namespace (database.collection) related to the event.          |
 | `elapsed_secs` | float	 | The time taken for an operation to complete, in seconds.                   |
-| `time`	       | string  | The timestamp of the log event in YYYY-MM-DD HH:MM:SS.ms format.           |
+| `time`	       | string  | The timestamp of the log event in RFC 3339 format, always in UTC (`YYYY-MM-DDTHH:MM:SS.mmmZ`).           |
 | `message`	     | string	 | The main log message.                                                      |
 | `error`	       | string	 | The error message, if an error occurred.                                   |
 | `op`	         | string	 | The type of operation (e.g., insert, createIndexes).                       |
