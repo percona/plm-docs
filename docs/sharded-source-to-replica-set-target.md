@@ -144,7 +144,19 @@ The commands and API endpoints are the same as for any other topology. See, [Per
 
     10. Confirm that the documents for both `plain_collection` and `sharded_coll` got copied to the destination cluster.
 
-To learn how MongoDB uses shard keys to distribute documents across shards, see [Shard Keys :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-shard-key/){:target="_blank"} in the MongoDB documentation.
+
+## Next steps
+
+* [Install {{pcsm.full_name}}](installation.md)
+* [Configure authentication](install/authentication.md)
+* [Start replication](install/usage.md)
+* [Monitor replication status](install/usage.md#check-the-replication-status)
+* [Monitor PCSM performance with Percona Monitoring and Management](pmm-setup.md)
+
+
+## Learn more
+
+[Shard Keys :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-shard-key/){:target="_blank"}
 
 
 
