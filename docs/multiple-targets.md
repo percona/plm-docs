@@ -312,7 +312,7 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
                     'value_partial',
                     'tag_sparse'
                     ]
-            ```
+        ```
 
     The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
 
