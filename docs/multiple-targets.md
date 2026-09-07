@@ -42,16 +42,16 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
         ```bash
                 pcsm \
-                --source "mongodb://csync:<password>@rs101:27017/?replicaSet=rs1" \
-                --target "mongodb://csync:<password>@rs201:27017/?replicaSet=rs2"
+                --source "mongodb://csync:<password>@rs101:27017,rs102:27017,rs103:27017/?replicaSet=rs1" \
+                --target "mongodb://csync:<password>@rs201:27017,rs202:27017,rs203:27017/?replicaSet=rs2"
         ```
 
     2. Start `csync-b` against the same source, with `rs3` as the target:
 
         ```bash
                 pcsm \
-                --source "mongodb://csync:<password>@rs101:27017/?replicaSet=rs1" \
-                --target "mongodb://csync:<password>@rs301:27017/?replicaSet=rs3"
+                --source "mongodb://csync:<password>@rs101:27017,rs102:27017,rs103:27017/?replicaSet=rs1" \
+                --target "mongodb://csync:<password>@rs301:27017,rs302:27017,rs303:27017/?replicaSet=rs3"
         ```
 
     3. Start replication on `csync-a`, filtered to the namespaces it replicates:
