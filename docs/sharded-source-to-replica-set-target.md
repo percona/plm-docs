@@ -36,12 +36,14 @@ During change replication, PCSM skips `shardCollection` events coming from the s
 
 ## Connection string format
 
-Point the source URI at the mongos hostname and port. Point the target URI at the replica set members and name the replica set:
+Point the source URI at the `mongos` hostname and port. Point the target URI at the replica set members and name the replica set:
+
+**Example**
 
 ```sh
-PCSM_SOURCE_URI="mongodb://source-user:password@mongos-source:27017/admin"
+PCSM_SOURCE_URI="mongodb://source-user:password@mongos-source:27017/admin" 
 
-PCSM_TARGET_URI="mongodb://target-`user:password@target1:27017,target2:27017,target3:27017/admin?replicaSet=rs0"
+PCSM_TARGET_URI="mongodb://target-user:password@target1:27017,target2:27017,target3:27017/admin?replicaSet=rs0"
 ```
 
 ## usage
