@@ -31,7 +31,7 @@ No additional configuration is required.
 
 ## Before you start
 
-* vEnsure the source and target MongoDB versions meet the version requirements.
+* Ensure the source and target MongoDB versions meet the version requirements.
 * Configure authentication for both deployments.
 * Configure the source connection string with the mongos hostname and port. Configure the target connection string with the replica set members.
 
