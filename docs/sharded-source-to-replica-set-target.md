@@ -93,7 +93,9 @@ No additional configuration is required.
             2026-08-25T07:56:21.508Z ERR Cluster Replication has failed error="clone: copy: clone_shard_test_db.sharded_coll: shard collection: shard collection: (CommandNotFound) no such command: 'shardCollection'" s=pcsm
             ```
 
-        7. Confirm that neither collection reached the target. The clone stops at the first failure, so even the unsharded collection is missing.
+        7. Check the target collections. In this example, neither collection was copied to the target before the clone failed.
+
+        Because the initial clone processes collections in parallel, the result can vary. An unsharded collection such as `plain_collection` may already be created or partially copied when cloning `sharded_coll` fails.
 
 === "After cross-topology support"
 
