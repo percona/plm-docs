@@ -16,7 +16,7 @@ Every instance runs the full replication workflow on its own: clone, replication
 
 !!! note
 
-    You run `start`, `status`, and `finalize` against each instance separately. Instances in separate containers can all use the default port 2242. See [Percona ClusterSync for MongoDB startup configuration](install/parameters.md) for the available options.
+    Run each PCSM server in a separate container or host, or assign a unique `--port` when servers share a network namespace. Run every `start`, `status`, and `finalize` command in the corresponding container or host; for a shared host, pass that instance's `--port` to every subcommand. The examples below assume separate environments, where all instances can use the default port `2242`. See [Percona ClusterSync for MongoDB startup configuration](install/parameters.md) for the available options.
 
 The examples below replicate `db_0` to the first target and `db_1` to the second. Select the tab that matches your deployment.
 
