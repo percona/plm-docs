@@ -18,7 +18,6 @@ During ongoing replication, PCSM skips `shardCollection` operations from the sou
 
 No additional configuration is required.
 
-
 !!! note
     A collection that is sharded on the source is created as a regular collection on the replica set target. The collection data is copied, but the target collection isn't sharded.
 
