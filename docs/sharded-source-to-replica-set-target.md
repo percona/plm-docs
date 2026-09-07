@@ -8,14 +8,13 @@ For example, you can use this topology when moving data from a sharded MongoDB A
 
 For information about sharded cluster support, see [Sharding support in Percona ClusterSync for MongoDB](sharding.md).
 
-## How PCSM handles the topology difference
+## Overview
 
 When the PCSM server starts, it detects that the source is sharded and the target is a replica set.
 
-During the initial sync, PCSM creates collections that are sharded on the source as regular collections on the replica set target. It doesn't apply the source shard key because `shardCollection` isn't supported on replica sets.
+During the initial sync, PCSM creates every source collection on the target, including the sharded ones, as a regular collection. It doesn't carry over the source shard key, because a replica set has no shards to distribute documents across and doesn't support [`shardCollection` :octicons-link-external-16:](https://www.mongodb.com/docs/manual/reference/command/shardCollection/){:target="_blank"}.
 
-During ongoing replication, PCSM skips `shardCollection` operations from the source and continues applying supported data changes to the target.
-
+During change replication, PCSM skips `shardCollection` events coming from the source [change stream :octicons-link-external-16:](https://www.mongodb.com/docs/manual/changeStreams/){:target="_blank"} and keeps applying the data changes it supports.
 No additional configuration is required.
 
 !!! note
@@ -33,19 +32,24 @@ No additional configuration is required.
 
 * Ensure the source and target MongoDB versions meet the version requirements.
 * Configure authentication for both deployments.
-* Configure the source connection string with the mongos hostname and port. Configure the target connection string with the replica set members.
-
-    For example:
-
-    `PCSM_SOURCE_URI="mongodb://source-user:password@mongos-source:27017/admin"`
-    PCSM_TARGET_URI="mongodb://target-`user:password@target1:27017,target2:27017,target3:27017/admin?replicaSet=rs0"`
+* Configure the source connection string with the `mongos` hostname and port. Configure the target connection string with the replica set members.
 * Verify that PCSM can connect to both the source sharded cluster and the target replica set.
 
-## Replication after cross-topology support
+## Connection string format
 
-With cross-topology support, PCSM detects the replica set target and skips the unsupported sharding operations.
+Point the source URI at the mongos hostname and port. Point the target URI at the replica set members and name the replica set:
 
-??? example "Example"
+```sh
+PCSM_SOURCE_URI="mongodb://source-user:password@mongos-source:27017/admin"
+
+PCSM_TARGET_URI="mongodb://target-`user:password@target1:27017,target2:27017,target3:27017/admin?replicaSet=rs0"
+```
+
+## usage
+
+The commands and API endpoints are the same as for any other topology. See, [Percona ClusterSync for MongoDB commands](pcsm-commands.md) for the command reference. 
+
+??? example "Walkthrough: sharded source to replica set target"
 
     Follow these steps:
     {.power-number}
