@@ -10,7 +10,7 @@ For information about sharded cluster support, see [Sharding support in Percona 
 
 ## How PCSM handles the topology difference
 
-When replication starts, PCSM detects that the source is sharded and the target is a replica set.
+When the PCSM server starts, it detects that the source is sharded and the target is a replica set.
 
 During the initial sync, {{pcsm.short}} creates collections that are sharded on the source as regular collections on the replica set target. It doesn't apply the source shard key because `shardCollection` isn't supported on replica sets.
 
