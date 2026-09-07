@@ -99,7 +99,7 @@ $ curl -g -sS "http://[$(hostname -i | awk '{for (i=1;i<=NF;i++) if ($i ~ /:/) {
 A response means the bind address took effect. Connection refused means the server is still on loopback, so check that the environment variable or option reached the process.
 
 !!! warning
-    Binding to `0.0.0.0` (IPv4) or `::` (IPv6) exposes the control endpoints `/start`, `/pause`, `/resume`, and `/finalize`, along with the `pprof` profiling endpoints, on every network interface of the host or pod. None of them require authentication, so anything that can route to the pod can start, pause, or finalize replication.
+    Binding to `0.0.0.0` (IPv4) or :: (IPv6) exposes all PCSM HTTP endpoints on every network interface of the host or pod. This includes `/start`, `/pause`, `/resume`, `/finalize`, `/status`, `/metrics`, and the `pprof` profiling endpoints. None of them require authentication, so anything that can route to the pod can start, pause, or finalize replication.
 
     In Kubernetes, restrict access with a `NetworkPolicy` or an equivalent network control. If all you need is a health check, an exec probe against `localhost` gives you the same result with no network exposure.
 
