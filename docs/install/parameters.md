@@ -46,5 +46,5 @@ Alternatively, you can define the following environment variables:
 | `PCSM_REPL_EVENT_QUEUE_SIZE` | Controls the size of the internal event queue used by the replication subsystem. | `5000` |
 | `PCSM_REPL_WORKER_QUEUE_SIZE` | Defines the maximum number of replication events that each replication worker thread can queue before processing. | `5000` |
 | `PCSM_REPL_BULK_OPS_SIZE` | Defines the maximum number of operations that can be grouped together into a single bulk apply batch during replication. | `5000` |
-| `PCSM_LISTEN_HOST` | Host the HTTP server binds to. See [Configure the http listen address](../install/start-pcsm.md#configure-the-http-listen-address) | Localhost |
+| `PCSM_LISTEN_HOST` | Host the HTTP server binds to. See [Configure the HTTP listen address](../install/start-pcsm.md#configure-the-http-listen-address) | `localhost` |
 
