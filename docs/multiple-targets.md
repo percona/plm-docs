@@ -40,25 +40,25 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
     1. Start `csync-a` with `rs1` as the source and `rs2` as the target:
 
-```bash
-        pcsm \
-        --source "mongodb://csync:<password>@rs101:27017/?replicaSet=rs1" \
-        --target "mongodb://csync:<password>@rs201:27017/?replicaSet=rs2"
-```
+        ```bash
+                pcsm \
+                --source "mongodb://csync:<password>@rs101:27017/?replicaSet=rs1" \
+                --target "mongodb://csync:<password>@rs201:27017/?replicaSet=rs2"
+        ```
 
     2. Start `csync-b` against the same source, with `rs3` as the target:
 
-```bash
-        pcsm \
-        --source "mongodb://csync:<password>@rs101:27017/?replicaSet=rs1" \
-        --target "mongodb://csync:<password>@rs301:27017/?replicaSet=rs3"
-```
+        ```bash
+                pcsm \
+                --source "mongodb://csync:<password>@rs101:27017/?replicaSet=rs1" \
+                --target "mongodb://csync:<password>@rs301:27017/?replicaSet=rs3"
+        ```
 
     3. Start replication on `csync-a`, filtered to the namespaces it replicates:
 
-```bash
-        pcsm start --include-namespaces="db_0.*"
-```
+        ```bash
+                pcsm start --include-namespaces="db_0.*"
+        ```
 
         ??? example "Expected output"
 
