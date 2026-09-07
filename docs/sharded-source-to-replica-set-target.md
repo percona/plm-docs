@@ -14,8 +14,7 @@ When the PCSM server starts, it detects that the source is sharded and the targe
 
 During the initial sync, PCSM creates every source collection on the target, including the sharded ones, as a regular collection. It doesn't carry over the source shard key, because a replica set has no shards to distribute documents across and doesn't support [`shardCollection` :octicons-link-external-16:](https://www.mongodb.com/docs/manual/reference/command/shardCollection/){:target="_blank"}.
 
-During change replication, PCSM skips `shardCollection` events coming from the source [change stream :octicons-link-external-16:](https://www.mongodb.com/docs/manual/changeStreams/){:target="_blank"} and keeps applying the data changes it supports.
-No additional configuration is required.
+During change replication, PCSM skips `shardCollection` events coming from the source [change stream :octicons-link-external-16:](https://www.mongodb.com/docs/manual/changeStreams/){:target="_blank"} and keeps applying the data changes it supports. No additional configuration is required.
 
 !!! note
     A collection that is sharded on the source is created as a regular collection on the replica set target. The collection data is copied, but the target collection isn't sharded.
