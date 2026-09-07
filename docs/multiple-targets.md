@@ -228,15 +228,15 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
     6. Finalize each instance:
 
-    ```bash
-    pcsm finalize
-    ```
+        ```bash
+        pcsm finalize
+        ```
 
     7. Check the status of each instance after finalization. The following output is from `csync-a`:
 
-    ```bash
-    pcsm status
-    ```
+        ```bash
+        pcsm status
+        ```
 
         ??? example "Expected output"
 
