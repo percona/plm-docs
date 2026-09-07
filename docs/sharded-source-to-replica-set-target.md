@@ -40,7 +40,7 @@ No additional configuration is required.
 
     `PCSM_SOURCE_URI="mongodb://source-user:password@mongos-source:27017/admin"`
     PCSM_TARGET_URI="mongodb://target-`user:password@target1:27017,target2:27017,target3:27017/admin?replicaSet=rs0"`
-* Verify that {{pcsm.short}} can connect to both the source sharded cluster and the target replica set.
+* Verify that PCSM can connect to both the source sharded cluster and the target replica set.
 
 ## Replication after cross-topology support
 
