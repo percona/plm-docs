@@ -12,9 +12,9 @@ For information about sharded cluster support, see [Sharding support in Percona 
 
 When the PCSM server starts, it detects that the source is sharded and the target is a replica set.
 
-During the initial sync, {{pcsm.short}} creates collections that are sharded on the source as regular collections on the replica set target. It doesn't apply the source shard key because `shardCollection` isn't supported on replica sets.
+During the initial sync, PCSM creates collections that are sharded on the source as regular collections on the replica set target. It doesn't apply the source shard key because `shardCollection` isn't supported on replica sets.
 
-During ongoing replication, {{pcsm.short}} skips `shardCollection` operations from the source and continues applying supported data changes to the target.
+During ongoing replication, PCSM skips `shardCollection` operations from the source and continues applying supported data changes to the target.
 
 No additional configuration is required.
 
@@ -32,170 +32,114 @@ No additional configuration is required.
 
 ## Before you start
 
-- Ensure the source and target MongoDB versions meet the [version requirements](version-compatibility.md#version-compatibility-matrix).
-- Configure authentication for both deployments. Refer to [Configure authentication in MongoDB](./install/authentication.md).
-- Verify that PCSM can connect to the source sharded cluster and the target replica set.
+* vEnsure the source and target MongoDB versions meet the version requirements.
+* Configure authentication for both deployments.
+* Configure the source connection string with the mongos hostname and port. Configure the target connection string with the replica set members.
 
-## Replication before and after cross-topology support
+    For example:
 
-=== "Before cross-topology support"
+    `PCSM_SOURCE_URI="mongodb://source-user:password@mongos-source:27017/admin"`
+    PCSM_TARGET_URI="mongodb://target-`user:password@target1:27017,target2:27017,target3:27017/admin?replicaSet=rs0"`
+* Verify that {{pcsm.short}} can connect to both the source sharded cluster and the target replica set.
 
-    Without cross-topology handling, PCSM attempts to apply the source collection's sharding configuration to the replica set. The clone fails because the target doesn't support `shardCollection`.
+## Replication after cross-topology support
 
-    ??? example "Example"
+With cross-topology support, PCSM detects the replica set target and skips the unsupported sharding operations.
 
-        Follow these steps:
-        {.power-number}
+??? example "Example"
 
-        1. Create two clusters, one sharded (source) and the other replica set (destination).
+    Follow these steps:
+    {.power-number}
 
-        2. Create two collections on the sharded cluster:
+    1. Create two clusters, one sharded (source) and the other replica set (destination).
 
-            1. `sharded_coll` (sharded)
-            2. `plain_collection` (unsharded)
+    2. Create two collections on the sharded cluster:
+    
+        1. `sharded_coll` (sharded)
+        2. `plain_collection` (unsharded)
 
-        3. Add documents to both the collections.
+    3. Add documents to both the collections.
 
-        4.  Start replication:
+    4. Start replication:
 
-            ```sh
-            pcsm start
-            ```
-        5. Check the replication status:
+        ```sh
+        pcsm start
+        ```
 
-            ```{.text .no-copy}
-            pcsm status
-            {
-                "ok": false,
-                "error": "clone: copy: clone_shard_test_db.sharded_coll: shard collection: (CommandNotFound) no such command: 'shardCollection'",
-                "state": "failed",
-                "info": "Failed",
-                "lagTimeSeconds": 0,
-                "eventsRead": 0,
-                "eventsApplied": 0,
-                "initialSync": {
-                    "estimatedCloneSizeBytes": 7490,
-                    "clonedSizeBytes": 1490,
-                    "completed": false,
-                    "cloneCompleted": true
-                }
-            }
-            Error: clone: copy: clone_shard_test_db.sharded_coll: shard collection: (CommandNotFound) no such command: 'shardCollection'
-            2026-08-25T07:51:17.586Z FTL error="clone: copy: clone_shard_test_db.sharded_coll: shard collection: (CommandNotFound) no such command: 'shardCollection'"
-            ```
-        
-        6. Check the logs:
+    5. Check the replication status. `clonedSizeBytes` matches `estimatedCloneSizeBytes`, and the state is `running`:
 
-            Output:
-
-            ```{.text .no-copy}
-            2026-08-25T07:56:21.508Z ERR Data Clone has failed: 0 B in 0s error="copy: clone_shard_test_db.sharded_coll: shard collection: shard collection: (CommandNotFound) no such command: 'shardCollection'" elapsed_secs=0.114 s=clone 
-            2026-08-25T07:56:21.508Z ERR Cluster Replication has failed error="clone: copy: clone_shard_test_db.sharded_coll: shard collection: shard collection: (CommandNotFound) no such command: 'shardCollection'" s=pcsm
-            ```
-
-        7. Check the target collections. In this example, neither collection was copied to the target before the clone failed.
-
-        Because the initial clone processes collections in parallel, the result can vary. An unsharded collection such as `plain_collection` may already be created or partially copied when cloning `sharded_coll` fails.
-
-=== "After cross-topology support"
-
-    With cross-topology support, PCSM detects the replica set target and skips the unsupported sharding operations.
-
-    ??? example "Example"
-
-        Follow these steps:
-        {.power-number}
-
-        1. Create two clusters, one sharded (source) and the other replica set (destination).
-
-        2. Create two collections on the sharded cluster:
-
-            1. `sharded_coll` (sharded)
-            2. `plain_collection` (unsharded)
-
-        3. Add documents to both the collections.
-
-        4.  Start replication:
-
-            ```sh
-            pcsm start
-            ```
-        5. Check the replication status. `clonedSizeBytes` matches `estimatedCloneSizeBytes`, and the state is `running`:
-
-            ```{.text .no-copy}
-            pcsm status
-            { 
-                "ok": true, 
-                "state": "running", 
-                "info": "Replicating Changes", 
-                "lagTimeSeconds": 0, 
-                "eventsRead": 0, 
-                "eventsApplied": 0, 
-                "lastReplicatedOpTime": { 
-                    "ts": "1787645813.1", 
-                    "isoDate": "2026-08-25T08:16:53Z" 
-                }, 
+        ```{.text .no-copy}
+        pcsm status
+        { 
+            "ok": true, 
+            "state": "running", 
+            "info": "Replicating Changes", 
+            "lagTimeSeconds": 0, 
+            "eventsRead": 0, 
+            "eventsApplied": 0, 
+            "lastReplicatedOpTime": { 
+                "ts": "1787645813.1", 
+                "isoDate": "2026-08-25T08:16:53Z" 
+            }, 
             "initialSync": { 
-                    "estimatedCloneSizeBytes": 7490, 
-                    "clonedSizeBytes": 7490, 
-                    "completed": true, 
-                    "cloneCompleted": true 
-                } 
-            }
-            ```
+                "estimatedCloneSizeBytes": 7490, 
+                "clonedSizeBytes": 7490, 
+                "completed": true, 
+                "cloneCompleted": true 
+            } 
+        }
+        ```
 
-        6. Confirm that both collections are present on the target and that document counts match:
+    6. Confirm that both collections are present on the target and that document counts match:
 
-            ```javascript
-                db.sharded_coll.countDocuments()
-                db.plain_collection.countDocuments()
-            ```
-        
-            The collection that was sharded on the source appears here as a regular collection. That is expected.
+        ```javascript
+        db.sharded_coll.countDocuments()
+        db.plain_collection.countDocuments()
+        ```
 
+        The collection that was sharded on the source appears here as a regular collection. That is expected.
 
-        7. Finalize the sync:
+    7. Finalize the sync:
 
-            ```{.bash data-prompt="$"}
-            $ pcsm finalize
-            ```
+        ```{.bash data-prompt="$"}
+        $ pcsm finalize
+        ```
 
-        8. Check the status again:
+    8. Check the status again:
 
-            ```{.bash data-prompt="$"}
-            $ pcsm status
-            ```
+        ```{.bash data-prompt="$"}
+        $ pcsm status
+        ```
 
-            ```{.json .no-copy}
-            {
-              "ok": true,
-              "state": "finalized",
-              "info": "Finalized",
-              "lagTimeSeconds": 1,
-              "eventsRead": 0,
-              "eventsApplied": 0,
-              "lastReplicatedOpTime": {
-                "ts": "1787645817.1",
-                "isoDate": "2026-08-25T08:16:57Z"
-              },
-              "initialSync": {
-                "estimatedCloneSizeBytes": 7490,
-                "clonedSizeBytes": 7490,
-                "completed": true,
-                "cloneCompleted": true
-              },
-              "finalization": {
-                "completed": true,
-                "startedAt": "2026-08-25T08:16:57.539447026Z",
-                "completedAt": "2026-08-25T08:16:57.539557888Z"
-              }
-            }
-            ```
+        ```{.json .no-copy}
+        {
+          "ok": true,
+          "state": "finalized",
+          "info": "Finalized",
+          "lagTimeSeconds": 1,
+          "eventsRead": 0,
+          "eventsApplied": 0,
+          "lastReplicatedOpTime": {
+            "ts": "1787645817.1",
+            "isoDate": "2026-08-25T08:16:57Z"
+          },
+          "initialSync": {
+            "estimatedCloneSizeBytes": 7490,
+            "clonedSizeBytes": 7490,
+            "completed": true,
+            "cloneCompleted": true
+          },
+          "finalization": {
+            "completed": true,
+            "startedAt": "2026-08-25T08:16:57.539447026Z",
+            "completedAt": "2026-08-25T08:16:57.539557888Z"
+          }
+        }
+        ```
 
-        9. Check the replication logs and confirm that no errors were recorded. For details, see [Logging in Percona ClusterSync for MongoDB](logging.md)
+    9. Check the replication logs and confirm that no errors were recorded. For details, see [Logging in Percona ClusterSync for MongoDB](logging.md).
 
-
-        10. Confirm that the documents for both `plain_collection` and `sharded_coll` got copied to the destination cluster.
+    10. Confirm that the documents for both `plain_collection` and `sharded_coll` got copied to the destination cluster.
 
 To learn how MongoDB uses shard keys to distribute documents across shards, see [Shard Keys :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-shard-key/){:target="_blank"} in the MongoDB documentation.
 
