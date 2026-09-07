@@ -145,7 +145,8 @@ No additional configuration is required.
         6. Confirm that both collections are present on the target and that document counts match:
 
             ```javascript
-                db.<collection>.countDocuments()
+                db.sharded_coll.countDocuments()
+                db.plain_collection.countDocuments()
             ```
         
             The collection that was sharded on the source appears here as a regular collection. That is expected.
