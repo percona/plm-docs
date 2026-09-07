@@ -14,7 +14,7 @@ For details about using a replica set as the target, see [Replicate from a shard
 
 The workflow for sharded clusters is similar to replica sets. See [How {{pcsm.full_name}} works](intro.md#replication-workflows) for the complete workflow overview. The key difference is the target topology: when the target is a sharded cluster, {{pcsm.short}} connects through `mongos` on both the source and target. When the target is a replica set, it connects through the source `mongos` and then the target replica set members instead of a target `mongos`.
 
-In both cases, the source must be a sharded MongoDB deployment. The source and target can have different numbers of shards, and a replica set target does not require a target `mongos` instance.
+In both cases, the source must be a sharded MongoDB deployment. When the target is a sharded cluster, the source and target can have different numbers of shards. A replica set target does not require a target `mongos` instance.
 
 Also, {{pcsm.short}} replicates data and not metadata. This means chunk distribution as well as the primary shard name for a collection may differ on source and target clusters.
 

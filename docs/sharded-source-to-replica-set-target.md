@@ -55,7 +55,7 @@ The commands and API endpoints are the same as for any other topology. See, [Per
     Follow these steps:
     {.power-number}
 
-    1. Create two clusters, one sharded (source) and the other replica set (destination).
+    1. Create two clusters: one sharded source cluster and one target replica set.
 
     2. Create two collections on the sharded cluster:
     
@@ -94,7 +94,7 @@ The commands and API endpoints are the same as for any other topology. See, [Per
         }
         ```
 
-    6. Confirm that both collections are present on the target and that document counts match:
+    6. Run the same query against both deployments and compare the results to confirm that both collections are present and that document counts match:
 
         ```javascript
         db.sharded_coll.countDocuments()
@@ -109,7 +109,7 @@ The commands and API endpoints are the same as for any other topology. See, [Per
         $ pcsm finalize
         ```
 
-    8. Check the status again:
+    8. Check the status again until the state is `finalized`:
 
         ```{.bash data-prompt="$"}
         $ pcsm status
