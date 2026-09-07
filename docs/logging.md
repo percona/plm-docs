@@ -45,15 +45,42 @@ pcsm --source <source-uri> --target <target-uri> --log-level=debug
 
 PCSM can output logs in two formats: human-readable text (default) and structured JSON.
 
+PCSM writes timestamps in **UTC** using **RFC 3339** format with millisecond precision:
+
+```sh
+YYYY-MM-DDTHH:MM:SS.mmmZ
+```
+
+The **T** separates the date and time, and the **Z** suffix indicates UTC, also known as Zulu time.
+
+Using UTC provides a consistent timestamp regardless of the host's local timezone. This makes it easier to correlate PCSM logs with MongoDB logs, FTDC diagnostics, application logs, and monitoring systems without converting between local timezones.
+
 #### Text format (default)
 
-By default, logs are printed to the console in a color-coded, human-readable format. This is ideal for interactive use and manual inspection.
+By default, logs are printed to the console in a color-coded, human-readable format. The timestamp uses **RFC 3339 format** with an explicit timezone offset. This makes timestamps unambiguous and allows PCSM logs to be correlated with MongoDB logs, application logs, monitoring tools, and other systems running in different timezones.
+
+The timestamp format is:
+
+```text
+YYYY-MM-DDTHH:MM:SS.mmm±HH:MM
+```
+
+For example:
+
+```sh
+2026-06-02T12:43:46.854+02:00 INF POST /start s=http
+```
+The `T` separates the date and time, and the `±HH:MM` suffix specifies the local timezone offset from UTC. For example, `+02:00` indicates that the local time is two hours ahead of UTC.
+
+This format provides an unambiguous representation of the log event time and aligns with the timestamp format used by MongoDB and the **RFC 3339** standard.
+
+
 
 ??? example "Sample output"
 
     ```text
-    2024-10-26 14:30:01.000 INF s=http Starting HTTP server at http://localhost:2242
-    2024-10-26 14:30:05.123 DBG s=repl:watch op=insert ns=test.coll1 op_ts=1729953005,1
+    2026-06-02T12:43:46.854+02:00 INF s=http Starting HTTP server at http://localhost:2242
+    2026-06-02T12:43:50.123+02:00 DBG s=repl:watch op=insert ns=test.coll1 op_ts=1729953005,1
     ```
 
 You can disable the colorization with the `--log-no-color` flag. This is useful when redirecting log output to a file.
