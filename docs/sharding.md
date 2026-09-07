@@ -4,7 +4,11 @@
 
     Sharding support is available starting with {{pcsm.full_name}} 0.7.0 and is currently in technical preview stage. We encourage you to try it out and share your feedback. This will help us improve the feature in future releases.
 
-{{pcsm.full_name}} supports replication between sharded MongoDB clusters, enabling you to migrate or synchronize data from one sharded deployment to another. This capability allows you to migrate sharded clusters with minimal downtime and synchronize data between sharded clusters for testing or development purposes.
+{{pcsm.full_name}} supports replication from a sharded MongoDB cluster to another sharded cluster or to a replica set. 
+
+With a sharded target, you can migrate or synchronize data between sharded deployments with minimal downtime. With a replica set target, {{pcsm.full_name}} copies the data and skips the source sharding configuration.
+
+For details about using a replica set as the target, see [Replicate from a sharded cluster to a replica set](sharded-source-to-replica-set-target.md).
 
 ## Overview
 
@@ -17,7 +21,8 @@ Also, {{pcsm.short}} replicates data and not metadata. This means chunk distribu
 ## Prerequisites
 
 * {{pcsm.full_name}} version 0.7.0 or later
-* Source and target clusters must be sharded MongoDB deployments
+* The source must be a sharded MongoDB deployment.
+* The target can be either a sharded MongoDB deployment or a replica set.
 * Both clusters must be running the same MongoDB version. Check [Version requirements](deployment.md#version-requirements) for more information about supported versions.
 
 ## Connection string format

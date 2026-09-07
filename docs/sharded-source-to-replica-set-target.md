@@ -1,6 +1,8 @@
 # Replicate from a sharded cluster to a replica set
 
-Percona ClusterSync for MongoDB (PCSM) supports replication from a sharded MongoDB cluster to a replica set. This lets you migrate data from a sharded deployment without having to recreate the source sharding configuration on the target.
+!!! admonition "Version added: 0.10.0"
+
+{{pcsm.full_name}} (PCSM) supports replication from a sharded MongoDB cluster to a replica set. This lets you migrate data from a sharded deployment without having to recreate the source sharding configuration on the target.
 
 For example, you can use this topology when moving data from a sharded MongoDB Atlas or MongoDB Enterprise deployment to a Percona Server for MongoDB replica set.
 
@@ -10,9 +12,12 @@ For information about sharded cluster support, see [Sharding support in Percona 
 
 When replication starts, PCSM detects that the source is sharded and the target is a replica set.
 
-If a source collection is sharded, PCSM skips sharding operations such as `shardCollection` on the target. These operations apply only to sharded clusters.
+During the initial sync, {{pcsm.short}} creates collections that are sharded on the source as regular collections on the replica set target. It doesn't apply the source shard key because `shardCollection` isn't supported on replica sets.
 
-PCSM then continues with the standard clone and replication workflow. No additional configuration is required.
+During ongoing replication, {{pcsm.short}} skips `shardCollection` operations from the source and continues applying supported data changes to the target.
+
+No additional configuration is required.
+
 
 !!! note
     A collection that is sharded on the source is created as a regular collection on the replica set target. The collection data is copied, but the target collection isn't sharded.
@@ -111,7 +116,7 @@ PCSM then continues with the standard clone and replication workflow. No additio
         4.  Start replication:
 
             ```sh
-            pcsm start 2> pcsm.log
+            pcsm start
             ```
         5. Check the replication status. `clonedSizeBytes` matches `estimatedCloneSizeBytes`, and the state is `running`:
 
@@ -184,9 +189,8 @@ PCSM then continues with the standard clone and replication workflow. No additio
             }
             ```
 
-        9. Check the logs from the replication run and confirm that no errors were recorded.
+        9. Check the replication logs and confirm that no errors were recorded. For details, see [Logging in Percona ClusterSync for MongoDB](logging.md)
 
-            Review the `pcsm.log` file created when you started replication.
 
         10. Confirm that the documents for both `plain_collection` and `sharded_coll` got copied to the destination cluster.
 
