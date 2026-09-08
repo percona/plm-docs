@@ -18,11 +18,6 @@ Every instance runs the full replication workflow on its own: clone, replication
 
     Run each PCSM server in a separate container or host, or assign a unique `--port` when servers share a network namespace. Run every `start`, `status`, and `finalize` command in the corresponding container or host; for a shared host, pass that instance's `--port` to every subcommand. The examples below assume separate environments, where all instances can use the default port `2242`. See [Percona ClusterSync for MongoDB startup configuration](install/parameters.md) for the available options.
 
-The examples below replicate `db_0` to the first target and `db_1` to the second. Select the tab that matches your deployment.
-
-!!! warning "Technical preview"
-
-    Sharding support in PCSM is a technical preview and is not recommended for production. See [Sharding support in Percona ClusterSync for MongoDB](sharding.md).
 
 === "Replica set"
 
@@ -171,6 +166,10 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
     4. Finally, check the logs of each instance for errors. See [Logging in Percona ClusterSync for MongoDB](logging.md).
 
 === "Sharded cluster"
+
+    !!! warning "Technical preview"
+
+    Sharding support in PCSM is a technical preview and is not recommended for production. See [Sharding support in Percona ClusterSync for MongoDB](sharding.md).
 
     ## Replicate from a sharded cluster to two targets
 
