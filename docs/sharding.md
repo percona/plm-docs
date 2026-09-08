@@ -66,7 +66,6 @@ This happens automatically. There is no flag to set, nothing to enable, and no w
 
     {{pcsm.short}} reads the source chunk boundaries once, before the clone. It does not replicate sharding metadata afterwards, so later chunk migrations, splits, merges, and resharding on the source have no effect on the target layout. The two clusters drift apart as soon as either balancer moves data. A layout that no longer matches the source is expected and does not indicate a replication problem.
 
-<!-- TBD-ENG (Inel): does the pre-split also cover a collection that is sharded on the SOURCE while replication is already running, or only collections that were sharded when the clone started? Question 4 in PCSM-203 was never answered, and the answer belongs in the note above. -->
 
 ### Hashed shard keys
 
