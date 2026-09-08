@@ -12,7 +12,7 @@ The workflow for sharded clusters is similar to replica sets. See [How {{pcsm.fu
 
 Since {{pcsm.short}} connects through `mongos`, the cluster topology doesn't matter. This means the source and target clusters can have different numbers of shards.
 
-{{pcsm.short}} replicates data and not sharding metadata. For a collection with a ranged shard key it copies the initial chunk boundaries to the target before the clone starts, but it does not replicate any sharding metadata changes that follow, and the primary shard name for a collection may differ on source and target clusters. See [Chunk distribution](#chunk-distribution).
+{{pcsm.short}} does not continuously replicate sharding metadata from the source to the target. For collections with a ranged shard key, it copies the initial chunk boundaries to the target before the clone starts. Any sharding metadata changes made after that are not replicated. The primary shard name for a collection may also differ between the source and target clusters. See [Chunk distribution](#chunk-distribution).
 
 ## Prerequisites
 
