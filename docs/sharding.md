@@ -36,7 +36,7 @@ For detailed information about authentication and connection string configuratio
 
 ### Initial sync preparation
 
-Before starting the initial sync, {{pcsm.short}} checks which collections are sharded on the source cluster and creates corresponding sharded collections on the destination cluster. The shard key is the only sharding configuration carried over from the source; everything else is handled internally by the destination cluster.
+Before starting the initial sync, {{pcsm.short}} checks which collections are sharded on the source cluster and creates corresponding sharded collections on the destination cluster. The sharding key is preserved from the source cluster. For ranged shard keys, {{pcsm.short}} also copies the initial chunk boundaries and ownership to the target; it does not replicate sharding metadata afterwards.
 
 For a ranged shard key, {{pcsm.short}} then pre-splits the collection using the source chunk boundaries, immediately after it shards the collection on the target and before it copies any documents. Collections with a hashed shard key keep the layout that `shardCollection` creates. See [Chunk distribution](#chunk-distribution).
 
