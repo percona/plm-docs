@@ -62,7 +62,7 @@ This runs automatically for every collection with a ranged shard key, immediatel
 | Ranged shard key | Same number as the source | The same chunk boundaries and the same ownership pattern as the source. |
 | Ranged shard key | Different number from the source | The same chunk boundaries, with chunks placed to even out the estimated data volume per shard.|
 
-!!! note "The layout is a starting point, not a copy"
+!!! note
     {{pcsm.short}} reads the source boundaries once, before the clone, and does not replicate sharding metadata afterwards. Later migrations, splits, merges, and resharding on the source have no effect on the target, so the two layouts drift apart as the balancers work. That is expected and does not indicate a replication problem.
 
 ### Hashed shard keys
