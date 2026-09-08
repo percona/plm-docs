@@ -126,49 +126,49 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
     Connect to each target and confirm it holds only the namespaces that its instance replicated.
 
-    **On `rs2`.** List the databases, then count the documents. The `db_0` database returns the full count and `db_1` returns zero:
+    1. **On `rs2`.** List the databases, then count the documents. The `db_0` database returns the full count and `db_1` returns zero:
 
-    ```javascript
-    show databases
-    db.getSiblingDB('db_0').docs.countDocuments({})
-    db.getSiblingDB('db_1').docs.countDocuments({})
-    ```
-
-    Check the indexes that PCSM recreated on the target:
-
-    ```javascript
-    db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
-    ```
-
-    ??? example "Expected output"
-
-        ```{.text .no-copy}
-                [
-                '_id_',
-                'value_1',
-                'value_1_uid_-1',
-                'uid_1',
-                'tag_text',
-                '_id_hashed',
-                'created_at_1',
-                'value_partial',
-                'tag_sparse'
-                ]
+        ```javascript
+        show databases
+        db.getSiblingDB('db_0').docs.countDocuments({})
+        db.getSiblingDB('db_1').docs.countDocuments({})
         ```
 
-    The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
+    2. Check the indexes that PCSM recreated on the target:
 
-    ```javascript
-    db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
-    ```
+        ```javascript
+        db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
+        ```
 
-    ```{.text .no-copy}
-    MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
-    ```
+        ??? example "Expected output"
 
-    **On `rs3`.** Run the same checks with the databases reversed. Here `db_1` holds the data, and querying `db_0.docs` returns `ns does not exist: db_0.docs`.
+            ```{.text .no-copy}
+                    [
+                    '_id_',
+                    'value_1',
+                    'value_1_uid_-1',
+                    'uid_1',
+                    'tag_text',
+                    '_id_hashed',
+                    'created_at_1',
+                    'value_partial',
+                    'tag_sparse'
+                    ]
+            ```
 
-    Finally, check the logs of each instance for errors. See [Logging in Percona ClusterSync for MongoDB](logging.md).
+        The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
+
+        ```javascript
+        db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
+        ```
+
+        ```{.text .no-copy}
+        MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
+        ```
+
+    3. **On `rs3`.** Run the same checks with the databases reversed. Here `db_1` holds the data, and querying `db_0.docs` returns `ns does not exist: db_0.docs`.
+
+    4. Finally, check the logs of each instance for errors. See [Logging in Percona ClusterSync for MongoDB](logging.md).
 
 === "Sharded cluster"
 
@@ -264,100 +264,103 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
                     "completedAt": "2026-08-21T08:35:48.21823288Z"
                 }
             }
-            ```   ### Verify the result on sharded targets
+            ```   
+            
+    ### Verify the result on sharded targets
 
     Connect to the `mongos` of each target cluster and confirm it holds only the namespaces that its instance replicated.
+    {.power-number}
 
-    **On `mongos2`.** List the databases:
+    1. **On `mongos2`.** List the databases:
 
-    ```javascript
-    show databases
-    ```
-
-    ??? example "Expected output"
-
-        ```{.text .no-copy}
-        admin                        172.00 KiB
-        config                         2.11 MiB
-        db_0                          31.56 MiB
-        percona_clustersync_mongodb  168.00 KiB
+        ```javascript
+        show databases
         ```
 
-    Count the documents. The `db_0` database returns the full count and `db_1` returns zero:
+        ??? example "Expected output"
 
-    ```javascript
-    db.getSiblingDB('db_0').docs.countDocuments({})
-    db.getSiblingDB('db_1').docs.countDocuments({})
-    ```
+            ```{.text .no-copy}
+            admin                        172.00 KiB
+            config                         2.11 MiB
+            db_0                          31.56 MiB
+            percona_clustersync_mongodb  168.00 KiB
+            ```
 
-    Check the indexes:
+    2. Count the documents. The `db_0` database returns the full count and `db_1` returns zero:
 
-    ```javascript
-    db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
-    ```
+        ```javascript
+        db.getSiblingDB('db_0').docs.countDocuments({})
+        db.getSiblingDB('db_1').docs.countDocuments({})
+        ```
 
-    ??? example "Expected output"
+    3. Check the indexes:
 
-        ```{.text .no-copy}
-                [
+        ```javascript
+        db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
+        ```
+
+        ??? example "Expected output"
+
+            ```{.text .no-copy}
+            [
                 '_id_',
                 'value_1',
-                    'value_1_uid_-1',
-                    'uid_1',
-                    'tag_text',
-                    '_id_hashed',
-                    'created_at_1',
-                    'value_partial',
-                    'tag_sparse'
-                    ]
+                'value_1_uid_-1',
+                'uid_1',
+                'tag_text',
+                '_id_hashed',
+                'created_at_1',
+                'value_partial',
+                'tag_sparse'
+            ]
+            ```
+
+        The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
+
+        ```javascript
+        db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
         ```
-
-    The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
-
-    ```javascript
-    db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
-    ```
-
-    ```{.text .no-copy}
-    MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
-    ```
-
-    **On `mongos3`.** List the databases:
-
-    ```javascript
-    show databases
-    ```
-
-    ??? example "Expected output"
 
         ```{.text .no-copy}
-        admin                        172.00 KiB
-        config                         2.11 MiB
-        db_1                          31.55 MiB
-        percona_clustersync_mongodb  168.00 KiB
+        MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
         ```
 
-    Count the documents. The `db_1` database returns the full count and `db_0` returns zero:
+    4. **On `mongos3`.** List the databases:
 
-    ```javascript
-    db.getSiblingDB('db_1').docs.countDocuments({})
-    db.getSiblingDB('db_0').docs.countDocuments({})
-    ```
+        ```javascript
+        show databases
+        ```
 
-    Check the indexes:
+        ??? example "Expected output"
 
-    ```javascript
-    db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
-    ```
+            ```{.text .no-copy}
+            admin                        172.00 KiB
+            config                         2.11 MiB
+            db_1                          31.55 MiB
+            percona_clustersync_mongodb  168.00 KiB
+            ```
 
-    Querying the collection replicated to the other target returns an error:
+    5. Count the documents. The `db_1` database returns the full count and `db_0` returns zero:
 
-    ```javascript
-    db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
-    ```
+        ```javascript
+        db.getSiblingDB('db_1').docs.countDocuments({})
+        db.getSiblingDB('db_0').docs.countDocuments({})
+        ```
 
-    ```{.text .no-copy}
-    MongoServerError[NamespaceNotFound]: ns does not exist: db_0.docs
-    ```
+    6. Check the indexes:
 
-    Finally, check the logs of each instance for errors. See [Logging in Percona ClusterSync for MongoDB](logging.md).
+        ```javascript
+        db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
+        ```
+
+        Querying the collection replicated to the other target returns an error:
+
+        ```javascript
+        db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
+        ```
+
+        ```{.text .no-copy}
+        MongoServerError[NamespaceNotFound]: ns does not exist: db_0.docs
+        ```
+
+    7. Finally, check the logs of each instance for errors. See [Logging in Percona ClusterSync for MongoDB](logging.md).
