@@ -28,7 +28,7 @@ This page lists known limitations for using {{pcsm.full_name}}.
 
 The following limitations apply specifically to sharded cluster replication:
 
-* {{pcsm.short}} replicates the data and doesn't continuously replicate metadata. For ranged shard keys, the initial chunk boundaries and ownership are copied during the initial sync, but subsequent sharding metadata changes are not replicated. The following information is therefore not preserved from the source cluster:
+* {{pcsm.short}} replicates the data and doesn't continuously replicate metadata. For ranged shard keys, the initial chunk boundaries are copied and ownership is initialized on the target during the initial sync, but subsequent sharding metadata changes are not replicated. The following information is therefore not preserved from the source cluster:
 
    * The primary shard name for a collection. The target cluster may have a different primary shard name.
    * Ongoing chunk distribution information. The target cluster manages chunk distribution according to its own sharding configuration. See [Chunk distribution](sharding.md#chunk-distribution) for more information.
