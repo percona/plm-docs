@@ -50,79 +50,55 @@ The target starts from the same chunk boundaries as the source, so a chunk migra
 
 !!! admonition "Version added: 0.10.0"
 
-Sharding an empty collection on a ranged shard key gives you a single chunk that covers the whole key range, and the balancer only starts spreading data once documents arrive. For a clone, that is the worst possible starting point. Every document {{pcsm.short}} writes lands on one shard, that shard absorbs the entire write load, and when the clone finishes the balancer begins a long migration of data that never needed to be in one place.
+When MongoDB shards an empty collection on a ranged shard key, it creates a single chunk covering the entire range of shard key values. See [Data partitioning with chunks :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-data-partitioning/){:target="_blank"} in the MongoDB documentation. A clone into that collection would therefore write to a single shard, and the target balancer would move the data afterwards.
 
-{{pcsm.short}} pre-splits the target collection before it copies anything. It reads the chunk layout of the source collection, recreates those boundaries on the target, and places the resulting chunks across the target shards. Clone writes then spread across every shard from the first document, and no rebalancing wave follows the clone.
+{{pcsm.short}} therefore recreates the source chunk boundaries on the target before copying any documents, so the clone writes to every shard from the start and no rebalancing wave follows. Matching boundaries are also what makes it safe to leave the balancer running on the source, as described in [Balancer operation](#balancer-operation).
 
-This happens automatically. There is no flag to set, nothing to enable, and no way to turn it off. {{pcsm.short}} identifies the source collection by UUID, keeps the chunk boundaries in order, and applies them with the standard MongoDB sharding commands.
+This runs automatically for every sharded collection, immediately after {{pcsm.short}} shards it on the target. There is no flag and nothing to configure.
 
-| **Source collection** | **Target shards** | **What {{pcsm.short}} does** |
-|-----------------------|-------------------|------------------------------|
-| Hashed shard key | Any number | Nothing. The target keeps the layout that `shardCollection` creates. |
-| Ranged shard key | Same number as the source | Mirrors the source chunk boundaries and their ownership pattern. |
-| Ranged shard key | Different number from the source | Replays the source boundaries and places the chunks so that each target shard holds roughly the same volume of data. |
+| **Source collection** | **Target shards** | **Result on the target** |
+|-----------------------|-------------------|--------------------------|
+| Hashed shard key | Any number | The layout that `shardCollection` creates, unchanged. |
+| Ranged shard key | Same number as the source | The same chunk boundaries and the same ownership pattern as the source. |
+| Ranged shard key | Different number from the source | The same chunk boundaries, with each target shard holding roughly the same volume of data. |
 
 !!! note "The layout is a starting point, not a copy"
 
-    {{pcsm.short}} reads the source chunk boundaries once, before the clone. It does not replicate sharding metadata afterwards, so later chunk migrations, splits, merges, and resharding on the source have no effect on the target layout. The two clusters drift apart as soon as either balancer moves data. A layout that no longer matches the source is expected and does not indicate a replication problem.
-
+    {{pcsm.short}} reads the source boundaries once, before the clone, and does not replicate sharding metadata afterwards. Later migrations, splits, merges, and resharding on the source have no effect on the target, so the two layouts drift apart as the balancers work. That is expected and does not indicate a replication problem.
 
 ### Hashed shard keys
 
-{{pcsm.short}} does no pre-splitting for hashed shard keys, and that is deliberate. The `shardCollection` command already produces an evenly distributed layout across all shards on every supported MongoDB version, so there is nothing to improve and {{pcsm.short}} keeps what MongoDB created.
+{{pcsm.short}} does not pre-split hashed collections, and does not need to. MongoDB already spreads the initial chunks evenly across the shards for a hashed shard key, so {{pcsm.short}} keeps that layout. See [Hashed sharding :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/hashed-sharding/){:target="_blank"} in the MongoDB documentation.
 
-The number of initial chunks depends on the server version. With three target shards:
+The number of chunks depends on your MongoDB version. With three target shards, MongoDB 6.0 and 7.0 create six chunks and MongoDB 8.0 creates three.
 
-* MongoDB 6.0 and 7.0 create six chunks, roughly two per shard.
-* MongoDB 8.0 creates three chunks, roughly one per shard.
+### Ranged shard keys
 
-See [Hashed sharding :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/hashed-sharding/){:target="_blank"} in the MongoDB documentation for how the server builds that initial layout.
+With the same number of shards on both sides, the target gets the source boundaries and the same ownership pattern. Shards are paired in sorted order, so a range does not necessarily land on the target shard whose name resembles its source shard.
 
-### Ranged shard keys with the same number of shards
+With different shard counts, the boundaries still come from the source, but the largest chunks are placed first, each on whichever target shard holds the least data at that point. Every shard ends up owning chunks and holding roughly the same volume. The estimate carries across collections, so the large chunks of several collections do not all collect on one shard.
 
-When both clusters have the same number of shards, {{pcsm.short}} reproduces the source layout directly. It sorts the shard IDs on each side, pairs them by position, replays every source chunk boundary on the target, and puts each target chunk on the shard paired with its source owner.
+??? example "How the two cases look"
 
-```{.text .no-copy}
-Source shards: src-a, src-b
-Target shards: tgt-a, tgt-b
+    ```{.text .no-copy}
+    Same number of shards
+    ---------------------
+    Source: [MinKey, 100) -> src-a    Target: [MinKey, 100) -> tgt-a
+            [100, MaxKey) -> src-b            [100, MaxKey) -> tgt-b
 
-Source layout:
-[MinKey, 100)  ->  src-a
-[100, MaxKey)  ->  src-b
+    Different number of shards
+    --------------------------
+    Target shards: tgt-a, tgt-b
+    Source chunk sizes: 100 MB, 60 MB, 40 MB
 
-Target layout:
-[MinKey, 100)  ->  tgt-a
-[100, MaxKey)  ->  tgt-b
-```
-
-!!! note "Shard names are paired, not matched"
-
-    Pairing is by sorted position, so the shard that owns a range on the target is not necessarily the one with a similar name on the source. What {{pcsm.short}} reproduces is the shape of the distribution, not the shard names.
-
-### Ranged shard keys with a different number of shards
-
-Source ownership cannot be mirrored when the shard counts differ, so {{pcsm.short}} aims for even data volume instead. It estimates the size of every source chunk, works through the chunks from largest to smallest, and assigns each one to the target shard holding the least estimated data so far. It then replays the source boundaries and places the chunks according to those assignments.
-
-```{.text .no-copy}
-Target shards: tgt-a, tgt-b
-Source chunk sizes: 100 MB, 60 MB, 40 MB
-
-100 MB  ->  tgt-a
- 60 MB  ->  tgt-b
- 40 MB  ->  tgt-b
-
-Estimated result:
-tgt-a: 100 MB
-tgt-b: 100 MB
-```
-
-The running size estimate carries across collections rather than resetting for each one, so a large chunk from one collection and a large chunk from the next do not both land on the same target shard. The source boundaries are preserved either way. Only the ownership changes.
+    100 MB -> tgt-a        Estimated result:
+     60 MB -> tgt-b        tgt-a: 100 MB
+     40 MB -> tgt-b        tgt-b: 100 MB
+    ```
 
 ### If the pre-split fails
 
-A failed pre-split fails the clone for that instance. {{pcsm.short}} does not fall back to loading into an unsplit collection, because that would quietly reintroduce the single-shard bottleneck the pre-split exists to prevent.
-
-Fix the underlying problem on the target cluster, then restart replication with `pcsm resume --from-failure`. See [Resume the replication](install/usage.md#resume-the-replication), [Logging in {{pcsm.full_name}}](logging.md), and the [Troubleshooting guide](troubleshooting.md).
+A failed pre-split fails the clone for that instance, and there is no fallback to loading into an unsplit collection. Check the log for the reported failure, resolve it on the target cluster, then restart replication with `pcsm resume --from-failure`. See [Resume the replication](install/usage.md#resume-the-replication), [Logging in {{pcsm.full_name}}](logging.md), and the [Troubleshooting guide](troubleshooting.md).
 
 ### Check the layout on the target
 
@@ -132,9 +108,7 @@ Connect to the target `mongos` and look at how a replicated collection is spread
 db.getSiblingDB('<database>').<collection>.getShardDistribution()
 ```
 
-For chunk counts per shard across the cluster, use `sh.status()`. See [db.collection.getShardDistribution() :octicons-link-external-16:](https://www.mongodb.com/docs/manual/reference/method/db.collection.getShardDistribution/){:target="_blank"} and [sh.status() :octicons-link-external-16:](https://www.mongodb.com/docs/manual/reference/method/sh.status/){:target="_blank"} in the MongoDB documentation.
-
-Look for data on every shard rather than an exact match with the source. Chunk counts and document counts per shard differ from the source even immediately after the clone, and they keep changing as the balancer works.
+Look for data on every shard rather than an exact match with the source, since counts differ even immediately after the clone and keep changing as the balancer works. For chunk counts per shard across the cluster, use [sh.status() :octicons-link-external-16:](https://www.mongodb.com/docs/manual/reference/method/sh.status/){:target="_blank"}.
 
 ## Usage
 
