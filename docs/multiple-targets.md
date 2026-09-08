@@ -143,45 +143,45 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
     Counting documents confirms the same thing from the data side:
 
-        ```javascript
-        db.getSiblingDB('db_0').docs.countDocuments({})
-        db.getSiblingDB('db_1').docs.countDocuments({})
-        ```
+    ```javascript
+    db.getSiblingDB('db_0').docs.countDocuments({})
+    db.getSiblingDB('db_1').docs.countDocuments({})
+    ```
 
     The first count matches the source. The second returns `0` rather than an error,
 
 
     PCSM recreates the source indexes on the target during finalization, so check that they arrived:
 
-        ```javascript
-        db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
-        ```
+    ```javascript
+    db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
+    ```
 
-        ??? example "Expected output"
-
-            ```{.text .no-copy}
-            [
-                '_id_',
-                'value_1',
-                'value_1_uid_-1',
-                'uid_1',
-                'tag_text',
-                '_id_hashed',
-                'created_at_1',
-                'value_partial',
-                'tag_sparse'
-            ]
-            ```
-
-        The collection replicated to the other target does not exist here, so querying it returns an error.
-
-        ```javascript
-        db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
-        ```
+    ??? example "Expected output"
 
         ```{.text .no-copy}
-        MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
+        [
+            '_id_',
+            'value_1',
+            'value_1_uid_-1',
+            'uid_1',
+            'tag_text',
+            '_id_hashed',
+            'created_at_1',
+            'value_partial',
+            'tag_sparse'
+        ]
         ```
+
+    The collection replicated to the other target does not exist here, so querying it returns an error.
+
+    ```javascript
+    db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
+    ```
+
+    ```{.text .no-copy}
+    MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
+    ```
 
     Repeat the same three checks on `rs3` with the databases reversed. There, `db_1` holds the data and its indexes, and `db_0.docs` returns `ns does not exist: db_0.docs`.
 
@@ -189,7 +189,7 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
     !!! warning "Technical preview"
 
-    Sharding support in PCSM is a technical preview and is not recommended for production. See [Sharding support in Percona ClusterSync for MongoDB](sharding.md).
+        Sharding support in PCSM is a technical preview and is not recommended for production. See [Sharding support in Percona ClusterSync for MongoDB](sharding.md).
 
     ## Replicate from a sharded cluster to two targets
 
@@ -200,12 +200,11 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
     | csync-a           | mongos1    | mongos2    | `db_0.*`                |
     | csync-b           | mongos1    | mongos3    | `db_1.*`                |
 
+    !!! note "Requirements for sharded deployments"
+        The source and both targets must be sharded clusters running the same MongoDB version, unless you are using [cross-version replication](version-compatibility.md). You do not need to disable the balancer on any of them. See [Sharding support in Percona ClusterSync for MongoDB](sharding.md).
+
     PCSM connects through `mongos` on both the source and the target, so you do not need to list individual shard members or config servers in the connection strings.
     {.power-number}
-
-    !!! note "Requirements for sharded deployments"
-
-        The source and both targets must be sharded clusters running the same MongoDB version, unless you are using [cross-version replication](version-compatibility.md). You do not need to disable the balancer on any of them. See [Sharding support in Percona ClusterSync for MongoDB](sharding.md).
 
     1. Start `csync-a` against the source `mongos` and the first target `mongos`:
 
@@ -246,7 +245,7 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
         pcsm start --include-namespaces="db_1.*"
         ```
     
-    For information on how include and exclude filters interact, see [Start the filtered replication](install/usage.md#start-the-filtered-replication). For the full flag list, see [PCSM commands](pcsm-commands.md). You can also drive every step through the [PCSM HTTP API](api.md).
+        For information on how include and exclude filters interact, see [Start the filtered replication](install/usage.md#start-the-filtered-replication). For the full flag list, see [PCSM commands](pcsm-commands.md). You can also drive every step through the [PCSM HTTP API](api.md).
 
 
     5. Check each instance and wait for the clone to complete and replication lag to reach an acceptable value. Look for `initialSync.completed` set to `true` and a low `lagTimeSeconds`:
@@ -262,7 +261,6 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
         ```
 
         !!! warning "Finalization cannot be undone"
-
             You cannot resume an instance after you finalize it. Running `start` again begins a fresh initial sync and overwrites the target collections a second time. For a migration cutover, stop application writes to the namespaces the instance owns, wait for `lagTimeSeconds` to reach `0`, and finalize only then.
 
     7. Check the status of each instance after finalization. The following output is from `csync-a`:
@@ -304,57 +302,57 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
     Connect to the `mongos` of each target cluster, not to the shards directly. On `mongos2`, list the databases:
 
 
-        ```javascript
-        show databases
+    ```javascript
+    show databases
+    ```
+
+    ??? example "Expected output"
+
+        ```{.text .no-copy}
+        admin                        172.00 KiB
+        config                         2.11 MiB
+        db_0                          31.56 MiB
+        percona_clustersync_mongodb  168.00 KiB
         ```
-
-        ??? example "Expected output"
-
-            ```{.text .no-copy}
-            admin                        172.00 KiB
-            config                         2.11 MiB
-            db_0                          31.56 MiB
-            percona_clustersync_mongodb  168.00 KiB
-            ```
 
     Count the documents. The `db_0` database returns the full count and `db_1` returns zero:
 
-        ```javascript
-        db.getSiblingDB('db_0').docs.countDocuments({})
-        db.getSiblingDB('db_1').docs.countDocuments({})
-        ```
+    ```javascript
+    db.getSiblingDB('db_0').docs.countDocuments({})
+    db.getSiblingDB('db_1').docs.countDocuments({})
+    ```
 
     Check that the indexes PCSM recreated during finalization are present:
 
-        ```javascript
-        db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
-        ```
+    ```javascript
+    db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
+    ```
 
-        ??? example "Expected output"
-
-            ```{.text .no-copy}
-            [
-                '_id_',
-                'value_1',
-                'value_1_uid_-1',
-                'uid_1',
-                'tag_text',
-                '_id_hashed',
-                'created_at_1',
-                'value_partial',
-                'tag_sparse'
-            ]
-            ```
-
-        The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
-
-        ```javascript
-        db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
-        ```
+    ??? example "Expected output"
 
         ```{.text .no-copy}
-        MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
+        [
+            '_id_',
+            'value_1',
+            'value_1_uid_-1',
+            'uid_1',
+            'tag_text',
+            '_id_hashed',
+            'created_at_1',
+            'value_partial',
+            'tag_sparse'
+        ]
         ```
+
+    The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
+
+    ```javascript
+    db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
+    ```
+
+    ```{.text .no-copy}
+    MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
+    ```
 
     If the source collection was sharded, confirm that the target collection is sharded too.
 
