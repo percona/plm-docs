@@ -30,9 +30,11 @@ The following limitations apply specifically to sharded cluster replication:
 
 * {{pcsm.short}} replicates the data and doesn't continuously replicate metadata. For ranged shard keys, the initial chunk boundaries are copied and ownership is initialized on the target during the initial sync, but subsequent sharding metadata changes are not replicated. The following information is therefore not preserved from the source cluster:
 
-   * The primary shard name for a collection. The target cluster may have a different primary shard name.
-   * Ongoing chunk distribution information. The target cluster manages chunk distribution according to its own sharding configuration. See [Chunk distribution](sharding.md#chunk-distribution) for more information.
-   * The configuration of [zones for sharded data :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/zone-sharding/).
+* The primary shard name for a collection. The target cluster may have a different primary shard name.
+
+* Ongoing chunk distribution information. The target cluster manages chunk distribution according to its own sharding configuration. See [Chunk distribution](sharding.md#chunk-distribution) for more information.
+
+* The configuration of [zones for sharded data :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/zone-sharding/).
 
 * During data replication, the following commands are not supported: `movePrimary`, `reshardCollecton`, `unshardCollection`, `refineCollectionShardKey`. Running them results in failed replication and you must start it anew, from the initial data sync stage.
 
