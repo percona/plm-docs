@@ -187,23 +187,23 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
     1. Start `csync-a` against the source `mongos` and the first target `mongos`:
 
         ```bash
-                pcsm \
-                --source "mongodb://csync:<password>@mongos1:27017" \
-                --target "mongodb://csync:<password>@mongos2:27017"
+        pcsm \
+        --source "mongodb://csync:<password>@mongos1:27017" \
+        --target "mongodb://csync:<password>@mongos2:27017"
         ```
 
     2. Start `csync-b` against the same source `mongos` and the second target `mongos`:
 
         ```bash
-                pcsm \
-                --source "mongodb://csync:<password>@mongos1:27017" \
-                --target "mongodb://csync:<password>@mongos3:27017"
+        pcsm \
+        --source "mongodb://csync:<password>@mongos1:27017" \
+        --target "mongodb://csync:<password>@mongos3:27017"
         ```
 
     3. Start replication on `csync-a`:
 
         ```bash
-                pcsm start --include-namespaces="db_0.*"
+        pcsm start --include-namespaces="db_0.*"
         ```
 
         ??? example "Expected output"
