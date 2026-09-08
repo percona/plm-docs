@@ -41,37 +41,37 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
     1. Start `csync-a` with `rs1` as the source and `rs2` as the target:
 
         ```bash
-                pcsm \
-                --source "mongodb://csync:<password>@rs101:27017,rs102:27017,rs103:27017/?replicaSet=rs1" \
-                --target "mongodb://csync:<password>@rs201:27017,rs202:27017,rs203:27017/?replicaSet=rs2"
+        pcsm \
+        --source "mongodb://csync:<password>@rs101:27017,rs102:27017,rs103:27017/?replicaSet=rs1" \
+        --target "mongodb://csync:<password>@rs201:27017,rs202:27017,rs203:27017/?replicaSet=rs2"
         ```
 
     2. Start `csync-b` against the same source, with `rs3` as the target:
 
         ```bash
-                pcsm \
-                --source "mongodb://csync:<password>@rs101:27017,rs102:27017,rs103:27017/?replicaSet=rs1" \
-                --target "mongodb://csync:<password>@rs301:27017,rs302:27017,rs303:27017/?replicaSet=rs3"
+        pcsm \
+        --source "mongodb://csync:<password>@rs101:27017,rs102:27017,rs103:27017/?replicaSet=rs1" \
+        --target "mongodb://csync:<password>@rs301:27017,rs302:27017,rs303:27017/?replicaSet=rs3"
         ```
 
     3. Start replication on `csync-a`, filtered to the namespaces it replicates:
 
         ```bash
-                pcsm start --include-namespaces="db_0.*"
+        pcsm start --include-namespaces="db_0.*"
         ```
 
         ??? example "Expected output"
 
             ```{.json .no-copy}
-                        {
-                        "ok": true
-                        }
+            {
+            "ok": true
+            }
             ```
 
     4. Start replication on `csync-b` with its own filter:
 
         ```bash
-                pcsm start --include-namespaces="db_1.*"
+        pcsm start --include-namespaces="db_1.*"
         ```
 
         For how include and exclude filters interact, see [Start the filtered replication](install/usage.md#start-the-filtered-replication). For the full flag list, see [PCSM commands](pcsm-commands.md). You can also drive every step through the [PCSM HTTP API](api.md).
@@ -79,47 +79,47 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
     5. Check each instance and wait for the clone to complete and replication lag to reach an acceptable value:
 
         ```bash
-                pcsm status
+        pcsm status
         ```
 
     6. Finalize each instance:
 
         ```bash
-                pcsm finalize
+        pcsm finalize
         ```
 
     7. Check the status of each instance after finalization. The following output is from `csync-a`. The `csync-b` output has the same structure with its own operation time and finalization timestamps:
 
         ```bash
-                pcsm status
+        pcsm status
         ```
 
         ??? example "Expected output"
 
             ```{.json .no-copy}
-                        {
-                        "ok": true,
-                        "state": "finalized",
-                        "info": "Finalized",
-                        "lagTimeSeconds": 0,
-                        "eventsRead": 0,
-                        "eventsApplied": 0,
-                        "lastReplicatedOpTime": {
-                            "ts": "1787298593.1",
-                            "isoDate": "2026-08-21T07:49:53Z"
-                        },
-                        "initialSync": {
-                            "estimatedCloneSizeBytes": 9877780,
-                            "clonedSizeBytes": 9877780,
-                            "completed": true,
-                            "cloneCompleted": true
-                        },
-                        "finalization": {
-                            "completed": true,
-                            "startedAt": "2026-08-21T07:49:53.633159569Z",
-                            "completedAt": "2026-08-21T07:49:53.759444616Z"
-                        }
-                        }
+            {
+                "ok": true,
+                "state": "finalized",
+                "info": "Finalized",
+                "lagTimeSeconds": 0,
+                "eventsRead": 0,
+                "eventsApplied": 0,
+                "lastReplicatedOpTime": {
+                    "ts": "1787298593.1",
+                    "isoDate": "2026-08-21T07:49:53Z"
+                },
+                "initialSync": {
+                    "estimatedCloneSizeBytes": 9877780,
+                    "clonedSizeBytes": 9877780,
+                    "completed": true,
+                    "cloneCompleted": true
+                },
+                "finalization": {
+                    "completed": true,
+                    "startedAt": "2026-08-21T07:49:53.633159569Z",
+                    "completedAt": "2026-08-21T07:49:53.759444616Z"
+                }
+            }
             ```
 
     ### Verify the result on replica set targets
@@ -128,17 +128,17 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
     **On `rs2`.** List the databases, then count the documents. The `db_0` database returns the full count and `db_1` returns zero:
 
-        ```javascript
-            show databases
-            db.getSiblingDB('db_0').docs.countDocuments({})
-            db.getSiblingDB('db_1').docs.countDocuments({})
-        ```
+    ```javascript
+    show databases
+    db.getSiblingDB('db_0').docs.countDocuments({})
+    db.getSiblingDB('db_1').docs.countDocuments({})
+    ```
 
     Check the indexes that PCSM recreated on the target:
 
-        ```javascript
-            db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
-        ```
+    ```javascript
+    db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
+    ```
 
     ??? example "Expected output"
 
@@ -159,11 +159,11 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
     The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
 
     ```javascript
-        db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
+    db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
     ```
 
     ```{.text .no-copy}
-        MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
+    MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
     ```
 
     **On `rs3`.** Run the same checks with the databases reversed. Here `db_1` holds the data, and querying `db_0.docs` returns `ns does not exist: db_0.docs`.
@@ -209,9 +209,9 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
         ??? example "Expected output"
 
             ```{.json .no-copy}
-                        {
-                        "ok": true
-                        }
+            {
+            "ok": true
+            }
             ```
 
     4. Start replication on `csync-b`:
@@ -241,62 +241,60 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
         ??? example "Expected output"
 
             ```{.json .no-copy}
-                        {
-                        "ok": true,
-                        "state": "finalized",
-                        "info": "Finalized",
-                        "lagTimeSeconds": 2,
-                        "eventsRead": 6,
-                        "eventsApplied": 5,
-                        "lastReplicatedOpTime": {
-                            "ts": "1787301347.3",
-                            "isoDate": "2026-08-21T08:35:47Z"
-                        },
-                        "initialSync": {
-                            "estimatedCloneSizeBytes": 9877780,
-                            "clonedSizeBytes": 9877780,
-                            "completed": true,
-                            "cloneCompleted": true
-                        },
-                        "finalization": {
-                            "completed": true,
-                            "startedAt": "2026-08-21T08:35:47.949454942Z",
-                            "completedAt": "2026-08-21T08:35:48.21823288Z"
-                        }
-                        }
-            ```
-
-    ### Verify the result on sharded targets
+            {
+                "ok": true,
+                "state": "finalized",
+                "info": "Finalized",
+                "lagTimeSeconds": 2,
+                "eventsRead": 6,
+                "eventsApplied": 5,
+                "lastReplicatedOpTime": {
+                    "ts": "1787301347.3",
+                    "isoDate": "2026-08-21T08:35:47Z"
+                },
+                "initialSync": {
+                    "estimatedCloneSizeBytes": 9877780,
+                    "clonedSizeBytes": 9877780,
+                    "completed": true,
+                    "cloneCompleted": true
+                },
+                "finalization": {
+                    "completed": true,
+                    "startedAt": "2026-08-21T08:35:47.949454942Z",
+                    "completedAt": "2026-08-21T08:35:48.21823288Z"
+                }
+            }
+            ```   ### Verify the result on sharded targets
 
     Connect to the `mongos` of each target cluster and confirm it holds only the namespaces that its instance replicated.
 
     **On `mongos2`.** List the databases:
 
-        ```javascript
-            show databases
-        ```
+    ```javascript
+    show databases
+    ```
 
     ??? example "Expected output"
 
         ```{.text .no-copy}
-                admin                        172.00 KiB
-                config                         2.11 MiB
-                db_0                          31.56 MiB
-                percona_clustersync_mongodb  168.00 KiB
+        admin                        172.00 KiB
+        config                         2.11 MiB
+        db_0                          31.56 MiB
+        percona_clustersync_mongodb  168.00 KiB
         ```
 
     Count the documents. The `db_0` database returns the full count and `db_1` returns zero:
 
-        ```javascript
-            db.getSiblingDB('db_0').docs.countDocuments({})
-            db.getSiblingDB('db_1').docs.countDocuments({})
-        ```
+    ```javascript
+    db.getSiblingDB('db_0').docs.countDocuments({})
+    db.getSiblingDB('db_1').docs.countDocuments({})
+    ```
 
     Check the indexes:
 
-        ```javascript
-            db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
-        ```
+    ```javascript
+    db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
+    ```
 
     ??? example "Expected output"
 
@@ -316,50 +314,50 @@ The examples below replicate `db_0` to the first target and `db_1` to the second
 
     The collection replicated to the other target does not exist here, so querying it returns an error. This is the expected result:
 
-        ```javascript
-            db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
-        ```
+    ```javascript
+    db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
+    ```
 
-        ```{.text .no-copy}
-            MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
-        ```
+    ```{.text .no-copy}
+    MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
+    ```
 
     **On `mongos3`.** List the databases:
 
-        ```javascript
-            show databases
-        ```
+    ```javascript
+    show databases
+    ```
 
     ??? example "Expected output"
 
         ```{.text .no-copy}
-                admin                        172.00 KiB
-                config                         2.11 MiB
-                db_1                          31.55 MiB
-                percona_clustersync_mongodb  168.00 KiB
+        admin                        172.00 KiB
+        config                         2.11 MiB
+        db_1                          31.55 MiB
+        percona_clustersync_mongodb  168.00 KiB
         ```
 
     Count the documents. The `db_1` database returns the full count and `db_0` returns zero:
 
-        ```javascript
-            db.getSiblingDB('db_1').docs.countDocuments({})
-            db.getSiblingDB('db_0').docs.countDocuments({})
-        ```
+    ```javascript
+    db.getSiblingDB('db_1').docs.countDocuments({})
+    db.getSiblingDB('db_0').docs.countDocuments({})
+    ```
 
     Check the indexes:
 
-        ```javascript
-            db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
-        ```
+    ```javascript
+    db.getSiblingDB('db_1').docs.getIndexes().map(i => i.name)
+    ```
 
     Querying the collection replicated to the other target returns an error:
 
-        ```javascript
-            db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
-        ```
+    ```javascript
+    db.getSiblingDB('db_0').docs.getIndexes().map(i => i.name)
+    ```
 
-        ```{.text .no-copy}
-            MongoServerError[NamespaceNotFound]: ns does not exist: db_0.docs
-        ```
+    ```{.text .no-copy}
+    MongoServerError[NamespaceNotFound]: ns does not exist: db_0.docs
+    ```
 
     Finally, check the logs of each instance for errors. See [Logging in Percona ClusterSync for MongoDB](logging.md).
