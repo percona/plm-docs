@@ -69,7 +69,7 @@ Every instance runs the full replication workflow on its own: clone, replication
         pcsm start --include-namespaces="db_1.*"
         ```
 
-        For how include and exclude filters interact, see [Start the filtered replication](install/usage.md#start-the-filtered-replication). For the full flag list, see [PCSM commands](pcsm-commands.md). You can also drive every step through the [PCSM HTTP API](api.md).
+        For information on how include and exclude filters interact, see [Start the filtered replication](install/usage.md#start-the-filtered-replication). For the full flag list, see [PCSM commands](pcsm-commands.md). You can also drive every step through the [PCSM HTTP API](api.md).
 
     5. Check each instance and wait for the clone to complete and replication lag to reach an acceptable value:
 
@@ -270,7 +270,7 @@ Every instance runs the full replication workflow on its own: clone, replication
     Connect to the `mongos` of each target cluster and confirm it holds only the namespaces that its instance replicated.
     {.power-number}
 
-    1. **On `mongos2`.** List the databases:
+    1. **On `mongos2`.**, list the databases:
 
         ```javascript
         show databases
@@ -324,7 +324,7 @@ Every instance runs the full replication workflow on its own: clone, replication
         MongoServerError[NamespaceNotFound]: ns does not exist: db_1.docs
         ```
 
-    4. **On `mongos3`.** List the databases:
+    4. **On `mongos3`.**, list the databases:
 
         ```javascript
         show databases
