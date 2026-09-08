@@ -12,7 +12,7 @@ The workflow for sharded clusters is similar to replica sets. See [How {{pcsm.fu
 
 Since {{pcsm.short}} connects through `mongos`, the cluster topology doesn't matter. This means the source and target clusters can have different numbers of shards.
 
-Also, {{pcsm.short}} replicates data and not metadata. This means chunk distribution as well as the primary shard name for a collection may differ on source and target clusters.
+{{pcsm.short}} replicates data and not sharding metadata. For a collection with a ranged shard key it copies the initial chunk boundaries to the target before the clone starts, but it does not replicate any sharding metadata changes that follow, and the primary shard name for a collection may differ on source and target clusters. See [Chunk distribution](#chunk-distribution).
 
 ## Prerequisites
 
@@ -36,15 +36,15 @@ For detailed information about authentication and connection string configuratio
 
 ### Initial sync preparation
 
-Before starting the initial sync, {{pcsm.short}} checks which collections are sharded on the source cluster and creates corresponding sharded collections on the destination cluster. The only sharding configuration preserved from the source cluster is the sharding key; all other sharding details are handled internally by the destination cluster.
+Before starting the initial sync, {{pcsm.short}} checks which collections are sharded on the source cluster and creates corresponding sharded collections on the destination cluster. The shard key is the only sharding configuration carried over from the source; everything else is handled internally by the destination cluster.
 
-For a ranged shard key, immediately after it shards a collection on the target and before copying any documents, {{pcsm.short}} pre-splits the collection using the source chunk boundaries. Hashed collections retain the layout created by `shardCollection`. See [Chunk distribution](#chunk-distribution).
+For a ranged shard key, {{pcsm.short}} then pre-splits the collection using the source chunk boundaries, immediately after it shards the collection on the target and before it copies any documents. Collections with a hashed shard key keep the layout that `shardCollection` creates. See [Chunk distribution](#chunk-distribution).
 
 ### Balancer operation
 
 {{pcsm.full_name}} connects to source and target clusters via a `mongos` instance. Therefore, you do not need to disable the balancer on either the source or target cluster before starting replication. The target cluster's balancer continues to operate normally and manages chunk distribution according to its own sharding configuration and balancer settings.
 
-The target starts from the same chunk boundaries as the source, so a chunk migration on the source arrives where the target expects it. That makes it safe to leave the balancer running during the sync, which matters in write-heavy clusters where turning it off is not an option. See [Manage sharded cluster balancer :octicons-link-external-16:](https://www.mongodb.com/docs/manual/tutorial/manage-sharded-cluster-balancer/){:target="_blank"} in the MongoDB documentation.
+For ranged shard keys, the target also starts from the source chunk boundaries, which leaves the target balancer less data to move once the clone begins. Chunk migrations on either cluster are not replicated to the other, so both clusters keep managing their own layout throughout. See [Manage sharded cluster balancer :octicons-link-external-16:](https://www.mongodb.com/docs/manual/tutorial/manage-sharded-cluster-balancer/){:target="_blank"} in the MongoDB documentation.
 
 ## Chunk distribution
 
@@ -52,25 +52,22 @@ The target starts from the same chunk boundaries as the source, so a chunk migra
 
 When MongoDB shards an empty collection on a ranged shard key, it creates a single chunk covering the entire range of shard key values. See [Data partitioning with chunks :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-data-partitioning/){:target="_blank"} in the MongoDB documentation. A clone into that collection would therefore write to a single shard, and the target balancer would move the data afterwards.
 
-{{pcsm.short}} therefore recreates the source chunk boundaries on the target before copying any documents, so the clone writes to every shard from the start and no rebalancing wave follows. Matching boundaries are also what makes it safe to leave the balancer running on the source, as described in [Balancer operation](#balancer-operation).
+{{pcsm.short}} therefore recreates the source chunk boundaries on the target before copying any documents. Clone writes follow the source layout instead of concentrating on one shard, which reduces how much the target balancer has to move afterwards.
 
-This runs automatically for every sharded collection, immediately after {{pcsm.short}} shards it on the target. There is no flag and nothing to configure.
+This runs automatically for every collection with a ranged shard key, immediately after {{pcsm.short}} shards it on the target. There is no flag and nothing to configure. Collections with a hashed shard key are not pre-split.
 
 | **Source collection** | **Target shards** | **Result on the target** |
 |-----------------------|-------------------|--------------------------|
 | Hashed shard key | Any number | The layout that `shardCollection` creates, unchanged. |
 | Ranged shard key | Same number as the source | The same chunk boundaries and the same ownership pattern as the source. |
-| Ranged shard key | Different number from the source | The same chunk boundaries, with each target shard holding roughly the same volume of data. |
+| Ranged shard key | Different number from the source | The same chunk boundaries, with chunks placed to even out the estimated data volume per shard.|
 
 !!! note "The layout is a starting point, not a copy"
-
     {{pcsm.short}} reads the source boundaries once, before the clone, and does not replicate sharding metadata afterwards. Later migrations, splits, merges, and resharding on the source have no effect on the target, so the two layouts drift apart as the balancers work. That is expected and does not indicate a replication problem.
 
 ### Hashed shard keys
 
 {{pcsm.short}} does not pre-split hashed collections, and does not need to. MongoDB already spreads the initial chunks evenly across the shards for a hashed shard key, so {{pcsm.short}} keeps that layout. See [Hashed sharding :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/hashed-sharding/){:target="_blank"} in the MongoDB documentation.
-
-The number of chunks depends on your MongoDB version. With three target shards, MongoDB 6.0 and 7.0 create six chunks and MongoDB 8.0 creates three.
 
 ### Ranged shard keys
 
@@ -105,7 +102,7 @@ A failed pre-split fails the clone for that instance, and there is no fallback t
 Connect to the target `mongos` and look at how a replicated collection is spread:
 
 ```javascript
-db.getSiblingDB('<database>').<collection>.getShardDistribution()
+db.getSiblingDB('<database>').getCollection('<collection>').getShardDistribution()
 ```
 
 Look for data on every shard rather than an exact match with the source, since counts differ even immediately after the clone and keep changing as the balancer works. For chunk counts per shard across the cluster, use [sh.status() :octicons-link-external-16:](https://www.mongodb.com/docs/manual/reference/method/sh.status/){:target="_blank"}.
