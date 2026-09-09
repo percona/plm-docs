@@ -105,7 +105,7 @@ Instead, {{pcsm.short}} estimates the size of each source chunk and processes th
     tgt-a: 100 MB
     tgt-b: 100 MB
     ```
-    Here, the 100 MB chunk is placed on `tgt-a `first. The 60 MB chunk goes to `tgt-b`, which has no data assigned yet. When the 40 MB chunk is processed, `tgt-b `still has less estimated data than `tgt-a`, so the chunk is also placed there.
+    Here, the 100 MB chunk is placed on `tgt-a` first. The 60 MB chunk goes to `tgt-b`, which has no data assigned yet. When the 40 MB chunk is processed, `tgt-b` still has less estimated data than `tgt-a`, so the chunk is also placed there.
 
 ### Hashed shard keys
 
