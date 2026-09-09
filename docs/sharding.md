@@ -99,31 +99,7 @@ When the source and target have different numbers of shards, {{pcsm.short}} cann
 
 ### Hashed shard keys
 
-{{pcsm.short}} does not pre-split hashed collections, and does not need to. MongoDB already spreads the initial chunks evenly across the shards for a hashed shard key, so {{pcsm.short}} keeps that layout. See [Hashed sharding :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/hashed-sharding/){:target="_blank"} in the MongoDB documentation.
-
-### Ranged shard keys
-
-With the same number of shards on both sides, the target gets the source boundaries and the same ownership pattern. Shards are paired in sorted order, so a range does not necessarily land on the target shard whose name resembles its source shard.
-
-With different shard counts, the boundaries still come from the source, but the largest chunks are placed first, each on whichever target shard holds the least data at that point. Every shard ends up owning chunks and holding roughly the same volume. The estimate carries across collections, so the large chunks of several collections do not all collect on one shard.
-
-??? example "How the two cases look"
-
-    ```{.text .no-copy}
-    Same number of shards
-    ---------------------
-    Source: [MinKey, 100) -> src-a    Target: [MinKey, 100) -> tgt-a
-            [100, MaxKey) -> src-b            [100, MaxKey) -> tgt-b
-
-    Different number of shards
-    --------------------------
-    Target shards: tgt-a, tgt-b
-    Source chunk sizes: 100 MB, 60 MB, 40 MB
-
-    100 MB -> tgt-a        Estimated result:
-     60 MB -> tgt-b        tgt-a: 100 MB
-     40 MB -> tgt-b        tgt-b: 100 MB
-    ```
+{{pcsm.short}} does not pre-split hashed collections. MongoDB already spreads the initial chunks evenly across the shards for a hashed shard key, so {{pcsm.short}} keeps that layout. See [Hashed sharding :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/hashed-sharding/){:target="_blank"} in the MongoDB documentation.
 
 ### If the pre-split fails
 
@@ -136,8 +112,6 @@ Connect to the target `mongos` and look at how a replicated collection is spread
 ```javascript
 db.getSiblingDB('<database>').getCollection('<collection>').getShardDistribution()
 ```
-
-Look for data on every shard rather than an exact match with the source, since counts differ even immediately after the clone and keep changing as the balancer works. For chunk counts per shard across the cluster, use [sh.status() :octicons-link-external-16:](https://www.mongodb.com/docs/manual/reference/method/sh.status/){:target="_blank"}.
 
 ## Usage
 
