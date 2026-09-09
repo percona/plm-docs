@@ -56,7 +56,7 @@ For an empty collection with a ranged shard key, MongoDB initially creates a sin
 
 To avoid this, {{pcsm.short}} recreates the source chunk boundaries on the target before copying the data. How those chunks are placed depends on whether the source and target have the same number of shards.
 
-Collections with a hashed shard key use the initial chunk layout created by MongoDB. [Hashed shard keys](#hashed-shard-keys).
+Collections with a hashed shard key use the initial chunk layout created by MongoDB. See [Hashed shard keys](#hashed-shard-keys).
 
 !!! note
     {{pcsm.short}} uses the source chunk layout to prepare the target before the clone. It does not keep the chunk layouts on the two clusters synchronized. This is expected and does not indicate a replication problem. See [Balancer operation](#balancer-operation). Chunk migrations, splits, or merges that happen later on the source are not reproduced on the target. The layouts can therefore change independently as each cluster's balancer runs. This is expected and does not indicate a replication problem. See [Balancer operation](#balancer-operation).
