@@ -39,7 +39,6 @@ The following limitations apply specifically to sharded cluster replication:
 - During data replication, the following commands are not supported: `movePrimary`, `reshardCollection`, `unshardCollection`, `refineCollectionShardKey`. Running them results in failed replication and you must start it anew, from the initial data sync stage.
 
 ## Data types
-
 * Queryable encryption is not supported
 * Users and roles are not synchronized
 * Timeseries collections are not supported
