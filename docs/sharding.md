@@ -52,16 +52,20 @@ For ranged shard keys, the target also starts from the source chunk boundaries, 
 
 During the initial sync, {{pcsm.short}} prepares the chunk distribution of a sharded collection before copying its documents. This happens automatically for every sharded collection, immediately after the collection is sharded on the target. There is no flag and nothing to configure.
 
-For an empty collection with a ranged shard key, MongoDB initially creates a single chunk that covers the full shard key range. Without additional splitting, clone writes can initially concentrate on one shard and require the target balancer to redistribute the data later. See [Data partitioning with chunks :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-data-partitioning/){:target="_blank"} in the MongoDB documentation.
+For an empty collection with a ranged shard key, MongoDB initially creates a single chunk that covers the full shard key range. If the clone starts with this layout, writes can be concentrated on one shard and the target balancer may need to redistribute the data later. See [Data partitioning with chunks :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-data-partitioning/){:target="_blank"} in the MongoDB documentation.
 
-For ranged shard keys, {{pcsm.short}} recreates the source chunk boundaries on the target before the clone begins. How {{pcsm.short}} places those chunks depends on the number of shards in the source and target clusters. Collections with a hashed shard key are left as MongoDB creates them, as described in [Hashed shard keys](#hashed-shard-keys).
+To avoid this, {{pcsm.short}} recreates the source chunk boundaries on the target before copying the data. How those chunks are placed depends on whether the source and target have the same number of shards.
+
+Collections with a hashed shard key use the initial chunk layout created by MongoDB. [Hashed shard keys](#hashed-shard-keys).
 
 !!! note
-    {{pcsm.short}} reads the source chunk boundaries before the clone and does not replicate sharding metadata after that. Chunk migrations, splits, and merges that happen later on the source have no effect on the target, so the two layouts diverge as each cluster's balancer works. This is expected and does not indicate a replication problem. See [Balancer operation](#balancer-operation).
+    {{pcsm.short}} uses the source chunk layout to prepare the target before the clone. It does not keep the chunk layouts on the two clusters synchronized. This is expected and does not indicate a replication problem. See [Balancer operation](#balancer-operation). Chunk migrations, splits, or merges that happen later on the source are not reproduced on the target. The layouts can therefore change independently as each cluster's balancer runs. This is expected and does not indicate a replication problem. See [Balancer operation](#balancer-operation).
 
 ### Same number of shards
 
-When the source and target have the same number of shards, PCSM sorts the shard IDs in each cluster and pairs them by their position in the sorted lists. For example, the first source shard is paired with the first target shard, the second source shard with the second target shard, and so on. PCSM then recreates each source chunk boundary on the target and places the corresponding target chunk on the shard paired with the source shard that owns that chunk.
+When the source and target have the same number of shards, PCSM sorts the shard IDs in each cluster and pairs them by their position in the sorted lists. For example, the first source shard is paired with the first target shard, the second source shard with the second target shard, and so on. 
+
+PCSM then recreates each source chunk boundary on the target and places the corresponding target chunk on the shard paired with the source shard that owns that chunk.
 
 ??? example "Same number of shards"
 
@@ -77,10 +81,15 @@ When the source and target have the same number of shards, PCSM sorts the shard 
     [-∞, 100)  -> tgt-a
     [100, +∞)  -> tgt-b
     ```
+    In this example, `src-a` is paired with `tgt-a` and `src-b` with `tgt-b`. The target keeps the same chunk boundaries and ownership pattern as the source.
 
 ### Different number of shards
 
-When the source and target have different numbers of shards, {{pcsm.short}} cannot reproduce the source ownership pattern directly. Instead, it estimates the size of each source chunk and processes the largest chunks first. For each chunk, {{pcsm.short}} compares the cumulative estimated data already assigned to every target shard and places the chunk on the shard with the smallest total. It then recreates the source chunk boundaries on the target using this calculated placement. This distributes the estimated data volume as evenly as possible across the available target shards.
+When the source and target have different numbers of shards, the source chunk ownership cannot be mapped one-to-one to the target. 
+
+Instead, {{pcsm.short}} estimates the size of each source chunk and processes the largest chunks first. It places each chunk on the target shard that currently has the smallest estimated amount of assigned data.
+
+{{pcsm.short}} keeps track of the estimated total for each target shard as it assigns chunks. It then recreates the source chunk boundaries on the target using the calculated placement.
 
 ??? example "Different number of shards"
 
@@ -96,6 +105,7 @@ When the source and target have different numbers of shards, {{pcsm.short}} cann
     tgt-a: 100 MB
     tgt-b: 100 MB
     ```
+    Here, the 100 MB chunk is placed on `tgt-a `first. The 60 MB chunk goes to `tgt-b`, which has no data assigned yet. When the 40 MB chunk is processed, `tgt-b `still has less estimated data than `tgt-a`, so the chunk is also placed there.
 
 ### Hashed shard keys
 
@@ -103,15 +113,24 @@ When the source and target have different numbers of shards, {{pcsm.short}} cann
 
 ### If the pre-split fails
 
-A failed pre-split fails the clone for that instance, and there is no fallback to loading into an unsplit collection. Check the log for the reported failure, resolve it on the target cluster, then restart replication with `pcsm resume --from-failure`. See [Resume the replication](install/usage.md#resume-the-replication), [Logging in {{pcsm.full_name}}](logging.md), and the [Troubleshooting guide](troubleshooting.md).
+If {{pcsm.short}} cannot prepare the chunk layout on the target, the clone fails. It does not fall back to copying the data into an unsplit collection.
 
-### Check the layout on the target
+Check the PCSM logs for the reported error and resolve the issue on the target cluster. Then resume replication:
 
-Connect to the target `mongos` and look at how a replicated collection is spread:
+```sh
+pcsm resume --from-failure
+```
+See [Resume the replication](install/usage.md#resume-the-replication), [Logging in {{pcsm.full_name}}](logging.md), and the [Troubleshooting guide](troubleshooting.md).
+
+### Check the chunk distribution
+
+To check how a replicated collection is distributed, connect to the target mongos and run:
 
 ```javascript
 db.getSiblingDB('<database>').getCollection('<collection>').getShardDistribution()
 ```
+
+The command shows the data distribution across the target shards.
 
 ## Usage
 
