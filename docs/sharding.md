@@ -50,20 +50,52 @@ For ranged shard keys, the target also starts from the source chunk boundaries, 
 
 !!! admonition "Version added: 0.10.0"
 
-When MongoDB shards an empty collection on a ranged shard key, it creates a single chunk covering the entire range of shard key values. See [Data partitioning with chunks :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-data-partitioning/){:target="_blank"} in the MongoDB documentation. A clone into that collection would therefore write to a single shard, and the target balancer would move the data afterwards.
+During the initial sync, {{pcsm.short}} prepares the chunk distribution of a sharded collection before copying its documents. This happens automatically for every sharded collection, immediately after the collection is sharded on the target. There is no flag and nothing to configure.
 
-{{pcsm.short}} therefore recreates the source chunk boundaries on the target before copying any documents. Clone writes follow the source layout instead of concentrating on one shard, which reduces how much the target balancer has to move afterwards.
+For an empty collection with a ranged shard key, MongoDB initially creates a single chunk that covers the full shard key range. Without additional splitting, clone writes can initially concentrate on one shard and require the target balancer to redistribute the data later. See [Data partitioning with chunks :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/sharding-data-partitioning/){:target="_blank"} in the MongoDB documentation.
 
-This runs automatically for every collection with a ranged shard key, immediately after {{pcsm.short}} shards it on the target. There is no flag and nothing to configure. Collections with a hashed shard key are not pre-split.
-
-| **Source collection** | **Target shards** | **Result on the target** |
-|-----------------------|-------------------|--------------------------|
-| Hashed shard key | Any number | The layout that `shardCollection` creates, unchanged. |
-| Ranged shard key | Same number as the source | The same chunk boundaries and the same ownership pattern as the source. |
-| Ranged shard key | Different number from the source | The same chunk boundaries, with chunks placed to even out the estimated data volume per shard.|
+For ranged shard keys, {{pcsm.short}} recreates the source chunk boundaries on the target before the clone begins. How {{pcsm.short}} places those chunks depends on the number of shards in the source and target clusters. Collections with a hashed shard key are left as MongoDB creates them, as described in [Hashed shard keys](#hashed-shard-keys).
 
 !!! note
-    {{pcsm.short}} reads the source boundaries once, before the clone, and does not replicate sharding metadata afterwards. Later migrations, splits, merges, and resharding on the source have no effect on the target, so the two layouts drift apart as the balancers work. That is expected and does not indicate a replication problem.
+    {{pcsm.short}} reads the source chunk boundaries before the clone and does not replicate sharding metadata after that. Chunk migrations, splits, and merges that happen later on the source have no effect on the target, so the two layouts diverge as each cluster's balancer works. This is expected and does not indicate a replication problem. See [Balancer operation](#balancer-operation).
+
+### Same number of shards
+
+When the source and target have the same number of shards, PCSM sorts the shard IDs in each cluster and pairs them by their position in the sorted lists. For example, the first source shard is paired with the first target shard, the second source shard with the second target shard, and so on. PCSM then recreates each source chunk boundary on the target and places the corresponding target chunk on the shard paired with the source shard that owns that chunk.
+
+??? example "Same number of shards"
+
+    ```{.text .no-copy}
+    Source shards: src-a, src-b
+    Target shards: tgt-a, tgt-b
+
+    Source layout:
+    [-∞, 100)  -> src-a
+    [100, +∞)  -> src-b
+
+    Target layout:
+    [-∞, 100)  -> tgt-a
+    [100, +∞)  -> tgt-b
+    ```
+
+### Different number of shards
+
+When the source and target have different numbers of shards, {{pcsm.short}} cannot reproduce the source ownership pattern directly. Instead, it estimates the size of each source chunk and processes the largest chunks first. For each chunk, {{pcsm.short}} compares the cumulative estimated data already assigned to every target shard and places the chunk on the shard with the smallest total. It then recreates the source chunk boundaries on the target using this calculated placement. This distributes the estimated data volume as evenly as possible across the available target shards.
+
+??? example "Different number of shards"
+
+    ```{.text .no-copy}
+    Target shards: tgt-a, tgt-b
+    Source chunk sizes: 100 MB, 60 MB, 40 MB
+
+    100 MB -> tgt-a
+    60 MB -> tgt-b
+    40 MB -> tgt-b
+
+    Final estimated placement:
+    tgt-a: 100 MB
+    tgt-b: 100 MB
+    ```
 
 ### Hashed shard keys
 
