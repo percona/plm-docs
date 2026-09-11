@@ -136,7 +136,7 @@ initial clone interrupted by failover and is not resumable; start a new run to r
 
     To recover, start a new synchronization run on the `ACTIVE` instance. PCSM starts the initial clone again from the beginning. Automatic recovery from the last checkpoint becomes available after the initial clone completes and PCSM enters the replication phase.
 
-See PCSM HTTP API for information about the /status endpoint and Start and manage synchronization for information about starting a new synchronization run.
+See the [PCSM HTTP API](api.md) for information about the `/status` endpoint and [Start the replication](install/usage.md#start-the-replication) for information about starting a new synchronization run.
 
 ## Operate an HA deployment
 
