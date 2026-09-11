@@ -266,7 +266,7 @@ Before starting PCSM 0.10.0:
 
 1. Stop all PCSM 0.9.0 instances that use the target cluster.
 
-2.Rreset the stored PCSM state on the target:
+2. Reset the stored PCSM state on the target:
 
     ```bash
     pcsm reset --target "<target-mongodb-uri>"
