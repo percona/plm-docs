@@ -13,7 +13,7 @@ High availability is always enabled and requires no configuration. A single inst
 
 ## How high availability works
 
-The instances coordinate through a lease stored on the target cluster, so the MongoDB deployment you already have is the only coordinator involved. Exactly one instance holds the lease at a time. That instance is `ACTIVE` and runs replication. The rest are `STANDBY` and do nothing until the lease expires.
+The instances coordinate through a lease stored on the target cluster, so the MongoDB deployment you already have is the only coordinator involved. Exactly one instance holds the lease at a time. That instance is `ACTIVE` and runs replication.
 
 PCSM uses three mechanisms to ensure safe failover:
 
@@ -23,32 +23,25 @@ PCSM uses a lease to ensure that only one instance is ACTIVE at a time. Lease ac
 
 PCSM evaluates lease expiration using the target MongoDB server clock. Differences between the clocks on PCSM hosts therefore do not affect the election.
 
+For more information about atomic single-document operations, see [Atomicity and Transactions :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/write-operations-atomicity/){="_blank"} in the MongoDB documentation.
+
 PCSM stores the lease as a single document in the `percona_clustersync_mongodb.lease` collection. For example:
 
-    ```sh
-    { "_id": "lease", "term": 7, "instanceId": "b3f1c2a4-9d7e-4c11-8a2f-1e6b0d5c9a77", "electionDate": { "$date": "2026-07-17T09:14:02.190Z" }, "expiresAt": { "$date": "2026-07-17T09:20:41.882Z" } }
-    ```
-
-Each instance also maintains a liveness document in the `percona_clustersync_mongodb.members` collection, refreshed on every heartbeat:
-
-```{.json .no-copy}
-{
-  "_id": "b3f1c2a4-9d7e-4c11-8a2f-1e6b0d5c9a77",
-  "group": "default",
-  "host": "pcsm0",
-  "port": 2242,
-  "role": "ACTIVE",
-  "term": 7,
-  "pcsmVersion": "0.10.0",
-  "startedAt": { "$date": "2026-07-17T09:14:02.113Z" },
-  "lastHeartbeat": { "$date": "2026-07-17T09:20:31.882Z" }
+```sh
+{ "_id": "lease", 
+  "group": "default", 
+  "term": 7, 
+  "instanceId": "b3f1c2a4-9d7e-4c11-8a2f-1e6b0d5c9a77",         
+  "electionDate": { "$date": "2026-07-17T09:14:02.190Z" }, 
+  "expiresAt": { "$date": "2026-07-17T09:20:41.882Z" } 
 }
 ```
-A member whose `lastHeartbeat` falls past the stale threshold is treated as dead and drops out of the group view.
+
+The document identifies the active instance and records the current lease term, election time, and expiration time.
 
 ### Term fencing
 
-Each lease has a term value that increases whenever a new `ACTIVE` instance is elected. PCSM includes this value in every checkpoint written by the active instance. 
+Each lease has a `term` value that increases whenever a new `ACTIVE` instance is elected. PCSM includes this value in every checkpoint written by the active instance. 
 
 If a previous active instance resumes after losing its lease, its checkpoint writes contain an outdated term and are rejected. The instance then switches to `STANDBY`, which prevents it from overwriting the current replication state.
 
@@ -66,6 +59,29 @@ The timings are fixed:
 | Stale member threshold | 3 missed heartbeats |
 
 If the active instance stops unexpectedly, a standby can take over after the lease expires and continue replication from the latest checkpoint.
+
+### Instance membership
+
+Each PCSM instance records its identity and liveness information in the `percona_clustersync_mongodb.members` collection on the target cluster. The instance refreshes this information with each heartbeat.
+
+
+For example:
+
+```sh
+{
+  "_id": "b3f1c2a4-9d7e-4c11-8a2f-1e6b0d5c9a77",
+  "group": "default",
+  "host": "pcsm0",
+  "port": 2242,
+  "role": "ACTIVE",
+  "term": 7,
+  "pcsmVersion": "0.10.0",
+  "startedAt": { "$date": "2026-07-17T09:14:02.113Z" },
+  "lastHeartbeat": { "$date": "2026-07-17T09:20:31.882Z" }
+}
+```
+
+A member that does not send a heartbeat within the stale-member threshold is removed from the current group view.
 
 ## Set up high availability
 
@@ -87,7 +103,9 @@ See [Start PCSM](install/start-pcsm.md) for startup options and [Percona Cluster
 
 ### Identify the HA group
 
-Instances that share a group name coordinate as one active-standby group. Set the name with `--group-name` or the `PCSM_GROUP_NAME` environment variable:
+You can use `--group-name` or the `PCSM_GROUP_NAME` environment variable to assign a name that identifies the HA deployment in member information, API responses, metrics, and logs.
+
+For example:
 
 ```sh
 pcsm \
@@ -96,7 +114,13 @@ pcsm \
     --group-name migration-1
 ```
 
-The default group name is `default`. The name appears in member documents, in the API envelope, and as a label on the `..._ha_info` metric.
+The default group name is `default`.
+
+!!! important
+
+    In PCSM 0.10.0, the group name is used for identification and observability. It does not isolate HA coordination between different groups that use the same target cluster.
+
+    Do not rely on different group names to create independent HA deployments against the same target.
 
 ## Failover during the initial clone
 
@@ -116,11 +140,11 @@ See PCSM HTTP API for information about the /status endpoint and Start and manag
 
 ## Operate an HA deployment
 
-In an HA deployment, you need to know which PCSM instance is ACTIVE, direct operational commands to that instance, and monitor the health of all instances. PCSM provides API responses, metrics, and health endpoints to help you manage these tasks.
+During normal operation, you need to know which PCSM instance is active, send replication commands to that instance, and monitor all members of the deployment. PCSM exposes the information you need through its API and `/metrics` endpoint.
 
 ### Check the active instance
 
-PCSM exposes the HA role through the `/metrics` endpoint.
+Use the `percona_clustersync_mongodb_ha_active` metric to check the role of a PCSM instance:
 
 ```bash
 curl -sS http://localhost:2242/metrics | grep percona_clustersync_mongodb_ha_active
@@ -130,7 +154,9 @@ A value of `1` identifies the active instance. A value of `0` identifies a stand
 
 When PCSM sees more than one live member, API responses can also include the me, role, and group fields. These fields identify the instance that handled the request and list the other members of the HA group.
 
-When PCSM sees more than one live member, API responses can also include the `me`, `role`, and `group` fields. These fields identify the instance that handled the request and list the other members of the HA group. For example, a `GET /status` response from the active instance:
+When PCSM sees more than one live member, API responses can also include the me, role, and group fields. The group information lists the live PCSM instances and their current roles.
+
+For example, an operational request sent to a standby returns HTTP `409` with `error: "not_active"`:
 
 ```{.json .no-copy}
 {
@@ -159,24 +185,7 @@ When PCSM sees more than one live member, API responses can also include the `me
   }
 }
 ```
-A request sent to a standby returns HTTP `409` with the `not_active` error:
-
-```{.json .no-copy}
-{
-  "ok": false,
-  "error": "not_active",
-  "me": { "instanceId": "6a2d8e10-4b3c-4f97-9c0a-2f7e1b4d6c88" },
-  "role": "STANDBY",
-  "group": {
-    "name": "default",
-    "term": 7,
-    "members": [
-      { "instanceId": "b3f1c2a4-9d7e-4c11-8a2f-1e6b0d5c9a77", "host": "pcsm0", "port": 2242, "role": "ACTIVE" },
-      { "instanceId": "6a2d8e10-4b3c-4f97-9c0a-2f7e1b4d6c88", "host": "pcsm1", "port": 2243, "role": "STANDBY" }
-    ]
-  }
-}
-```
+The response shows which instance handled the request and identifies the current active member.
 
 !!! info "Important"
 
@@ -186,7 +195,7 @@ A request sent to a standby returns HTTP `409` with the `not_active` error:
 
 See the [PCSM HTTP API](api.md) for endpoint details.
 
-###  Operational commands on standby instances
+###  Send operational commands to the active instance
 
 Replication commands must be sent to the active PCSM instance.
 
@@ -198,14 +207,11 @@ The following endpoints return HTTP `409` with `error: "not_active"` when called
 * `/resume`
 * `/finalize`
 
-The response identifies the standby and, when available, includes the HA member list so you can locate the active instance.
-
-The `/metrics` endpoint and `pprof` endpoints remain available on both active and standby instances.
-
+When group information is available, the 409 response includes the member list so you can locate the active instance.
 
 See [PCSM commands](pcsm-commands.md) for information about managing a synchronization run.
 
-## Configure readiness probes
+## Configure health probes
 
 Use `/metrics` for liveness and readiness probes in an HA deployment. This endpoint is available regardless of whether an instance is active or standby.
 
@@ -215,7 +221,7 @@ Do not use `/status` for a readiness probe. A healthy standby returns HTTP `409`
 
     A healthy standby returns HTTP `409` from this endpoint because replication status is available only from the active instance. A probe pointed there marks every standby unhealthy. For Kubernetes deployments, see [Configure Liveness, Readiness and Startup Probes :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/){:target="_blank"}.
 
-For monitoring configuration, see [Set up observability with Percona Monitoring and Management](pmm-setup.md).
+For information about Kubernetes probes, see [Configure Liveness, Readiness and Startup Probes :octicons-link-external-16:](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/){="_blank"}.
 
 ## High availability metrics
 
@@ -240,13 +246,13 @@ PCSM provides commands to clear the stored HA membership or lease state.
 Clear the recorded member information:
 
 ```bash
-pcsm reset members
+pcsm reset members --target "<target-mongodb-uri>
 ```
 
 Clear the HA lease:
 
 ```bash
-pcsm reset lease
+pcsm reset lease --target "<target-mongodb-uri>
 ```
 
 Use these commands only when you need to clear HA coordination state. To clear all PCSM state, use `pcsm reset`.
