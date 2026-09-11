@@ -152,9 +152,7 @@ curl -sS http://localhost:2242/metrics | grep percona_clustersync_mongodb_ha_act
 
 A value of `1` identifies the active instance. A value of `0` identifies a standby.
 
-When PCSM sees more than one live member, API responses can also include the me, role, and group fields. These fields identify the instance that handled the request and list the other members of the HA group.
-
-When PCSM sees more than one live member, API responses can also include the me, role, and group fields. The group information lists the live PCSM instances and their current roles.
+When PCSM sees more than one live member, API responses can also include the `me`, `role`, and `group` fields. These fields identify the instance that handled the request and list the live PCSM instances and their current roles.
 
 For example, an operational request sent to a standby returns HTTP `409` with `error: "not_active"`:
 
