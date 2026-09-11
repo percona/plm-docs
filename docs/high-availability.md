@@ -116,7 +116,7 @@ pcsm \
 
 The default group name is `default`.
 
-!!! important
+!!! info "Important"
 
     In PCSM 0.10.0, the group name is used for identification and observability. It does not isolate HA coordination between different groups that use the same target cluster.
 
@@ -275,14 +275,14 @@ Before starting PCSM 0.10.0:
 3. Start PCSM 0.10.0
 4. Start a new synchronization run.
 
-!!! important
+!!! info "Important"
     Do not run PCSM 0.9.0 and PCSM 0.10.0 against the same target at the same time.
 
 ## Next steps
 
-[Manage synchronization with PCSM commands](pcsm-commands.md){.md-button}
-
 [Use the PCSM HTTP API](api.md){.md-button}
+
+[Manage synchronization with PCSM commands](pcsm-commands.md){.md-button}
 
 [Set up observability with Percona Monitoring and Management](pmm-setup.md){.md-button}
 
