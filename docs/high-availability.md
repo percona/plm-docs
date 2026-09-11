@@ -23,7 +23,7 @@ PCSM uses a lease to ensure that only one instance is ACTIVE at a time. Lease ac
 
 PCSM evaluates lease expiration using the target MongoDB server clock. Differences between the clocks on PCSM hosts therefore do not affect the election.
 
-For more information about atomic single-document operations, see [Atomicity and Transactions :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/write-operations-atomicity/){="_blank"} in the MongoDB documentation.
+For more information about atomic single-document operations, see [Atomicity and Transactions :octicons-link-external-16:](https://www.mongodb.com/docs/manual/core/write-operations-atomicity/){:target="_blank"} in the MongoDB documentation.
 
 PCSM stores the lease as a single document in the `percona_clustersync_mongodb.lease` collection. For example:
 
