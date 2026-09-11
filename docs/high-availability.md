@@ -244,7 +244,7 @@ PCSM provides commands to clear the stored HA membership or lease state.
 Clear the recorded member information:
 
 ```bash
-pcsm reset members --target "<target-mongodb-uri>
+pcsm reset members --target "<target-mongodb-uri>"
 ```
 
 Clear the HA lease:
