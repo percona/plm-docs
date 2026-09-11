@@ -15,7 +15,7 @@ High availability is always enabled and requires no configuration. A single inst
 
 The instances coordinate through a lease stored on the target cluster, so the MongoDB deployment you already have is the only coordinator involved. Exactly one instance holds the lease at a time. That instance is `ACTIVE` and runs replication.
 
-PCSM uses three mechanisms to ensure safe failover:
+PCSM uses the following mechanisms to ensure safe failover and track instance membership:
 
 ### Lease election 
 
